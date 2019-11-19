@@ -3,10 +3,12 @@ package com.asfoundation.wallet.ui.iab.bazaariab
 import android.app.Activity
 import android.content.Intent
 import android.util.Log
+import com.appcoins.wallet.bdsbilling.repository.RemoteRepository
 import com.asfoundation.wallet.entity.TransactionBuilder
 import com.asfoundation.wallet.ui.iab.bazaariab.util.IabHelper
 import com.asfoundation.wallet.ui.iab.bazaariab.util.IabResult
 import com.asfoundation.wallet.ui.iab.bazaariab.util.Purchase
+import java.util.*
 
 
 class BazaarIab(private val transaction: TransactionBuilder, activity: Activity) {
@@ -17,13 +19,13 @@ class BazaarIab(private val transaction: TransactionBuilder, activity: Activity)
   private var mHelper: IabHelper? = null
 
 
-  private val sku = /*"test"*/transaction.skuId
+  private val sku = "test"/*transaction.skuId*/
 
   private val isDisposed: Boolean
     get() = mHelper == null || mActivity == null
 
   private var mPurchaseFinishedListener: IabHelper.OnIabPurchaseFinishedListener = object : IabHelper.OnIabPurchaseFinishedListener {
-    override fun onIabPurchaseFinished(result: IabResult, purchase: Purchase) {
+    override fun onIabPurchaseFinished(result: IabResult, purchase: Purchase?) {
       Log.d(TAG, "Purchase finished: $result, purchase: $purchase")
 
       if (isDisposed) return
@@ -33,7 +35,7 @@ class BazaarIab(private val transaction: TransactionBuilder, activity: Activity)
 //                setWaitScreen(false)
         return
       }
-      if (!verifyDeveloperPayload(purchase)) {
+      if (!verifyDeveloperPayload(purchase!!)) {
         complain("Error purchasing. Authenticity verification failed.")
 //                setWaitScreen(false)
         return
@@ -73,8 +75,8 @@ class BazaarIab(private val transaction: TransactionBuilder, activity: Activity)
 
 //              val queryInventory = mHelper!!.queryInventory(true, listOf("test"))
 
-              mHelper!!.launchPurchaseFlow(mActivity, sku, RC_REQUEST,
-                  mPurchaseFinishedListener, payload)
+              mHelper!!.launchPurchaseFlow(mActivity, sku, transaction.type.toLowerCase(Locale.US), RC_REQUEST,
+                  mPurchaseFinishedListener, transaction.payload)
             }
           })
         }
