@@ -32,12 +32,10 @@ class BazaarIab(private val transaction: TransactionBuilder, activity: Activity)
 
       if (result.isFailure) {
         complain("Error purchasing: $result")
-//                setWaitScreen(false)
         return
       }
       if (!verifyDeveloperPayload(purchase!!)) {
         complain("Error purchasing. Authenticity verification failed.")
-//                setWaitScreen(false)
         return
       }
 
@@ -45,10 +43,6 @@ class BazaarIab(private val transaction: TransactionBuilder, activity: Activity)
       if (purchase.sku == sku) {
         // bought the premium upgrade!
         Log.d(TAG, "Purchase is premium upgrade. Congratulating user.")
-//                alert("Thank you for upgrading to premium!")
-//                mIsPremium = true
-//                updateUi()
-//                setWaitScreen(false)
       }
     }
   }
@@ -63,7 +57,6 @@ class BazaarIab(private val transaction: TransactionBuilder, activity: Activity)
               Log.d(TAG, "Setup finished.")
 
               if (!result.isSuccess) {
-                // Oh noes, there was a problem.
                 complain("Problem setting up in-app billing: $result")
                 return
               }
@@ -72,8 +65,6 @@ class BazaarIab(private val transaction: TransactionBuilder, activity: Activity)
               Log.d(TAG, "Setup successful. Querying inventory.")
 
               if (isDisposed) return
-
-//              val queryInventory = mHelper!!.queryInventory(true, listOf("test"))
 
               mHelper!!.launchPurchaseFlow(mActivity, sku, transaction.type.toLowerCase(Locale.US), RC_REQUEST,
                   mPurchaseFinishedListener, transaction.payload)
@@ -145,8 +136,9 @@ class BazaarIab(private val transaction: TransactionBuilder, activity: Activity)
 
     private val RC_REQUEST = 10001
 
-
     private const val payload = ""
+
+    private const val GATEWAY = "cafe_bazaar"
   }
 
 }
