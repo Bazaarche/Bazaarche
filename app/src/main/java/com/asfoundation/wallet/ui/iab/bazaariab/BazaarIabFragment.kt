@@ -19,7 +19,7 @@ class BazaarIabFragment : DaggerFragment() {
     private const val ARG_IS_BDS_KEY = "is_bds"
     private const val ARG_TRANSACTION = "transaction"
 
-    private val TAG = this::class.java.simpleName
+    private const val TAG = "BazaarIabFragment"
 
     private const val BASE64_ENCODED_PUBLIC_KEY = "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwDMPD2GdXOVRi13M5glHo0/0hqMPkdhYZ42rYLGCroxOc0W/lZ9zhWtm+zF5Epa98tHeBXmLr9HWJJz2v4HGCaPYHo0up7ogEMbWCLIniN9N6j42Tt/naPZWOCbkeHZ5b7191Zz2cZUi4zAbEJA9uWOf1dS3tS5+7G+lG2yhhtu1dWoAng0wRj2hCoIcy/YENacQRtrRRohp8zWUdPQaK1xwX2mXMuq/Le2c7onjrUCAwEAAQ=="
 
@@ -51,25 +51,8 @@ class BazaarIabFragment : DaggerFragment() {
 
   private val sku = "test"/*transaction.skuId*///TODO: remove this and use transaction.skuId
 
-  private var mPurchaseFinishedListener: IabHelper.OnIabPurchaseFinishedListener = object : IabHelper.OnIabPurchaseFinishedListener {
-    override fun onIabPurchaseFinished(result: IabResult, purchase: Purchase?) {
-
-      if (mHelper == null) return
-
-      if (result.isFailure) {
-        return
-      } else purchase!!
-
-      if (!verifyDeveloperPayload(purchase)) {
-        return
-      }
-
-      if (purchase.sku == sku) {
-
-        createTransaction(purchase)
-      }
-    }
-
+  private var mPurchaseFinishedListener = IabHelper.OnIabPurchaseFinishedListener { result, purchase ->
+    if (mHelper != null) onPurchaseFinished(result, purchase)
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,18 +78,31 @@ class BazaarIabFragment : DaggerFragment() {
     mHelper = null
   }
 
+  private fun onPurchaseFinished(result: IabResult, purchase: Purchase?) {
 
-  private fun verifyDeveloperPayload(p: Purchase): Boolean {
-    val payload = p.developerPayload
+    if (result.isFailure) {
+      return
+    } else purchase!!
 
+    if (!verifyDeveloperPayload(purchase)) {
+      return
+    }
+
+    if (purchase.sku == sku) {
+
+      createTransaction(purchase)
+    }
+  }
+
+  private fun verifyDeveloperPayload(purchase: Purchase): Boolean {
+    val payload = purchase.developerPayload
     /*
      * TODO: verify that the developer payload of the purchase is correct. It will be
      */
-
     return true
   }
 
-  private fun createTransaction(purchase: Purchase) {
+  private fun createTransaction(purchase: Purchase) {//TODO
 //    val disposable = bazaarIabUtils.start(transaction, purchase.developerPayload,
 //        purchase.token, isBds, activity.packageName)
 //
