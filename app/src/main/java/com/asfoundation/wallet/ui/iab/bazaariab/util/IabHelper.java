@@ -29,6 +29,8 @@ import android.os.RemoteException;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.fragment.app.Fragment;
+
 import com.android.vending.billing.IInAppBillingService;
 
 import org.json.JSONException;
@@ -367,56 +369,109 @@ public class IabHelper {
      */
     public void launchPurchaseFlow(Activity act, String sku, String itemType, int requestCode,
                                    OnIabPurchaseFinishedListener listener, String extraData) {
-        checkNotDisposed();
-        checkSetupDone("launchPurchaseFlow");
-        flagStartAsync("launchPurchaseFlow");
-        IabResult result;
+      checkNotDisposed();
+      checkSetupDone("launchPurchaseFlow");
+      flagStartAsync("launchPurchaseFlow");
+      IabResult result;
 
-        if (itemType.equals(ITEM_TYPE_SUBS) && !mSubscriptionsSupported) {
-            IabResult r = new IabResult(IABHELPER_SUBSCRIPTIONS_NOT_AVAILABLE,
-                    "Subscriptions are not available.");
-            flagEndAsync();
-            if (listener != null) listener.onIabPurchaseFinished(r, null);
-            return;
+      if (itemType.equals(ITEM_TYPE_SUBS) && !mSubscriptionsSupported) {
+        IabResult r = new IabResult(IABHELPER_SUBSCRIPTIONS_NOT_AVAILABLE,
+            "Subscriptions are not available.");
+        flagEndAsync();
+        if (listener != null) listener.onIabPurchaseFinished(r, null);
+        return;
+      }
+
+      try {
+        logDebug("Constructing buy intent for " + sku + ", item type: " + itemType);
+        Bundle buyIntentBundle = mService.getBuyIntent(3, mContext.getPackageName(), sku, itemType, extraData);
+        int response = getResponseCodeFromBundle(buyIntentBundle);
+        if (response != BILLING_RESPONSE_RESULT_OK) {
+          logError("Unable to buy item, Error response: " + getResponseDesc(response));
+          flagEndAsync();
+          result = new IabResult(response, "Unable to buy item");
+          if (listener != null) listener.onIabPurchaseFinished(result, null);
+          return;
         }
 
-        try {
-            logDebug("Constructing buy intent for " + sku + ", item type: " + itemType);
-            Bundle buyIntentBundle = mService.getBuyIntent(3, mContext.getPackageName(), sku, itemType, extraData);
-            int response = getResponseCodeFromBundle(buyIntentBundle);
-            if (response != BILLING_RESPONSE_RESULT_OK) {
-                logError("Unable to buy item, Error response: " + getResponseDesc(response));
-                flagEndAsync();
-                result = new IabResult(response, "Unable to buy item");
-                if (listener != null) listener.onIabPurchaseFinished(result, null);
-                return;
-            }
+        PendingIntent pendingIntent = buyIntentBundle.getParcelable(RESPONSE_BUY_INTENT);
+        logDebug("Launching buy intent for " + sku + ". Request code: " + requestCode);
+        mRequestCode = requestCode;
+        mPurchaseListener = listener;
+        mPurchasingItemType = itemType;
+        act.startIntentSenderForResult(pendingIntent.getIntentSender(),
+            requestCode, new Intent(),
+            Integer.valueOf(0), Integer.valueOf(0),
+            Integer.valueOf(0));
+      } catch (SendIntentException e) {
+        logError("SendIntentException while launching purchase flow for sku " + sku);
+        e.printStackTrace();
+        flagEndAsync();
 
-            PendingIntent pendingIntent = buyIntentBundle.getParcelable(RESPONSE_BUY_INTENT);
-            logDebug("Launching buy intent for " + sku + ". Request code: " + requestCode);
-            mRequestCode = requestCode;
-            mPurchaseListener = listener;
-            mPurchasingItemType = itemType;
-            act.startIntentSenderForResult(pendingIntent.getIntentSender(),
-                    requestCode, new Intent(),
-                    Integer.valueOf(0), Integer.valueOf(0),
-                    Integer.valueOf(0));
-        } catch (SendIntentException e) {
-            logError("SendIntentException while launching purchase flow for sku " + sku);
-            e.printStackTrace();
-            flagEndAsync();
+        result = new IabResult(IABHELPER_SEND_INTENT_FAILED, "Failed to send intent.");
+        if (listener != null) listener.onIabPurchaseFinished(result, null);
+      } catch (RemoteException e) {
+        logError("RemoteException while launching purchase flow for sku " + sku);
+        e.printStackTrace();
+        flagEndAsync();
 
-            result = new IabResult(IABHELPER_SEND_INTENT_FAILED, "Failed to send intent.");
-            if (listener != null) listener.onIabPurchaseFinished(result, null);
-        } catch (RemoteException e) {
-            logError("RemoteException while launching purchase flow for sku " + sku);
-            e.printStackTrace();
-            flagEndAsync();
-
-            result = new IabResult(IABHELPER_REMOTE_EXCEPTION, "Remote exception while starting purchase flow");
-            if (listener != null) listener.onIabPurchaseFinished(result, null);
-        }
+        result = new IabResult(IABHELPER_REMOTE_EXCEPTION, "Remote exception while starting purchase flow");
+        if (listener != null) listener.onIabPurchaseFinished(result, null);
+      }
     }
+
+  public void launchPurchaseFlow(Fragment fragment, String sku, String itemType, int requestCode,
+                                 OnIabPurchaseFinishedListener listener, String extraData) {
+    checkNotDisposed();
+    checkSetupDone("launchPurchaseFlow");
+    flagStartAsync("launchPurchaseFlow");
+    IabResult result;
+
+    if (itemType.equals(ITEM_TYPE_SUBS) && !mSubscriptionsSupported) {
+      IabResult r = new IabResult(IABHELPER_SUBSCRIPTIONS_NOT_AVAILABLE,
+          "Subscriptions are not available.");
+      flagEndAsync();
+      if (listener != null) listener.onIabPurchaseFinished(r, null);
+      return;
+    }
+
+    try {
+      logDebug("Constructing buy intent for " + sku + ", item type: " + itemType);
+      Bundle buyIntentBundle = mService.getBuyIntent(3, mContext.getPackageName(), sku, itemType, extraData);
+      int response = getResponseCodeFromBundle(buyIntentBundle);
+      if (response != BILLING_RESPONSE_RESULT_OK) {
+        logError("Unable to buy item, Error response: " + getResponseDesc(response));
+        flagEndAsync();
+        result = new IabResult(response, "Unable to buy item");
+        if (listener != null) listener.onIabPurchaseFinished(result, null);
+        return;
+      }
+
+      PendingIntent pendingIntent = buyIntentBundle.getParcelable(RESPONSE_BUY_INTENT);
+      logDebug("Launching buy intent for " + sku + ". Request code: " + requestCode);
+      mRequestCode = requestCode;
+      mPurchaseListener = listener;
+      mPurchasingItemType = itemType;
+      fragment.startIntentSenderForResult(pendingIntent.getIntentSender(),
+          requestCode, new Intent(),
+          Integer.valueOf(0), Integer.valueOf(0),
+          Integer.valueOf(0), null);
+    } catch (SendIntentException e) {
+      logError("SendIntentException while launching purchase flow for sku " + sku);
+      e.printStackTrace();
+      flagEndAsync();
+
+      result = new IabResult(IABHELPER_SEND_INTENT_FAILED, "Failed to send intent.");
+      if (listener != null) listener.onIabPurchaseFinished(result, null);
+    } catch (RemoteException e) {
+      logError("RemoteException while launching purchase flow for sku " + sku);
+      e.printStackTrace();
+      flagEndAsync();
+
+      result = new IabResult(IABHELPER_REMOTE_EXCEPTION, "Remote exception while starting purchase flow");
+      if (listener != null) listener.onIabPurchaseFinished(result, null);
+    }
+  }
 
     /**
      * Handles an activity result that's part of the purchase flow in in-app billing. If you

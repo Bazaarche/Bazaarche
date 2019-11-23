@@ -14,8 +14,7 @@ import com.asfoundation.wallet.navigator.UriNavigator
 import com.asfoundation.wallet.ui.BaseActivity
 import com.asfoundation.wallet.ui.iab.InAppPurchaseInteractor.PRE_SELECTED_PAYMENT_METHOD_KEY
 import com.asfoundation.wallet.ui.iab.WebViewActivity.SUCCESS
-import com.asfoundation.wallet.ui.iab.bazaariab.BazaarIab
-import com.asfoundation.wallet.ui.iab.bazaariab.BazaarIab.Companion.startBazaarIab
+import com.asfoundation.wallet.ui.iab.bazaariab.BazaarIabFragment
 import com.asfoundation.wallet.ui.iab.share.SharePaymentLinkFragment
 import com.jakewharton.rxrelay2.PublishRelay
 import dagger.android.AndroidInjection
@@ -41,9 +40,6 @@ class IabActivity : BaseActivity(), IabView, UriNavigator {
   private var results: PublishRelay<Uri>? = null
   private var developerPayload: String? = null
   private var uri: String? = null
-
-
-  private lateinit var bazaarIab: BazaarIab
 
   override fun onCreate(savedInstanceState: Bundle?) {
     AndroidInjection.inject(this)
@@ -74,8 +70,6 @@ class IabActivity : BaseActivity(), IabView, UriNavigator {
       } else if (resultCode == SUCCESS) {
         results!!.accept(Objects.requireNonNull(data!!.data, "Intent data cannot be null!"))
       }
-    } else {
-      bazaarIab.handleActivityResult(requestCode, resultCode, data)
     }
   }
 
@@ -198,6 +192,12 @@ class IabActivity : BaseActivity(), IabView, UriNavigator {
         .commit()
   }
 
+  override fun showBazaarIab() {
+    supportFragmentManager.beginTransaction()
+        .replace(R.id.fragment_container, BazaarIabFragment.newInstance(transaction!!, isBds))
+        .commit()
+  }
+
   override fun onNewIntent(intent: Intent) {
     super.onNewIntent(intent)
     results!!.accept(Objects.requireNonNull(intent.data, "Intent data cannot be null!"))
@@ -252,18 +252,6 @@ class IabActivity : BaseActivity(), IabView, UriNavigator {
   override fun unlockRotation() {
     requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
   }
-
-  override fun startBazaarIAB() {
-
-    bazaarIab = startBazaarIab(transaction!!, this)
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-
-    bazaarIab.dispose()
-  }
-
 
   companion object {
 

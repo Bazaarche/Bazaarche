@@ -42,6 +42,7 @@ import com.asfoundation.wallet.ui.iab.MergedAppcoinsFragment;
 import com.asfoundation.wallet.ui.iab.OnChainBuyFragment;
 import com.asfoundation.wallet.ui.iab.PaymentMethodsFragment;
 import com.asfoundation.wallet.ui.iab.WebViewActivity;
+import com.asfoundation.wallet.ui.iab.bazaariab.BazaarIabFragment;
 import com.asfoundation.wallet.ui.iab.share.SharePaymentLinkFragment;
 import com.asfoundation.wallet.ui.onboarding.OnboardingActivity;
 import com.asfoundation.wallet.ui.transact.AppcoinsCreditsTransferSuccessFragment;
@@ -54,6 +55,7 @@ import com.asfoundation.wallet.wallet_validation.poa.PoaPhoneValidationFragment;
 import com.asfoundation.wallet.wallet_validation.poa.PoaValidationLoadingFragment;
 import com.asfoundation.wallet.wallet_validation.poa.PoaValidationSuccessFragment;
 import com.asfoundation.wallet.wallet_validation.poa.PoaWalletValidationActivity;
+
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
@@ -185,6 +187,9 @@ import dagger.android.ContributesAndroidInjector;
   @ContributesAndroidInjector() abstract InviteFriendsFragment inviteFriendsFragment();
 
   @ContributesAndroidInjector() abstract ReferralsFragment referralsFragment();
+
+  @ContributesAndroidInjector()
+  abstract BazaarIabFragment bazaarIabFragment();
 
   @ContributesAndroidInjector() abstract EarnAppcoinsFragment earnAppcoinsFragment();
 }

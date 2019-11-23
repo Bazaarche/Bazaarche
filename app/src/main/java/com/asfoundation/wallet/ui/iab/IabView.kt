@@ -40,6 +40,6 @@ interface IabView {
   fun lockRotation()
   fun unlockRotation()
   fun showEarnAppcoins()
+  fun showBazaarIab()
   fun launchIntent(intent: Intent)
-  fun startBazaarIAB()
 }
