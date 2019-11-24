@@ -3,12 +3,11 @@ package com.asfoundation.wallet.ui.iab.bazaariab
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.lifecycle.ViewModelProviders
 import com.asfoundation.wallet.entity.TransactionBuilder
 import com.asfoundation.wallet.ui.iab.bazaariab.util.IabHelper
 import com.asfoundation.wallet.ui.iab.bazaariab.util.IabResult
-import com.asfoundation.wallet.ui.iab.bazaariab.util.Purchase
 import dagger.android.support.DaggerFragment
-import java.util.*
 
 
 class BazaarIabFragment : DaggerFragment() {
@@ -25,8 +24,6 @@ class BazaarIabFragment : DaggerFragment() {
 
     private const val PURCHASE_REQUEST = 10001
 
-    private const val GATEWAY = "cafe_bazaar"
-
     fun newInstance(transaction: TransactionBuilder, isBds: Boolean): BazaarIabFragment {
       val fragment = BazaarIabFragment()
       val bundle = Bundle()
@@ -39,79 +36,40 @@ class BazaarIabFragment : DaggerFragment() {
 
   }
 
-  private var mHelper: IabHelper? = null
-
-  private val transaction by lazy {
-    arguments!!.getParcelable<TransactionBuilder>(ARG_TRANSACTION)!!
-  }
-
-  private val isBds by lazy {
-    arguments!!.getBoolean(ARG_TRANSACTION)
-  }
-
-  private val sku = "test"/*transaction.skuId*///TODO: remove this and use transaction.skuId
-
-  private var mPurchaseFinishedListener = IabHelper.OnIabPurchaseFinishedListener { result, purchase ->
-    if (mHelper != null) onPurchaseFinished(result, purchase)
-  }
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-
-    mHelper = IabHelper(requireContext(), BASE64_ENCODED_PUBLIC_KEY)
+  private val iabHelper by lazy(LazyThreadSafetyMode.NONE) {
+    IabHelper(requireContext(), BASE64_ENCODED_PUBLIC_KEY)
         .apply {
           enableDebugLogging(true)
           startSetup()
         }
   }
 
+  private val transaction by lazy(LazyThreadSafetyMode.NONE) {
+    arguments!!.getParcelable<TransactionBuilder>(ARG_TRANSACTION)!!
+  }
+
+  private val isBds by lazy(LazyThreadSafetyMode.NONE) {
+    arguments!!.getBoolean(ARG_IS_BDS_KEY)
+  }
+
+  private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
+    ViewModelProviders.of(this)[BazaarIabViewModel::class.java]
+  }
+
+  private var purchaseFinishedListener = IabHelper.OnIabPurchaseFinishedListener { result, purchase ->
+    if (iabHelper.disposed) viewModel.onPurchaseFinished(result, purchase)
+  }
+
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-    mHelper?.handleActivityResult(requestCode, resultCode, data)
+    iabHelper.handleActivityResult(requestCode, resultCode, data)
   }
 
   override fun onDestroy() {
     super.onDestroy()
 
-    mHelper?.dispose()
-    mHelper = null
-  }
-
-  private fun onPurchaseFinished(result: IabResult, purchase: Purchase?) {
-
-    if (result.isFailure) {
-      return
-    } else purchase!!
-
-    if (!verifyDeveloperPayload(purchase)) {
-      return
-    }
-
-    if (purchase.sku == sku) {
-
-      createTransaction(purchase)
-    }
-  }
-
-  private fun verifyDeveloperPayload(purchase: Purchase): Boolean {
-    val payload = purchase.developerPayload
-    /*
-     * TODO: verify that the developer payload of the purchase is correct. It will be
-     */
-    return true
-  }
-
-  private fun createTransaction(purchase: Purchase) {//TODO
-//    val disposable = bazaarIabUtils.start(transaction, purchase.developerPayload,
-//        purchase.token, isBds, activity.packageName)
-//
-//        .observeOn(AndroidSchedulers.mainThread())
-//        .subscribe({
-//          Log.d(TAG, "status: " + it.status + " ,uid: " + it.uid + " ,data: " + it.data)
-//        }, {
-//          Log.d(TAG, it.message)
-//        })
+    iabHelper.dispose()
   }
 
   private fun IabHelper.startSetup() {
@@ -119,17 +77,20 @@ class BazaarIabFragment : DaggerFragment() {
       override fun onIabSetupFinished(result: IabResult) {
         Log.d(TAG, "Setup finished.")
 
-        if (mHelper == null) return
+        if (disposed) return
 
         if (!result.isSuccess) {
           return
         }
 
-        mHelper?.launchPurchaseFlow(this@BazaarIabFragment, sku, mapToBazaarItemType(transaction.type), PURCHASE_REQUEST,
-            mPurchaseFinishedListener, transaction.payload)
+        launchPurchaseFlow(this@BazaarIabFragment,
+            viewModel.sku,
+            viewModel.mapToBazaarItemType(transaction.type),
+            PURCHASE_REQUEST,
+            purchaseFinishedListener,
+            transaction.payload)
       }
 
-      private fun mapToBazaarItemType(apptoideItemType: String) = apptoideItemType.toLowerCase(Locale.US)
     })
   }
 }

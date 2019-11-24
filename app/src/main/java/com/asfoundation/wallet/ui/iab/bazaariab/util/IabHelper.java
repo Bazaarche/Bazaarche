@@ -79,7 +79,7 @@ public class IabHelper {
     boolean mSetupDone = false;
 
     // Has this object been disposed of? (If so, we should ignore callbacks, etc)
-    boolean mDisposed = false;
+    public boolean disposed = false;
 
     // Are subscriptions supported?
     boolean mSubscriptionsSupported = false;
@@ -217,7 +217,7 @@ public class IabHelper {
 
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                if (mDisposed) return;
+              if (disposed) return;
                 logDebug("Billing service connected.");
                 mService = IInAppBillingService.Stub.asInterface(service);
                 String packageName = mContext.getPackageName();
@@ -289,7 +289,7 @@ public class IabHelper {
             logDebug("Unbinding from service.");
             if (mContext != null) mContext.unbindService(mServiceConn);
         }
-        mDisposed = true;
+      disposed = true;
         mContext = null;
         mServiceConn = null;
         mService = null;
@@ -297,7 +297,7 @@ public class IabHelper {
     }
 
     private void checkNotDisposed() {
-        if (mDisposed)
+      if (disposed)
             throw new IllegalStateException("IabHelper was disposed of, so it cannot be used.");
     }
 
@@ -672,7 +672,7 @@ public class IabHelper {
 
                 final IabResult result_f = result;
                 final Inventory inv_f = inv;
-                if (!mDisposed && listener != null) {
+              if (!disposed && listener != null) {
                     handler.post(new Runnable() {
                         public void run() {
                             listener.onQueryInventoryFinished(result_f, inv_f);
@@ -1000,14 +1000,14 @@ public class IabHelper {
                 }
 
                 flagEndAsync();
-                if (!mDisposed && singleListener != null) {
+              if (!disposed && singleListener != null) {
                     handler.post(new Runnable() {
                         public void run() {
                             singleListener.onConsumeFinished(purchases.get(0), results.get(0));
                         }
                     });
                 }
-                if (!mDisposed && multiListener != null) {
+              if (!disposed && multiListener != null) {
                     handler.post(new Runnable() {
                         public void run() {
                             multiListener.onConsumeMultiFinished(purchases, results);
