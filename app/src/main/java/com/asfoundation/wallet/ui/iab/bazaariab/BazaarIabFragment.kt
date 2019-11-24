@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.asfoundation.wallet.entity.TransactionBuilder
 import com.asfoundation.wallet.ui.iab.bazaariab.util.IabHelper
 import com.asfoundation.wallet.ui.iab.bazaariab.util.IabResult
+import com.asfoundation.wallet.ui.iab.bazaariab.util.Purchase
 import dagger.android.support.DaggerFragment
 
 
@@ -56,8 +57,10 @@ class BazaarIabFragment : DaggerFragment() {
     ViewModelProviders.of(this)[BazaarIabViewModel::class.java]
   }
 
-  private var purchaseFinishedListener = IabHelper.OnIabPurchaseFinishedListener { result, purchase ->
-    if (iabHelper.disposed) viewModel.onPurchaseFinished(result, purchase)
+  private fun onPurchaseFinished(result: IabResult, purchase: Purchase) {
+    if (!iabHelper.disposed) {
+      viewModel.onPurchaseFinished(result, purchase)
+    }
   }
 
 
@@ -77,9 +80,7 @@ class BazaarIabFragment : DaggerFragment() {
       override fun onIabSetupFinished(result: IabResult) {
         Log.d(TAG, "Setup finished.")
 
-        if (disposed) return
-
-        if (!result.isSuccess) {
+        if (disposed || result.isFailure) {
           return
         }
 
@@ -87,7 +88,7 @@ class BazaarIabFragment : DaggerFragment() {
             viewModel.sku,
             viewModel.mapToBazaarItemType(transaction.type),
             PURCHASE_REQUEST,
-            purchaseFinishedListener,
+            ::onPurchaseFinished,
             transaction.payload)
       }
 

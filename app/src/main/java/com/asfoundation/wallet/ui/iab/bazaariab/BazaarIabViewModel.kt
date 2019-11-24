@@ -14,9 +14,9 @@ class BazaarIabViewModel : ViewModel() {
 
     if (result.isFailure) {
       return
-    } else purchase!!
+    }
 
-    if (!verifyDeveloperPayload(purchase)) {
+    if (!verifyDeveloperPayload(purchase!!)) {
       return
     }
 
