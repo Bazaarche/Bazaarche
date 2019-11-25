@@ -72,7 +72,9 @@ class LanguageController private constructor(application: Application, private v
     val res = context.resources
     val current = res.configuration.getLocaleCompat()
 
-    if (current == locale) return
+    if (current == locale) {
+      return
+    }
 
     val config = Configuration(res.configuration)
     when {
@@ -110,7 +112,11 @@ class LanguageController private constructor(application: Application, private v
 
   @Suppress("DEPRECATION")
   private fun Configuration.getLocaleCompat(): Locale {
-    return if (isAtLeastSdkVersion(VERSION_CODES.N)) locales.get(0) else locale
+    return if (isAtLeastSdkVersion(VERSION_CODES.N)) {
+      locales.get(0)
+    } else {
+      locale
+    }
   }
 
   private fun isAtLeastSdkVersion(versionCode: Int): Boolean {
