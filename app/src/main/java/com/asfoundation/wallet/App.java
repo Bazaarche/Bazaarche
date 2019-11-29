@@ -2,10 +2,8 @@ package com.asfoundation.wallet;
 
 import android.app.Activity;
 import android.app.Service;
-
 import androidx.fragment.app.Fragment;
 import androidx.multidex.MultiDexApplication;
-
 import com.appcoins.wallet.appcoins.rewards.AppcoinsRewards;
 import com.appcoins.wallet.bdsbilling.ProxyService;
 import com.appcoins.wallet.bdsbilling.WalletService;
@@ -23,11 +21,8 @@ import com.asfoundation.wallet.util.languagecontroller.LanguageController;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.flurry.android.FlurryAgent;
-
 import org.jetbrains.annotations.NotNull;
-
 import javax.inject.Inject;
-
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
