@@ -41,7 +41,6 @@ class BazaarIabFragment : DaggerFragment() {
     IabHelper(requireContext(), BASE64_ENCODED_PUBLIC_KEY)
         .apply {
           enableDebugLogging(true)
-          startSetup()
         }
   }
 
@@ -61,6 +60,12 @@ class BazaarIabFragment : DaggerFragment() {
     if (!iabHelper.disposed) {
       viewModel.onPurchaseFinished(result, purchase)
     }
+  }
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+
+    iabHelper.startSetup()
   }
 
 
