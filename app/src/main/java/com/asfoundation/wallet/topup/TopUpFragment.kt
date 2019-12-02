@@ -89,10 +89,8 @@ class TopUpFragment : DaggerFragment(), TopUpFragmentView {
 
   override fun onAttach(context: Context) {
     super.onAttach(context)
-    if (context !is TopUpActivityView) {
-      throw IllegalStateException(
-          "Express checkout buy fragment must be attached to IAB activity")
-    }
+    check(
+        context is TopUpActivityView) { "TopUp fragment must be attached to TopUp activity" }
     topUpActivityView = context
   }
 
@@ -217,6 +215,14 @@ class TopUpFragment : DaggerFragment(), TopUpFragmentView {
     bonus_layout.visibility = View.GONE
     bonus_msg.visibility = View.GONE
     loading.visibility = View.VISIBLE
+  }
+
+  override fun hideLoading() {
+    fragment_braintree_credit_card_form.visibility = View.VISIBLE
+    payment_methods.visibility = View.VISIBLE
+    bonus_layout.visibility = View.VISIBLE
+    bonus_msg.visibility = View.VISIBLE
+    loading.visibility = View.INVISIBLE
   }
 
   override fun showPaymentDetailsForm() {
@@ -362,7 +368,7 @@ class TopUpFragment : DaggerFragment(), TopUpFragmentView {
     }
   }
 
-  override fun unselectChips() {
+  override fun deselectChips() {
     setChipsUnchecked()
     setUnselectedChipsBackground()
   }
@@ -412,7 +418,7 @@ class TopUpFragment : DaggerFragment(), TopUpFragmentView {
     for (index in chipViewList.indices) {
       setChipOnClickListener(index)
     }
-    unselectChips()
+    deselectChips()
   }
 
   private fun setChipsUnchecked() {
@@ -452,34 +458,10 @@ class TopUpFragment : DaggerFragment(), TopUpFragmentView {
 
   private fun setChipOnClickListener(index: Int) {
     when (index) {
-      0 -> {
-        default_chip1.setOnCheckedChangeListener { _, isChecked ->
-          if (isChecked) {
-            chipClickSubject?.onNext(index)
-          }
-        }
-      }
-      1 -> {
-        default_chip2.setOnCheckedChangeListener { _, isChecked ->
-          if (isChecked) {
-            chipClickSubject?.onNext(index)
-          }
-        }
-      }
-      2 -> {
-        default_chip3.setOnCheckedChangeListener { _, isChecked ->
-          if (isChecked) {
-            chipClickSubject?.onNext(index)
-          }
-        }
-      }
-      3 -> {
-        default_chip4.setOnCheckedChangeListener { _, isChecked ->
-          if (isChecked) {
-            chipClickSubject?.onNext(index)
-          }
-        }
-      }
+      0 -> default_chip1.setOnClickListener { chipClickSubject?.onNext(index) }
+      1 -> default_chip2.setOnClickListener { chipClickSubject?.onNext(index) }
+      2 -> default_chip3.setOnClickListener { chipClickSubject?.onNext(index) }
+      3 -> default_chip4.setOnClickListener { chipClickSubject?.onNext(index) }
     }
   }
 

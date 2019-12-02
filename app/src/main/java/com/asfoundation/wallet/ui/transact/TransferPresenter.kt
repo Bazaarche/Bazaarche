@@ -4,6 +4,8 @@ import com.appcoins.wallet.appcoins.rewards.AppcoinsRewardsRepository
 import com.asfoundation.wallet.interact.FindDefaultWalletInteract
 import com.asfoundation.wallet.ui.barcode.BarcodeCaptureActivity
 import com.asfoundation.wallet.util.QRUri
+import com.asfoundation.wallet.util.isNoNetworkException
+import com.asfoundation.wallet.wallet_blocked.WalletBlockedInteract
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -18,6 +20,7 @@ class TransferPresenter(private val view: TransferFragmentView,
                         private val ioScheduler: Scheduler,
                         private val viewScheduler: Scheduler,
                         private val walletInteract: FindDefaultWalletInteract,
+                        private val walletBlockedInteract: WalletBlockedInteract,
                         private val packageName: String) {
 
   fun present() {
@@ -73,25 +76,48 @@ class TransferPresenter(private val view: TransferFragmentView,
         .subscribe())
   }
 
+  private fun shouldBlockTransfer(
+      currency: TransferFragmentView.Currency): Single<Boolean> {
+    return if (currency == TransferFragmentView.Currency.APPC_C) {
+      walletBlockedInteract.isWalletBlocked()
+    } else {
+      Single.just(false)
+    }
+  }
+
   private fun handleButtonClick() {
     disposables.add(view.getSendClick()
         .doOnNext { view.showLoading() }
         .subscribeOn(viewScheduler)
         .observeOn(ioScheduler)
-        .flatMapCompletable {
-          makeTransaction(it)
-              .observeOn(viewScheduler)
-              .flatMapCompletable { status ->
-                handleTransferResult(it.currency, status, it.walletAddress, it.amount)
+        .flatMapCompletable { data ->
+          shouldBlockTransfer(data.currency)
+              .flatMapCompletable {
+                if (it) {
+                  Completable.fromAction { view.showWalletBlocked() }
+                      .subscribeOn(viewScheduler)
+                } else {
+                  makeTransaction(data)
+                      .observeOn(viewScheduler)
+                      .flatMapCompletable { status ->
+                        handleTransferResult(data.currency, status, data.walletAddress, data.amount)
+                      }
+                }.andThen { view.hideLoading() }
               }
-              .andThen { view.hideLoading() }
         }
-        .doOnError { error ->
-          error.printStackTrace()
-          view.hideLoading()
-        }
+        .doOnError { handleError(it) }
         .retry()
         .subscribe { })
+  }
+
+  private fun handleError(throwable: Throwable) {
+    view.hideLoading()
+    if (throwable.isNoNetworkException()) {
+      view.showNoNetworkError()
+    } else {
+      throwable.printStackTrace()
+      view.showUnknownError()
+    }
   }
 
   private fun makeTransaction(

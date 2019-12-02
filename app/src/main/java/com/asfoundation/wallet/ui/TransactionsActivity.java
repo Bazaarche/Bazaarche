@@ -26,13 +26,13 @@ import com.asfoundation.wallet.entity.ErrorEnvelope;
 import com.asfoundation.wallet.entity.GlobalBalance;
 import com.asfoundation.wallet.entity.NetworkInfo;
 import com.asfoundation.wallet.entity.Wallet;
-import com.asfoundation.wallet.referrals.ReferralNotification;
+import com.asfoundation.wallet.referrals.CardNotification;
 import com.asfoundation.wallet.repository.PreferencesRepositoryType;
 import com.asfoundation.wallet.transactions.Transaction;
 import com.asfoundation.wallet.ui.appcoins.applications.AppcoinsApplication;
 import com.asfoundation.wallet.ui.toolbar.ToolbarArcBackground;
 import com.asfoundation.wallet.ui.widget.adapter.TransactionsAdapter;
-import com.asfoundation.wallet.ui.widget.holder.ReferralNotificationAction;
+import com.asfoundation.wallet.ui.widget.holder.CardNotificationAction;
 import com.asfoundation.wallet.util.RootUtil;
 import com.asfoundation.wallet.viewmodel.BaseNavigationActivity;
 import com.asfoundation.wallet.viewmodel.TransactionsViewModel;
@@ -70,6 +70,7 @@ public class TransactionsActivity extends BaseNavigationActivity implements View
   private View emptyClickableView;
   private View badge;
   private boolean showScroll = false;
+  private int paddingDp;
 
   public static Intent newIntent(Context context) {
     return new Intent(context, TransactionsActivity.class);
@@ -114,9 +115,9 @@ public class TransactionsActivity extends BaseNavigationActivity implements View
     disableDisplayHomeAsUp();
     prepareNotificationIcon();
     emptyTransactionsSubject = PublishSubject.create();
-
+    paddingDp = (int) (80 * getResources().getDisplayMetrics().density);
     adapter = new TransactionsAdapter(this::onTransactionClick, this::onApplicationClick,
-        this::onNotificationClick);
+        this::onNotificationClick, getResources());
     SwipeRefreshLayout refreshLayout = findViewById(R.id.refresh_layout);
     systemView = findViewById(R.id.system_view);
     list = findViewById(R.id.list);
@@ -211,8 +212,8 @@ public class TransactionsActivity extends BaseNavigationActivity implements View
     }
   }
 
-  private void onNotifications(List<ReferralNotification> referralNotifications) {
-    adapter.setNotifications(referralNotifications);
+  private void onNotifications(List<CardNotification> cardNotifications) {
+    adapter.setNotifications(cardNotifications);
     showList();
   }
 
@@ -220,12 +221,11 @@ public class TransactionsActivity extends BaseNavigationActivity implements View
     viewModel.showDetails(view.getContext(), transaction);
   }
 
-  private void onNotificationClick(ReferralNotification referralNotification,
-      ReferralNotificationAction referralNotificationAction) {
-    showScroll = referralNotificationAction.equals(ReferralNotificationAction.DISMISS)
+  private void onNotificationClick(CardNotification cardNotification,
+      CardNotificationAction cardNotificationAction) {
+    showScroll = cardNotificationAction.equals(CardNotificationAction.DISMISS)
         && adapter.getNotificationsCount() == 1;
-    viewModel.onNotificationClick(referralNotification, referralNotificationAction,
-        this.getApplicationContext());
+    viewModel.onNotificationClick(cardNotification, cardNotificationAction, this);
   }
 
   @Override protected void onPause() {
@@ -298,9 +298,17 @@ public class TransactionsActivity extends BaseNavigationActivity implements View
   private void showList() {
     if (adapter.getTransactionsCount() > 0) {
       systemView.setVisibility(View.GONE);
+      if (list.getPaddingBottom() != paddingDp) {
+        //Adds padding when there's transactions
+        list.setPadding(0, 0, 0, paddingDp);
+      }
       list.setVisibility(View.VISIBLE);
     } else if (adapter.getNotificationsCount() > 0) {
       systemView.setVisibility(View.VISIBLE);
+      if (list.getPaddingBottom() != 0) {
+        //Removes padding if the there's no transactions
+        list.setPadding(0, 0, 0, 0);
+      }
       list.setVisibility(View.VISIBLE);
     } else {
       systemView.setVisibility(View.VISIBLE);

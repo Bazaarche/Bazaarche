@@ -19,6 +19,7 @@ import com.asfoundation.wallet.interact.FindDefaultWalletInteract
 import com.asfoundation.wallet.router.ConfirmationRouter
 import com.asfoundation.wallet.ui.ActivityResultSharer
 import com.asfoundation.wallet.ui.barcode.BarcodeCaptureActivity
+import com.asfoundation.wallet.wallet_blocked.WalletBlockedInteract
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.material.snackbar.Snackbar
@@ -54,6 +55,8 @@ class TransferFragment : DaggerFragment(), TransferFragmentView {
   lateinit var findDefaultWalletInteract: FindDefaultWalletInteract
   @Inject
   lateinit var defaultTokenInfoProvider: DefaultTokenProvider
+  @Inject
+  lateinit var walletBlockedInteract: WalletBlockedInteract
 
   lateinit var navigator: TransactNavigator
   private lateinit var activityResultSharer: ActivityResultSharer
@@ -70,7 +73,8 @@ class TransferFragment : DaggerFragment(), TransferFragmentView {
             .doOnNext { activity?.onBackPressed() }
             .subscribe()
     presenter = TransferPresenter(this, CompositeDisposable(), interactor, Schedulers.io(),
-        AndroidSchedulers.mainThread(), findDefaultWalletInteract, context!!.packageName)
+        AndroidSchedulers.mainThread(), findDefaultWalletInteract, walletBlockedInteract,
+        context!!.packageName)
   }
 
   override fun openEthConfirmationView(walletAddress: String, toWalletAddress: String,
@@ -138,6 +142,10 @@ class TransferFragment : DaggerFragment(), TransferFragmentView {
           }
           return@OnEditorActionListener false
         })
+  }
+
+  override fun showWalletBlocked() {
+    navigator.showWalletBlocked()
   }
 
   override fun onResume() {
@@ -216,6 +224,11 @@ class TransferFragment : DaggerFragment(), TransferFragmentView {
 
   override fun showUnknownError() {
     Snackbar.make(title, R.string.error_general, Snackbar.LENGTH_LONG)
+        .show()
+  }
+
+  override fun showNoNetworkError() {
+    Snackbar.make(title, R.string.connectoin_error_body, Snackbar.LENGTH_LONG)
         .show()
   }
 

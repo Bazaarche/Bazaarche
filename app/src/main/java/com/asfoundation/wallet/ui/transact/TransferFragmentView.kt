@@ -28,6 +28,8 @@ interface TransferFragmentView {
   fun showAddress(address: String)
   fun getCurrencyChange(): Observable<Currency>
   fun showBalance(balance: BigDecimal, currency: Currency)
+  fun showWalletBlocked()
+  fun showNoNetworkError()
 
   data class TransferData(val walletAddress: String, val currency: Currency, val amount: BigDecimal)
 
