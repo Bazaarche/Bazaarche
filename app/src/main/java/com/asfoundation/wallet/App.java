@@ -16,9 +16,13 @@ import com.asfoundation.wallet.di.DaggerAppComponent;
 import com.asfoundation.wallet.poa.ProofOfAttentionService;
 import com.asfoundation.wallet.ui.iab.AppcoinsOperationsDataSaver;
 import com.asfoundation.wallet.ui.iab.InAppPurchaseInteractor;
+import com.asfoundation.wallet.util.languagecontroller.Language;
+import com.asfoundation.wallet.util.languagecontroller.LanguageController;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.flurry.android.FlurryAgent;
+import org.jetbrains.annotations.NotNull;
+import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
@@ -27,8 +31,6 @@ import dagger.android.support.HasSupportFragmentInjector;
 import io.fabric.sdk.android.Fabric;
 import io.reactivex.exceptions.UndeliverableException;
 import io.reactivex.plugins.RxJavaPlugins;
-import javax.inject.Inject;
-import org.jetbrains.annotations.NotNull;
 
 public class App extends MultiDexApplication
     implements HasActivityInjector, HasServiceInjector, HasSupportFragmentInjector,
@@ -64,6 +66,8 @@ public class App extends MultiDexApplication
         new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG)
             .build())
         .build());
+
+    LanguageController.init(this, Language.PERSIAN);
 
     inAppPurchaseInteractor.start();
     proofOfAttentionService.start();
