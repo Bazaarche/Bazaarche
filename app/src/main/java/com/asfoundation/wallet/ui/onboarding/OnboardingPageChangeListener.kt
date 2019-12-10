@@ -6,8 +6,8 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.ImageView
 import androidx.viewpager2.widget.ViewPager2
-import com.airbnb.lottie.LottieAnimationView
 import com.asf.wallet.R
 import com.rd.PageIndicatorView
 
@@ -18,10 +18,12 @@ class OnboardingPageChangeListener internal constructor(private val view: View,
 
   companion object {
     var ANIMATION_TRANSITIONS = 3
-    var pageCount = 4
+    var pageCount = 2
   }
 
-  private lateinit var lottieView: LottieAnimationView
+  private val imageResources = arrayOf(R.drawable.ic_joystick, R.drawable.ic_onboarding_buy)
+
+  private lateinit var onboardingImage: ImageView
   private lateinit var skipButton: Button
   private lateinit var nextButton: Button
   private lateinit var beenInvitedButton: Button
@@ -35,7 +37,7 @@ class OnboardingPageChangeListener internal constructor(private val view: View,
   }
 
   fun init() {
-    lottieView = view.findViewById(R.id.lottie_onboarding)
+    onboardingImage = view.findViewById(R.id.onboarding_image)
     skipButton = view.findViewById(R.id.skip_button)
     nextButton = view.findViewById(R.id.next_button)
     checkBox = view.findViewById(R.id.onboarding_checkbox)
@@ -57,17 +59,16 @@ class OnboardingPageChangeListener internal constructor(private val view: View,
   }
 
   override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-    lottieView.progress =
-        position * (1f / ANIMATION_TRANSITIONS) + positionOffset * (1f / ANIMATION_TRANSITIONS)
+    onboardingImage.setImageResource(imageResources[position])
     checkBox.setOnClickListener { handleUI(position) }
     updatePageIndicator(position)
     handleUI(position)
   }
 
   private fun handleUI(position: Int) {
-    if (position < 3) {
+    if (position < 1) {
       showFirstPageLayout()
-    } else if (position == 3) {
+    } else if (position == 1) {
       showLastPageLayout()
     }
   }
