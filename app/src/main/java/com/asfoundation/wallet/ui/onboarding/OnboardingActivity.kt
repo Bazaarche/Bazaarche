@@ -120,6 +120,11 @@ class OnboardingActivity : BaseActivity(), OnboardingView {
     return RxView.clicks(next_button)
   }
 
+  override fun getContinueClickMappedToViewPagerPosition(): Observable<Int> {
+    return RxView.clicks(continue_button)
+        .map { onboarding_viewpager.currentItem }
+  }
+
   override fun getRedeemButtonClick(): Observable<Any> {
     return RxView.clicks(been_invited_bonus)
   }

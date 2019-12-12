@@ -20,6 +20,8 @@ interface OnboardingView {
 
   fun getSkipClicks(): Observable<Any>
 
+  fun getContinueClickMappedToViewPagerPosition(): Observable<Int>
+
   fun navigateToBrowser(uri: Uri)
 
   fun showNoInternetView()
