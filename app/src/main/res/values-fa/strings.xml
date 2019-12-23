@@ -5,7 +5,7 @@
   <string name="title_send">ارسال</string>
   <string name="title_send_with_token">ارسال %s</string>
   <string name="title_request">دریافت</string>
-  <string name="title_import">وارد کردن شناسه‌ی کیف پول</string>
+  <string name="title_import">واردکردن شناسه‌ی کیف پول</string>
   <!-- Strings relatedwalletount creation -->
   <string name="prompt_password">رمزعبور</string>
   <string name="action_sign_in_short">ورود</string>
@@ -16,8 +16,8 @@
   <string name="action_settings">تنظیمات</string>
   <string name="title_account_list">حساب‌ها</string>
   <string name="cancel">لغو</string>
-  <string name="confirm_delete_account">از داشتن نسخه‌ی پشتیبان مطمئن شوید</string>
-  <string name="action_import">وارد کردن شناسه‌ی کیف پول</string>
+  <string name="confirm_delete_account">از داشتن نسخه‌ی پشتیبان مطمئن شوید.</string>
+  <string name="action_import">واردکردن شناسه‌ی کیف پول</string>
   <string name="copy">کپی به کلیپ بورد</string>
   <string name="close">بستن</string>
   <string name="title_activity_settings">تنظیمات</string>
@@ -26,7 +26,7 @@
   <string name="label_new">جدید</string>
   <string name="low_storage_error">فضای ذخیره سازی کافی نیست</string>
   <string name="no_camera_permission_title">دسترسی به دوربین</string>
-  <string name="no_camera_permission">برای اسکن کد تصویری به دوربین دسترسی دهید</string>
+  <string name="no_camera_permission">برای اسکن کد تصویری به دوربین دسترسی دهید.</string>
   <string name="ok">تایید</string>
   <string name="barcode_error_format">بارکد نامعتبر: %s</string>
   <string name="title_delete_account">آیا می خواهید این کیف پول را حذف کنید؟</string>
@@ -49,7 +49,7 @@
   <string name="title_privacy_policy">سیاست حفظ حریم خصوصی</string>
   <string name="title_terms">شرایط و مقررات</string>
   <string name="title_version">نسخه</string>
-  <string name="title_tokens">شناسه‌های من </string>
+  <string name="title_tokens">شناسه‌های من</string>
   <string name="unlock_screen_title_android">باز کردن قفل صفحه نمایش</string>
   <string name="unlock_screen_prompt_android">قفل دستگاه خود را باز کنید</string>
   <string name="do_manage_make_backup">آیا نسخه‌ی پشتیبان گرفتید؟</string>
@@ -68,7 +68,7 @@
   <string name="action_create_new_account">ساختن کیف پول</string>
   <string name="unknown_error">خطا</string>
   <string name="action_backup_wallet">نسخه‌ی پشتیبان از کیف پول</string>
-  <string name="no_tokens">شما تاکنون هیچ توکنی را اضافه نکرده اید.</string>
+  <string name="no_tokens">شما تاکنون هیچ توکنی را اضافه نکرده‌اید.</string>
   <string name="title_email">ارسال ایمیل</string>
   <string name="action_donate">کمک مالی</string>
   <!-- Titles -->
@@ -99,7 +99,7 @@
   <string name="toast_message_wallet_imported">اطلاعات کیف پول وارد شده است</string>
   <string name="toast_message_wallet_exported">نسخه‌ی پشتیبان ساخته شد</string>
   <string name="toast_qr_code_no_address">کد تصویری آدرس معتبر ندارد</string>
-  <string name="dialog_message_close_channel">آیا برای بستن مطمئن هستید؟</string>
+  <string name="dialog_message_close_channel">آیا از بستن کانال مطمئن هستید؟</string>
   <!-- Intro resources-->
   <string name="intro_title_first_page">AppCoins Wallet</string>
   <string name="intro_title_second_page"><![CDATA[خصوصی و امن]]></string>
@@ -176,7 +176,7 @@
   <string name="facebook">فیسبوک</string>
   <string name="error_already_added">شناسه قبلا اضافه شده است</string>
   <string name="error_export">عملیات خروجی گرفتن از کیف پول ناموفق بود</string>
-  <string name="error_fail_load_tokens">فرآخوانی لیست توکن‌ها موفق نبود</string>
+  <string name="error_fail_load_tokens">فراخوانی لیست توکن‌ها موفق نبود</string>
   <string name="error_create_wallet">کیف پول ساخته نشد</string>
   <string name="token_balance">%1$s%2$s %3$s</string>
   <string name="action_edit_tokens">ویرایش توکن‌ها</string>
@@ -195,22 +195,22 @@
   <string name="activity_iab_no_funds_message">ETH و APPC کافی نیست</string>
   <string name="activity_iab_no_ethereum_funds_message">Ethereum کافی نیست</string>
   <string name="activity_iab_no_token_funds_message">AppCoins کافی نیست</string>
-  <string name="activity_iab_wrong_network_message">اشتباه یا توکن نامعتبر اتریوم</string>
-  <string name="activity_iab_no_network_message">دسترسی به شبکه امکان پذیر نیست</string>
-  <string name="activity_iab_nonce_message">خطایی در ارتباط با blockchain رخ داد، لطفا بعدا دوباره امتحان کنید.</string>
+  <string name="activity_iab_wrong_network_message">شبکه اتریوم اشتباه می‌باشد یا توکن نامعتبر است.</string>
+  <string name="activity_iab_no_network_message">دسترسی به اینترنت امکان پذیر نیست.</string>
+  <string name="activity_iab_nonce_message">خطایی در ارتباط با بلاکچین رخ داد، لطفا بعدا دوباره امتحان کنید.</string>
   <string name="activity_iab_approving_message">بررسی همه جزییات: بالانس، موارد، شبکه…</string>
   <string name="activity_iab_buying_message">جزییات بررسی شد\nدرحال دریافت مورد شما…</string>
   <string name="activity_iab_change_card">تغییر کارت</string>
   <string name="notification_ongoing_poa">درحال پردازش جایزه شما</string>
   <string name="notification_completed_poa"> پاداش دریافت شد! شما باید مقدار %1$sh%2$sm  از زمان را سپری کنید تا پاداش بعدی را دریافت کنید. </string>
   <string name="notification_poa_limit_reached"> شما به پایان حد جایزه‌ روزانه خود رسیده اید. پس از سپری شدن مدت زمان %1$sh%2$sm  دوباره جایزه‌ دریافت کنید. </string>
-  <string name="notification_submitting_poa">در حال ارسال درخواست شما به blockchain</string>
+  <string name="notification_submitting_poa">در حال ارسال درخواست شما به بلاکچین</string>
   <string name="notification_no_funds_poa">شما سرمایه کافی برای دریافت جایزه‌ را ندارید</string>
   <string name="notification_no_network_poa">اتصال اینترنت قطع شد</string>
   <string name="notification_error_poa">خطایی رخ داده است</string>
   <string name="notification_no_wallet_poa">کیف پول شما هنوز تنظیم نشده است</string>
   <string name="notification_cancelled_poa">جایزه لغو شد</string>
-  <string name="notification_not_available_poa">این برنامه دریافت جایزه‌ دیگر به پایان رسیده است.</string>
+  <string name="notification_not_available_poa">این برنامه‌ی دریافت جایزه‌ دیگر به پایان رسیده است.</string>
   <string name="notification_not_available_for_country_poa">این برنامه جوایز دیگر در کشور شما موجود نیست</string>
   <string name="notification_already_rewarded_poa">شما قبلا در این برنامه جایزه‌ای دریافت کرده‌اید</string>
   <string name="notification_submit_error_poa">متاسفیم، خطایی رخ داده است. دوباره امتحان کنید!</string>
@@ -219,7 +219,7 @@
   <string name="transaction_status_success">موفقیت</string>
   <string name="transaction_status_pending">در حال انتظار</string>
   <string name="transaction_status_failed">انجام نشد</string>
-  <string name="transaction_type_iab">خرید داخل برنامه</string>
+  <string name="transaction_type_iab">خرید درون‌ برنامه</string>
   <string name="transaction_type_poa">Proof of Attention</string>
   <string name="transaction_type_poa_offchain">Proof of Attention Hybrid</string>
   <string name="transaction_type_standard">انتقال</string>
@@ -254,7 +254,7 @@
   <string name="iab_activity_micro_raiden_wallet">کیف پول </string>
   <string name="iab_activity_raiden_channel_label">Create µRaiden channel</string>
   <string name="iab_activity_raiden_amount_label">انتخاب مقدار</string>
-  <string name="iab_activity_raiden_channel_info_message"> تا زمانی که میزان مبلغ به حد نصاب برسد شما نمی توانید مبلغی از تراکنش با این توسعه دهنده دریافت کنید. این میزان ثبت و ذخیره می شد و شما می توانید هر زمان از کانال خارج شوید</string>
+  <string name="iab_activity_raiden_channel_info_message">تا زمانی که به حد نصاب مبلغ انتخاب شده نرسیده​‌اید، از شما کارمزدی کسر نخواهد شد. شما می‌توانید هر زمان کانال را ببندید، مبلغ شما ذخیره و تصفیه خواهد شد.</string>
   <string name="iab_activity_raiden_channel_info_title">µRaiden کانال</string>
   <string name="proceed">ادامه</string>
   <string name="iab_activity_raiden_channel_no_funds_message">بودجه‌ی شما در کانال پرداخت µRainden کافی نیست. کانال را از کیف پول خود ببنید تا کانال جدید ساخته شود. آیا هنوز می‌خواهید با پرداخت استاندارد هزینه کنید؟</string>
@@ -376,7 +376,7 @@
   <string name="p2p_send_confirmation_header">جزییات انتقال‌ها</string>
   <!--Common-->
   <string name="error_general">مشکلی پیش آمده است</string>
-  <string name="error_missing_field">این بخش اجباری</string>
+  <string name="error_missing_field">این بخش اجباری است.</string>
   <string name="cancel_button">لغو</string>
   <string name="submit_button">ارسال</string>
   <string name="close_button">بستن</string>
@@ -401,7 +401,7 @@
   <string name="title_redeem">استفاده از کد</string>
   <!--Local Payments-->
   <string name="local_payments_inprogress_header">در حال پیشرفت&#8230;</string>
-  <string name="local_payments_inprogress_body">پس از تکمیل پرداخت، اعتبار را دریافت خواهید کرد. به بازی بازگرید و خرید انجام دهید</string>
+  <string name="local_payments_inprogress_body">پس از تکمیل پرداخت، اعتبار را دریافت خواهید کرد. به بازی باز گردید و خرید را انجام دهید.</string>
   <!--Wallet Verification-->
   <string name="verification_notification_verification_needed_title">پاداش آماده است ولی نیازمند تایید است</string>
   <string name="verification_notification_verification_needed_body">به دلایل امنیتی، نیازمند به تایید کیف پول شما با یک کد پیامکی هستیم.</string>
@@ -413,7 +413,7 @@
   <string name="verification_insert_phone_security_disclaimer">این به دلایل امنیتی است، ما هیچ اطلاعات شخصی شما را ذخیره نمی‌کنیم.</string>
   <string name="verification_notification_code_title">کیف پول AppCoins</string>
   <string name="verification_notification_code_body">کد تاییدیه شما %s است. از آن برای تایید نشانی کیف پول AppCoins خود استفاده کنید.</string>
-  <string name="verification_insert_code_title">کد تاییدیه را وارد کنید</string>
+  <string name="verification_insert_code_title">کد تایید را وارد کنید</string>
   <string name="verification_insert_code_error">کد نامعتبر است </string>
   <string name="verification_insert_code_resend_button">ارسال مجدد کد</string>
   <string name="verification_validating_title">تایید اعتبار کد شما &#8230;</string>
