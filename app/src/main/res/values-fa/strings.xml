@@ -73,7 +73,7 @@
   <string name="action_donate">کمک مالی</string>
   <!-- Titles -->
   <string name="title_my_address">دریافت</string>
-  <string name="title_my_tokens">توکن‌های من </string>
+  <string name="title_my_tokens">توکن‌های من</string>
   <string name="title_activity_send">ارسال</string>
   <string name="title_activity_confirmation">تایید</string>
   <string name="title_add_token">اضافه کردن ژتون سفارشی</string>
@@ -84,9 +84,9 @@
   <string name="suggestion_this_is_your_address">آدرس کیف پول عمومی %s من</string>
   <!-- Hints -->
   <string name="hint_private_key_field">کلید خصوصی *</string>
-  <string name="hint_keystore">کی استور *</string>
+  <string name="hint_keystore">Keystore *</string>
   <!-- Tabs labels-->
-  <string name="tab_keystore">کی استور</string>
+  <string name="tab_keystore">Keystore</string>
   <string name="tab_private_key">کلید خصوصی</string>
   <!-- Dialog titles -->
   <string name="title_dialog_error">خطا</string>
@@ -183,7 +183,7 @@
   <string name="token_name">%1$s (%2$s)</string>
   <string name="new_transaction_value">-%1$s %2$s</string>
   <string name="gas_price_value">%1$s %2$s</string>
-  <string name="settings_fragment_credits">ما Trust Wallet را برای پروژه اندروید در  توسعه کیف پول برنامه مبنا قرار دادیم.</string>
+  <string name="settings_fragment_credits">ما Trust Wallet را مبنای توسعه پروژه اندروید کیف پول قرار دادیم.</string>
   <string name="appcoins_symbol">APPC</string>
   <string name="activity_aib_loading_title">تراکنش درحال پردازش</string>
   <string name="activity_aib_loading_message">صبر کنید</string>
