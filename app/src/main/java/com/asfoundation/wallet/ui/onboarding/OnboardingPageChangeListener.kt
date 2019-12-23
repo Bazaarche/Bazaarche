@@ -77,8 +77,6 @@ class OnboardingPageChangeListener internal constructor(private val view: View,
 
   private fun showLastPageLayout() {
     skipButton.visibility = View.GONE
-//    nextButton.visibility = View.VISIBLE
-//    if (isActive) beenInvitedButton.visibility = View.VISIBLE
     termsConditionsLayout.visibility = View.VISIBLE
     nextButton.isEnabled = checkBox.isChecked
     continueButton.isEnabled = checkBox.isChecked
@@ -93,7 +91,6 @@ class OnboardingPageChangeListener internal constructor(private val view: View,
   }
 
   private fun showFirstPageLayout() {
-//    skipButton.visibility = View.VISIBLE
     nextButton.visibility = View.GONE
     continueButton.isEnabled = true
     beenInvitedButton.visibility = View.GONE
