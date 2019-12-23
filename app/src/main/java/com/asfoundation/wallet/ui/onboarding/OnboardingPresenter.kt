@@ -29,7 +29,7 @@ class OnboardingPresenter(private val disposables: CompositeDisposable,
   fun present() {
     handleSetupUI()
     handleSkipClicks()
-    handleContinueClicks()
+    handleContinueClick()
     handleSkippedOnboarding()
     handleLinkClick()
     handleCreateWallet()
@@ -75,7 +75,7 @@ class OnboardingPresenter(private val disposables: CompositeDisposable,
     )
   }
 
-  private fun handleContinueClicks() {
+  private fun handleContinueClick() {
     disposables.add(
         view.getContinueClickMappedToViewPagerPosition()
             .doOnNext { position ->
