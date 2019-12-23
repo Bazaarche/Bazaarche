@@ -14,9 +14,9 @@
   <string name="action_send">ارسال</string>
   <string name="error_field_required">این بخش الزامی است</string>
   <string name="action_settings">تنظیمات</string>
-  <string name="title_account_list">کیف‌های پول</string>حساب‌ها
+  <string name="title_account_list">حساب‌ها</string>
   <string name="cancel">لغو</string>
-  <string name="confirm_delete_account">مطمئن شوید که از این کیف پول بک‌آپ دارید.</string> از داشتن نسخه‌ی پشتیبان مطمئن شوید
+  <string name="confirm_delete_account">از داشتن نسخه‌ی پشتیبان مطمئن شوید</string>
   <string name="action_import">وارد کردن شناسه‌ی کیف پول</string>
   <string name="copy">کپی به کلیپ بورد</string>
   <string name="close">بستن</string>
