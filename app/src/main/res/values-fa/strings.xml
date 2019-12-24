@@ -5,19 +5,19 @@
   <string name="title_send">ارسال</string>
   <string name="title_send_with_token">ارسال %s</string>
   <string name="title_request">دریافت</string>
-  <string name="title_import">واردکردن کیف پول</string>
+  <string name="title_import">واردکردن شناسه‌ی کیف پول</string>
   <!-- Strings relatedwalletount creation -->
   <string name="prompt_password">رمزعبور</string>
-  <string name="action_sign_in_short">Create</string>
+  <string name="action_sign_in_short">ورود</string>
   <!-- String related to sending -->
   <string name="prompt_to">به</string>
   <string name="action_send">ارسال</string>
-  <string name="error_field_required">این جایگاه الزامی است</string>
+  <string name="error_field_required">این بخش الزامی است</string>
   <string name="action_settings">تنظیمات</string>
-  <string name="title_account_list">کیف‌های پول</string>
+  <string name="title_account_list">حساب‌ها</string>
   <string name="cancel">لغو</string>
-  <string name="confirm_delete_account">مطمئن شوید که از این کیف پول بک‌آپ دارید.</string>
-  <string name="action_import">واردکردن</string>
+  <string name="confirm_delete_account">از داشتن نسخه‌ی پشتیبان مطمئن شوید.</string>
+  <string name="action_import">واردکردن شناسه‌ی کیف پول</string>
   <string name="copy">کپی به کلیپ بورد</string>
   <string name="close">بستن</string>
   <string name="title_activity_settings">تنظیمات</string>
@@ -25,63 +25,63 @@
   <string name="credits">اعتبارات</string>
   <string name="label_new">جدید</string>
   <string name="low_storage_error">فضای ذخیره سازی کافی نیست</string>
-  <string name="no_camera_permission_title">اجازه دوربین</string>
-  <string name="no_camera_permission">AppCoins BDS Wallet نیازمند اجازه شما برای دسترسی به دوربین شما برای اسکن کردن کدهای QR است.</string>
+  <string name="no_camera_permission_title">دسترسی به دوربین</string>
+  <string name="no_camera_permission">برای اسکن کد تصویری به دوربین دسترسی دهید.</string>
   <string name="ok">تایید</string>
-  <string name="barcode_error_format">قالب غیرمعتبر بارکد: %s</string>
+  <string name="barcode_error_format">بارکد نامعتبر: %s</string>
   <string name="title_delete_account">آیا می خواهید این کیف پول را حذف کنید؟</string>
   <string name="twitter">توییتر</string>
-  <string name="telegram">گروه تلگرام</string>
+  <string name="telegram">تلگرام</string>
   <!-- TODO: Remove or change this placeholder text -->
-  <string name="title_community">جامعه</string>
+  <string name="title_community">شبکه اجتماعی </string>
   <string name="title_opensource">برنامه‌نویسی منبع آزاد</string>
   <string name="title_source_code">کد منبع</string>
   <string name="title_report_bug">گزارش اشکال</string>
   <string name="title_support">پشتیبانی</string>
   <string name="title_permissions">مجوزها</string>
   <string name="permissions_title">مجوزها</string>
-  <string name="permissions_active_wallet_short">کیف پول فعال فعلی</string>
-  <string name="error_import">خطای واردکردن keystore</string>
-  <string name="message_this_is_your_address">آدرس کیف پول عمومی Ethereum من</string>
-  <string name="backup_warning_text">از آنجا که تنها شما می توانید پول خود را کنترل کنید، باید یک بک‌آپ از kyestore خود ذخیره کنید برای زمانی که احیانا دیگر این اپلیکیشن وجود نداشته باشد.\n\n کیف پول شما هیچ گاه در ابر یا در دستگاه‌ های استاندارد بک‌آپ ذخیره نمی‌شود.</string>
-  <string name="message_no_backup">بدون بک‌آپ، بدون Ethereum</string>
-  <string name="error_deleting_account">خطا در حذف کیف پول</string>
+  <string name="permissions_active_wallet_short">کیف پول فعال</string>
+  <string name="error_import">خطای وارد کردن کیف پول</string>
+  <string name="message_this_is_your_address">آدرس عمومی کیف پول من</string>
+  <string name="backup_warning_text">از کلید خود نسخه‌ی پشتیبان بگیرید. برنامه اعتبار شما را جایی ذخیره نمی‌کند.</string>
+  <string name="message_no_backup">بدون نسخه‌ی پشتیبان </string>
+  <string name="error_deleting_account">کیف پول حذف نشد.</string>
   <string name="title_privacy_policy">سیاست حفظ حریم خصوصی</string>
-  <string name="title_terms">شرایط و ضوابط</string>
+  <string name="title_terms">شرایط و مقررات</string>
   <string name="title_version">نسخه</string>
-  <string name="title_tokens">ژتون‌های من</string>
+  <string name="title_tokens">شناسه‌های من</string>
   <string name="unlock_screen_title_android">باز کردن قفل صفحه نمایش</string>
-  <string name="unlock_screen_prompt_android">قفل دستگاه آندروید خود را برای ادامه را باز کند.</string>
-  <string name="do_manage_make_backup">آیا موفق به ساخت یک بک‌آپ شدید؟</string>
+  <string name="unlock_screen_prompt_android">قفل دستگاه خود را باز کنید</string>
+  <string name="do_manage_make_backup">آیا نسخه‌ی پشتیبان گرفتید؟</string>
   <string name="yes_continue">بله، ادامه</string>
   <string name="no_repeat">نه، تکرار</string>
-  <string name="skip">پرش</string>
+  <string name="skip">رد کردن</string>
   <string name="skip_with_arrow">ردکردن &gt;</string>
   <string name="root_title">امنیت دستگاه به خطر افتاده است</string>
-  <string name="root_body">هر اپلیکیشن \'rooted\' می‌تواند به اطلاعات AppCoins Wallet\'s keychain دسترسی داشته باشد و کیف پول شما را بدزدد! فورا این کیف پول را پاک کنید و روی دستگاه امنی بازیابی کنید.</string>
-  <string name="credits_purchase_value">%s APPC Credits</string>
+  <string name="root_body">برنامه می‌تواند به اطلاعات کیف پول شما دسترسی داشته باشد. کیف پول را پاک کنید و روی دستگاه امنی بازیابی کنید. </string>
+  <string name="credits_purchase_value">%s اعتبار برای خرید</string>
   <string name="buying">خرید %s</string>
   <string name="action_buy">خرید</string>
   <string name="empty"></string>
-  <string name="try_again">امتحان دوباره</string>
+  <string name="try_again">دوباره امتحان کنید</string>
   <string name="already_have_account">کیف پول دارید؟</string>
-  <string name="action_create_new_account">ایجاد کیف پول جدید</string>
-  <string name="unknown_error">خطایی رخ داده است.</string>
-  <string name="action_backup_wallet">بک‌آپ کیف پول</string>
-  <string name="no_tokens">شما هنوز هیچ ژتون سفارشی شده‌ای اضافه نکردید.</string>
-  <string name="title_email">ارسال ایمیل به ما</string>
+  <string name="action_create_new_account">ساختن کیف پول</string>
+  <string name="unknown_error">خطا</string>
+  <string name="action_backup_wallet">نسخه‌ی پشتیبان از کیف پول</string>
+  <string name="no_tokens">شما تاکنون هیچ توکنی را اضافه نکرده‌اید.</string>
+  <string name="title_email">ارسال ایمیل</string>
   <string name="action_donate">کمک مالی</string>
   <!-- Titles -->
   <string name="title_my_address">دریافت</string>
-  <string name="title_my_tokens">ژتون‌های من</string>
+  <string name="title_my_tokens">توکن‌های من</string>
   <string name="title_activity_send">ارسال</string>
   <string name="title_activity_confirmation">تایید</string>
   <string name="title_add_token">اضافه کردن ژتون سفارشی</string>
   <string name="title_airdrop">Airdrop</string>
   <!-- Suggestions -->
   <string name="suggestion_private_key">کلید خصوصی باید 64 کاراکتر باشد</string>
-  <string name="suggestion_empty_password_available">رمز عبور می تواند خالی گذاشته شود.</string>
-  <string name="suggestion_this_is_your_address">آدزس کیف پول عمومی %s من</string>
+  <string name="suggestion_empty_password_available">جای رمز عبور می‌تواند خالی باشد</string>
+  <string name="suggestion_this_is_your_address">آدرس کیف پول عمومی %s من</string>
   <!-- Hints -->
   <string name="hint_private_key_field">کلید خصوصی *</string>
   <string name="hint_keystore">Keystore *</string>
@@ -92,14 +92,14 @@
   <string name="title_dialog_error">خطا</string>
   <string name="title_dialog_handling">درحال پردازش…</string>
   <string name="title_dialog_add_account">اضافه کردن کیف پول</string>
-  <string name="title_dialog_deposit">How would you like to buy?</string>
-  <string name="title_dialog_close_channel">Close channel</string>
+  <string name="title_dialog_deposit">روش خرید را انتخاب کنید</string>
+  <string name="title_dialog_close_channel">بستن</string>
   <!-- Dialog messages-->
-  <string name="dialog_message">تنظیم رمز عبور برای رمزگذاری کیف پول خود</string>
-  <string name="toast_message_wallet_imported">کیف پول وارد شده است</string>
-  <string name="toast_message_wallet_exported">یک بک‌آپ ساخته شد</string>
-  <string name="toast_qr_code_no_address">کد QR آدرس معتبر ندارد</string>
-  <string name="dialog_message_close_channel">Are you sure you want to close this µRaiden channel? </string>
+  <string name="dialog_message">تنظیم رمز عبور برای رمزگذاری کیف پول</string>
+  <string name="toast_message_wallet_imported">اطلاعات کیف پول وارد شده است</string>
+  <string name="toast_message_wallet_exported">نسخه‌ی پشتیبان ساخته شد</string>
+  <string name="toast_qr_code_no_address">کد تصویری آدرس معتبر ندارد</string>
+  <string name="dialog_message_close_channel">آیا از بستن کانال مطمئن هستید؟</string>
   <!-- Intro resources-->
   <string name="intro_title_first_page">AppCoins Wallet</string>
   <string name="intro_title_second_page"><![CDATA[خصوصی و امن]]></string>
@@ -126,7 +126,7 @@
   <string name="label_gas_limit">حد گاز</string>
   <string name="label_gas_price">قیمت گاز</string>
   <string name="label_network_fee">هزینه شبکه</string>
-  <string name="button_ok">اوکی</string>
+  <string name="button_ok">باشه</string>
   <string name="hint_recipient_address">نشانی گيرنده</string>
   <string name="hint_amount">مقدار</string>
   <string name="hint_amount_with_token">مقدار %s</string>
@@ -138,7 +138,7 @@
   <!-- Subtitles -->
   <string name="subtitle_from">از</string>
   <string name="subtitle_gas_fee">هزینه</string>
-  <string name="subtitle_transaction_num">معامله</string>
+  <string name="subtitle_transaction_num">داد و ستد</string>
   <!-- Actions -->
   <string name="action_more_details">بیشتر</string>
   <string name="action_add_wallet">اضافه کردن کیف پول</string>
@@ -150,43 +150,43 @@
   <string name="action_edit">ویرایش</string>
   <string name="action_save">ذخیره‌سازی</string>
   <!-- Subject -->
-  <string name="error_fail_generate_qr">کد QR ایجاد نشد.</string>
+  <string name="error_fail_generate_qr">کد تصویری ساخته نشد</string>
   <string name="error_invalid_address">آدرس غیرمعتبر</string>
   <string name="error_invalid_amount">مقدار غیرمعتبر</string>
-  <string name="error_transaction_failed">خطای معامله</string>
+  <string name="error_transaction_failed">خطا در داد و ستد</string>
   <string name="error_must_numeric">باید یک مقدار عددی باشد.</string>
-  <string name="transaction_succeeded">معامله موفق</string>
+  <string name="transaction_succeeded">داد و ستد انجام شد</string>
   <string name="NA">N/A</string>
   <string name="error_wallet_not_selected">کیف پول انتخاب نشده است</string>
-  <string name="no_transactions_yet">مقداری APPC دریافت کنید تا بتوانید ببینید پرداخت‌های AppCoins چگونه کار می کند</string>
-  <string name="no_transactions_yet_main">کماکان بدون تراکنش مالی!</string>
+  <string name="no_transactions_yet">برای آشنایی با نحوه‌ي پرداخت در برنامه مقداری اعتبار دریافت کنید.</string>
+  <string name="no_transactions_yet_main">همچنان بدون تراکنش مالی</string>
   <string name="unknown_balance_with_symbol">-- ETH</string>
   <string name="unknown_balance_without_symbol">--</string>
   <string name="dummy">-</string>
   <string name="dummy_transaction_value">-- ETH</string>
   <string name="title_dialog_sending">درحال ارسال...</string>
   <string name="welcome.erc20.label.title">ERC20 سازگار</string>
-  <string name="welcome.erc20.label.description">بصورت پیش‌فرض از ژتون‌های ERC20 پشتیبانی می‌کند.</string>
+  <string name="welcome.erc20.label.description">بصورت پیش‌فرض از توکن‌های ERC20 پشتیبانی می‌کند.</string>
   <string name="scan_qr">گرفتن آدرس از کد QR</string>
   <string name="info_gas_price">هرچه قیمت گاز بالاتر باشد، هزینه تراکنش شما هم بالاتر خواهد بود، ولی تراکنش شما از طریق شبکه Ethereum سریعتر پردازش خواهد شد.</string>
-  <string name="info_gas_limit">حد گاز، جلوی قراردادهای هوشمند شما را از مصرف همه Ethereum شما می گیرد. ما سعی می کنیم که بصورت اتوماتیک، حد گاز شما را برای شما محاسبه کنیم، ولی بعضی از قراردادهای هوشمند ممکن است نیازمند به یک حد گاز شخصی سازی شده باشند.</string>
+  <string name="info_gas_limit">حد گاز، مانع مصرف تمامی اتریوم‌های شما می‌شود. حد گاز به صورت خودکار محاسبه می‌شود اما برخی از قراردادهای هوشمند ممکن است نیاز به حد گاز شخصی سازی شده داشته باشند. </string>
   <string name="title_send_settings">پیشرفته</string>
   <string name="title_activity_barcode">اسکن بارکد</string>
-  <string name="error_add_token">افزودن ژتون انجام نشد.</string>
+  <string name="error_add_token">توکن اضافه نشد</string>
   <string name="facebook">فیسبوک</string>
-  <string name="error_already_added">قبلا افزوده شده است</string>
-  <string name="error_export">خروجی گرفتن از کیف پول موفق نبود</string>
-  <string name="error_fail_load_tokens">بارگذاری لیست ژتون‌ها موفق نبود</string>
-  <string name="error_create_wallet">ساخت کیف پول موفق نبود</string>
+  <string name="error_already_added">شناسه قبلا اضافه شده است</string>
+  <string name="error_export">عملیات خروجی گرفتن از کیف پول ناموفق بود</string>
+  <string name="error_fail_load_tokens">فراخوانی لیست توکن‌ها موفق نبود</string>
+  <string name="error_create_wallet">کیف پول ساخته نشد</string>
   <string name="token_balance">%1$s%2$s %3$s</string>
-  <string name="action_edit_tokens">ویرایش ژتون‌ها</string>
+  <string name="action_edit_tokens">ویرایش توکن‌ها</string>
   <string name="token_name">%1$s (%2$s)</string>
   <string name="new_transaction_value">-%1$s %2$s</string>
   <string name="gas_price_value">%1$s %2$s</string>
-  <string name="settings_fragment_credits">ما Trust Wallet را برای پروژه اندروید در bootstrap توسعه کیف پول AppCoins قرار دادیم. ما آن را بهترین گزینه جایگزین برای قابلیت‌های حال حاضر می دانیم. ما با هدف مشارکت در ادغام‌سازی این کار را کردیم و امیدواریم که مرتبط قرار گیرد.</string>
+  <string name="settings_fragment_credits">ما Trust Wallet را مبنای توسعه پروژه اندروید کیف پول قرار دادیم.</string>
   <string name="appcoins_symbol">APPC</string>
   <string name="activity_aib_loading_title">تراکنش درحال پردازش</string>
-  <string name="activity_aib_loading_message">اندکی زمان می‌برد…</string>
+  <string name="activity_aib_loading_message">صبر کنید</string>
   <string name="activity_iab_transaction_completed_title">تراکنش کامل شد</string>
   <string name="activity_iab_error_title">خطا</string>
   <string name="activity_iab_error_message">خطایی رخ داد، دوباره امتحان کنید</string>
@@ -195,31 +195,31 @@
   <string name="activity_iab_no_funds_message">ETH و APPC کافی نیست</string>
   <string name="activity_iab_no_ethereum_funds_message">Ethereum کافی نیست</string>
   <string name="activity_iab_no_token_funds_message">AppCoins کافی نیست</string>
-  <string name="activity_iab_wrong_network_message">شبکه Ethereum اشتباه یا ژتون نامعتبر</string>
-  <string name="activity_iab_no_network_message">دسترسی به شبکه مقدور نیست</string>
-  <string name="activity_iab_nonce_message">خطایی در ارتباط با blockchain رخ داد، لطفا بعدا دوباره امتحان کنید.</string>
+  <string name="activity_iab_wrong_network_message">شبکه اتریوم اشتباه می‌باشد یا توکن نامعتبر است.</string>
+  <string name="activity_iab_no_network_message">دسترسی به اینترنت امکان پذیر نیست.</string>
+  <string name="activity_iab_nonce_message">خطایی در ارتباط با بلاکچین رخ داد، لطفا بعدا دوباره امتحان کنید.</string>
   <string name="activity_iab_approving_message">بررسی همه جزییات: بالانس، موارد، شبکه…</string>
   <string name="activity_iab_buying_message">جزییات بررسی شد\nدرحال دریافت مورد شما…</string>
   <string name="activity_iab_change_card">تغییر کارت</string>
   <string name="notification_ongoing_poa">درحال پردازش جایزه شما</string>
-  <string name="notification_completed_poa">Reward received!👌 You\’ll have to wait %1$sh%2$sm to earn more rewards by trying apps ⏰!</string>
-  <string name="notification_poa_limit_reached">You reached your daily rewards limit. ⏰ Come back in %1$sh%2$sm and try again!</string>
-  <string name="notification_submitting_poa">درحال ارسال درخواست شما به blockchain</string>
-  <string name="notification_no_funds_poa">You don\'t have enough funds to get rewarded</string>
+  <string name="notification_completed_poa"> پاداش دریافت شد! شما باید مقدار %1$sh%2$sm  از زمان را سپری کنید تا پاداش بعدی را دریافت کنید. </string>
+  <string name="notification_poa_limit_reached"> شما به پایان حد جایزه‌ روزانه خود رسیده اید. پس از سپری شدن مدت زمان %1$sh%2$sm  دوباره جایزه‌ دریافت کنید. </string>
+  <string name="notification_submitting_poa">در حال ارسال درخواست شما به بلاکچین</string>
+  <string name="notification_no_funds_poa">شما سرمایه کافی برای دریافت جایزه‌ را ندارید</string>
   <string name="notification_no_network_poa">اتصال اینترنت قطع شد</string>
   <string name="notification_error_poa">خطایی رخ داده است</string>
   <string name="notification_no_wallet_poa">کیف پول شما هنوز تنظیم نشده است</string>
   <string name="notification_cancelled_poa">جایزه لغو شد</string>
-  <string name="notification_not_available_poa">این کمپین جوایز دیگر موجود نیست</string>
-  <string name="notification_not_available_for_country_poa">این کمپین جوایز دیگر در کشور شما موجود نیست</string>
-  <string name="notification_already_rewarded_poa">شما قبلا در این کمپین جایزه‌ای دریافت کرده‌اید</string>
-  <string name="notification_submit_error_poa">متاسفیم، خطایی رخ داده است. دوباره امنحان کنید!</string>
-  <string name="notification_wrong_network_poa">شما در حال استفاده از نسخه برنامه‌نویسان کیف پول AppCoins هستید. برای پردازش پاداش خود لطفا نسخه رسمی را دانلود کنید.</string>
+  <string name="notification_not_available_poa">این برنامه‌ی دریافت جایزه‌ دیگر به پایان رسیده است.</string>
+  <string name="notification_not_available_for_country_poa">این برنامه جوایز دیگر در کشور شما موجود نیست</string>
+  <string name="notification_already_rewarded_poa">شما قبلا در این برنامه جایزه‌ای دریافت کرده‌اید</string>
+  <string name="notification_submit_error_poa">متاسفیم، خطایی رخ داده است. دوباره امتحان کنید!</string>
+  <string name="notification_wrong_network_poa">شما در حال استفاده از نسخه برنامه‌نویسان کیف پول هستید. برای پردازش پاداش خود لطفا نسخه رسمی برنامه را دانلود کنید.</string>
   <!-- transaction details -->
   <string name="transaction_status_success">موفقیت</string>
   <string name="transaction_status_pending">در حال انتظار</string>
   <string name="transaction_status_failed">انجام نشد</string>
-  <string name="transaction_type_iab">خرید داخل اپلیکیشن</string>
+  <string name="transaction_type_iab">خرید درون‌ برنامه</string>
   <string name="transaction_type_poa">Proof of Attention</string>
   <string name="transaction_type_poa_offchain">Proof of Attention Hybrid</string>
   <string name="transaction_type_standard">انتقال</string>
@@ -236,7 +236,7 @@
   <string name="transaction_category_label">دسته</string>
   <string name="transaction_details_label">جزئیات</string>
   <string name="transaction_to_label">به</string>
-  <string name="dialog_credit_card_remember">کارت را به یاد داشته باش</string>
+  <string name="dialog_credit_card_remember">ثبت کارت در حافظه</string>
   <string name="notification_payment_refused">پرداخت رد شد</string>
   <string name="dialog_credit_card_number">شماره کارت</string>
   <string name="dialog_credit_card_expiration">تاریخ انقضا</string>
@@ -246,43 +246,43 @@
   <string name="activity_airdrop_hint">کلمات داخل تصویر را تایپ کنید</string>
   <string name="activity_airdrop_submit_btn">ارسال</string>
   <string name="activity_airdrop_wrong_captcha">captcha اشتباه است</string>
-  <string name="activity_airdrop_ok">اوکی</string>
+  <string name="activity_airdrop_ok">باشه</string>
   <string name="activity_airdrop_message_title">Airdrop</string>
   <string name="activity_airdrop_success_message">Airdrop تکمیل شد</string>
   <string name="activity_airdrop_generic_error_message">خطایی رخ داده است</string>
   <string name="notification_generic_error">@string/unknown_error</string>
-  <string name="iab_activity_micro_raiden_wallet">Wallet</string>
+  <string name="iab_activity_micro_raiden_wallet">کیف پول </string>
   <string name="iab_activity_raiden_channel_label">Create µRaiden channel</string>
-  <string name="iab_activity_raiden_amount_label">Select Amount</string>
-  <string name="iab_activity_raiden_channel_info_message">You’ll not pay fees for the transactions made with this developer until the amount you choose is reached. The amount will be withdrawn and stored, and you can close this channel anytime.</string>
-  <string name="iab_activity_raiden_channel_info_title">µRaiden Channel</string>
-  <string name="proceed">proceed</string>
-  <string name="iab_activity_raiden_channel_no_funds_message">You don\'t have enough funds on your µRainden payment channel. Go to your wallet and close the channel to create a new one.  Do you still want to complete this purchase with a standard payment?</string>
-  <string name="iab_activity_raiden_channel_no_funds_title">Payment Channel Funds</string>
-  <string name="spend_your_appcoins">AppCoins خود را خرج کنید</string>
+  <string name="iab_activity_raiden_amount_label">انتخاب مقدار</string>
+  <string name="iab_activity_raiden_channel_info_message">تا زمانی که به حد نصاب مبلغ انتخاب شده نرسیده​‌اید، از شما کارمزدی کسر نخواهد شد. شما می‌توانید هر زمان کانال را ببندید، مبلغ شما ذخیره و تصفیه خواهد شد.</string>
+  <string name="iab_activity_raiden_channel_info_title">µRaiden کانال</string>
+  <string name="proceed">ادامه</string>
+  <string name="iab_activity_raiden_channel_no_funds_message">بودجه‌ی شما در کانال پرداخت µRainden کافی نیست. کانال را از کیف پول خود ببنید تا کانال جدید ساخته شود. آیا هنوز می‌خواهید با پرداخت استاندارد هزینه کنید؟</string>
+  <string name="iab_activity_raiden_channel_no_funds_title">کانال پرداخت سرمایه</string>
+  <string name="spend_your_appcoins">اعتبار خود را خرج کنید</string>
   <!-- Billing -->
-  <string name="action_skip_backup_wallet">پرش از گرفتن بک‌آپ</string>
+  <string name="action_skip_backup_wallet">گذشتن از نسخه‌ی پشتیبان</string>
   <string name="item_donation">کمک مالی</string>
   <!-- Gamification -->
-  <string name="gamification_home_body">کسب درآمد تا %s%% بونوس در بازی‌ها و اپلیکیشن‌های مورد علاقه خود!</string>
+  <string name="gamification_home_body">کسب درآمد تا %s%% پاداش در بازی‌ها و اپلیکیشن‌های مورد علاقه خود!</string>
   <string name="gamification_home_button">شروع به کسب درآمد</string>
   <string name="gamification_level_title">سطح من چیست؟</string>
   <string name="gamification_level_title_new">اعتبار APPC بگیرید!</string>
   <string name="gamification_level_on_graphic">سطح %s</string>
-  <string name="gamification_APPCapps_button">اپلیکیشن‌ها و بازی‌ها</string>
+  <string name="gamification_APPCapps_button">برنامه‌ها و بازی‌ها</string>
   <string name="gamification_level_header">تبریک, شما %s هستید!</string>
-  <string name="gamification_level_to_next">به سطح بعدی:</string>
-  <string name="gamification_level_earned">به دست آورده:</string>
+  <string name="gamification_level_to_next">ورود به سطح بعدی </string>
+  <string name="gamification_level_earned">آوردها:</string>آوردها
   <string name="gamification_level_next_lvl">به سطح بعدی:</string>
   <string name="gamification_level_next_lvl_value">%s APPC</string>
-  <string name="gamification_level_bonus">بونوس %s%%</string>
+  <string name="gamification_level_bonus">پاداش %s%%</string>
   <string name="gamification_level_button_how">چگونه کار می کند</string>
-  <string name="gamification_level_body">شما اعتبار APPC بدست خواهید آورد زمانی که در اپلیکیشن‌های و بازی‌های محبوب خود خرید کنید.</string>
-  <string name="gamification_how_header">چگونه سطح بالاتری بروید؟</string>
+  <string name="gamification_level_body">با خرید در بازی‌ها و برنامه‌های محبوب خود اعتبار بگیرید</string>
+  <string name="gamification_how_header">روش ورود به سطح بالاتر</string>
   <string name="gamification_how_body">شما اعتبار APPC بدست خواهید آورد زمانی که در اپلیکیشن‌های و بازی‌های محبوب خود خرید کنید.</string>
-  <string name="gamification_how_body_new">هر چه بیشتر در اپلیکیشن‌های محبوب خود خرج کنید، پاداش بزرگتر خواهد بود!</string>
+  <string name="gamification_how_body_new">دریافت پاداش بیشتر با خرید بیشتر در برنامه‌</string>
   <string name="gamification_how_table_a1">خرج کردن</string>
-  <string name="gamification_how_table_b1">بونوس</string>
+  <string name="gamification_how_table_b1">بونوس</string>پاداش
   <string name="gamification_how_table_a2">%s APPC</string>
   <string name="gamification_how_table_b2">%s %%</string>
   <string name="gamification_how_table_level">مرحله</string>
@@ -293,15 +293,15 @@
   <string name="gamification_a_planet_title">یک سیاره</string>
   <string name="gamification_a_star_title">یک ستاره</string>
   <string name="gamification_a_galaxy_title">یک کهکشان</string>
-  <string name="gamification_a_comet_subtitle">مراقب باشید و به سیاره برخورد نکنید!</string>
+  <string name="gamification_a_comet_subtitle">مراقب باشید به سیاره برخورد نکنید!</string>
   <string name="gamification_a_moon_subtitle">یک ماهواره طبیعی</string>
   <string name="gamification_planet_subtitle">در حال چرخش در اطراف یک ستاره بزرگ</string>
   <string name="gamification_star_subtitle">درخشان، بزرگ و پر از زندگی!</string>
-  <string name="gamification_galaxy_subtitle">بزرگترین سیستم که اینجا وجود دارد!</string>
+  <string name="gamification_galaxy_subtitle">ورود به بزرگ‌ترین کهکشان</string>
   <string name="gamification_transaction_title">@string/gamification_level_bonus</string>
-  <string name="gamification_purchase_header">This purchase has a bonus!</string>
+  <string name="gamification_purchase_header">این تراکنش پاداش دارد</string>
   <string name="gamification_purchase_header_part_1">پاداش خرید:</string>
-  <string name="gamification_purchase_header_part_2">%s اعتبار داخل APPC</string>
+  <string name="gamification_purchase_header_part_2">%s اعتبار</string>
   <string name="gamification_purchase_body">شما می‌توانید از این پاداش در خرید بعدی خود استفاده کنید.</string>
   <string name="gamification_purchase_completed_bonus_received_done">تمام!</string>
   <string name="gamification_purchase_completed_bonus_received">پاداش دریافت شد</string>
@@ -312,8 +312,8 @@
   <string name="gamification_how_to_next_level_body"><b>%1$sAppCoins</b> بیشتری خرج کنید تا به <b>مرحله %2$s</b> برسید.</string>
   <string name="gamification_level_expiration_title">بررسی برای مرحله بعد: %s</string>
   <string name="gamification_level_expiration_body">مرحله شما بر اساس خریدهای شما در ۱۲ ماه قبل است.</string>
-  <string name="gamification_leveled_up_title">به مرحله بعدی رسیدید!</string>
-  <string name="gamification_leveled_up_body">%s پاداش برای هر خرید دریافت خواهید کرد. به خرید ادامه دهید تا پاداش بیشتری کسب کنید!</string>
+  <string name="gamification_leveled_up_title">ورود به مرحله‌ی بعدی </string>
+  <string name="gamification_leveled_up_body">%s برای پاداش بیشتر باز هم خرید کنید</string>
   <string name="gamification_leveled_up_notification_title">به مرحله بعد رسیده‌اید!</string>
   <string name="gamification_leveled_up_notification_body">تبریک، پاداش %s برای هر خرید دریافت خواهید کرد!</string>
   <string name="gamification_how_max_level_body">تبریک! به بالاترین مرحله رسیدید 💃</string>
@@ -347,10 +347,10 @@
   <!--Balance-->
   <string name="balance_title">بالانس</string>
   <string name="balance_total_body">بالانس کلی در %s</string>
-  <string name="balance_topup_body">شما می توانید اعتبار کیف پول خود را با اعتبار AppCoins افزایش دهید.</string>
-  <string name="balance_ethereum_body">Ethereum همان cryptocurrency است که AppCoins بر اساس آن می باشد. شما می توانید آن ها را به اکثر واحدهای اعتباری خرید و فروش کنید. بسیار محبوب است!</string>
-  <string name="balance_appcoins_body">AppCoins همان cryptocurrency برای اقتصاد اپلیکیشن است. شما می توانید خرید و فروش آن را در مبادلات مختلف انجام دهید و از آن برای خریدهای داخل اپلیکیشنی استفاده کنید.</string>
-  <string name="balance_appccreditos_body">ژتون برای خرید آیتم‌های داخل اپلیکیشنی! APPC-C را از کیف پول خود افزایش دهید یا آن ها را بصورت رایگان با استفاده کردن از اپلیکیشن‌ها بدست آورید. آن همچنین قابل انتقال در میان دوستان نیز می‌باشد!</string>
+  <string name="balance_topup_body">شما می توانید اعتبار کیف پول خود را با اعتبار برنامه افزایش دهید.</string>
+  <string name="balance_ethereum_body">این برنامه بر پایه اتریوم می باشد. اتریوم جزو رمز ارز های محبوب است</string>
+  <string name="balance_appcoins_body">اعتبار این برنامه بر پایه اتریوم می باشد. شما می توانید به آسانی در برنامه ها و بازی ها خرید انجام دهید.</string>
+  <string name="balance_appccreditos_body">با توکن‌ در برنامه‌ها و بازی‌ها خرید انجام دهید. </string>
   <!--Ask a friend for funds-->
   <string name="askafriend_payment_option_button">از کسی بخواهید پرداخت کند</string>
   <string name="askafriend_generating_link_message">ما در حال تولید لینک پرداخت شما هستیم&#8230;</string>
@@ -371,12 +371,12 @@
   <string name="p2p_send_confirmation_message">%1$s%2$s به آدرس زیر ارسال شد:</string>
   <string name="p2p_send_current_balance_message">تراز فعلی: %1$s %2$s</string>
   <string name="p2p_send_error_address">آدرس نامعتبر</string>
-  <string name="p2p_send_error_not_enough_funds">بودجه کافی نیست</string>
+  <string name="p2p_send_error_not_enough_funds">اعتبار کافی نیست</string>
   <string name="p2p_send_error_amount_zero">باید بیش از صفر باشد</string>
   <string name="p2p_send_confirmation_header">جزییات انتقال‌ها</string>
   <!--Common-->
   <string name="error_general">مشکلی پیش آمده است</string>
-  <string name="error_missing_field">فیلد اجباری</string>
+  <string name="error_missing_field">این بخش اجباری است.</string>
   <string name="cancel_button">لغو</string>
   <string name="submit_button">ارسال</string>
   <string name="close_button">بستن</string>
@@ -384,7 +384,7 @@
   <string name="value_fiat">%1$s%2$s</string>
   <string name="value_crypto">%1$s%2$s</string>
   <string name="dismiss_button">رد کردن</string>
-  <string name="discover_button">کشف‌کردن</string>
+  <string name="discover_button">جستجو</string>
   <string name="retry_button">تلاش مجدد</string>
   <string name="do_it_later_button">بعدا انجام شود</string>
   <string name="connectoin_error_body">به نظر می‌رسد به اینترنت متصل نیستید. ارتباط خود را بررسی کنید و دوباره امتحان کنید!</string>
@@ -394,14 +394,14 @@
   <string name="terms_and_conditions">شرایط و ضوابط</string>
   <string name="privacy_policy">سیاست حفظ حریم خصوصی</string>
   <!--Home-->
-  <string name="home_empty_discover_apps_body">بهترین اپلیکیشن‌های اندروید منتظر شما هستند.</string>
-  <string name="home_empty_discover_apps_button">اپلیکیشن‌های برتر را کشف کنید</string>
+  <string name="home_empty_discover_apps_body">بهترین برنامه‌ها و بازی‌ها منتظر شما هستند.</string>
+  <string name="home_empty_discover_apps_button">برنامه‌ها و بازی‌های  برتر را کشف کنید</string>
   <!--Tokens-->
   <!--Settings-->
   <string name="title_redeem">استفاده از کد</string>
   <!--Local Payments-->
-  <string name="local_payments_inprogress_header">در حال پیش رفتن&#8230;</string>
-  <string name="local_payments_inprogress_body">هرزمان که پرداخت خود را تکمیل کنید، اعتبار AppCoins در کیف پول خود دریافت خواهید کرد. پس برای تکمیل خرید به بازی برگردید!</string>
+  <string name="local_payments_inprogress_header">در حال پیشرفت&#8230;</string>
+  <string name="local_payments_inprogress_body">پس از تکمیل پرداخت، اعتبار را دریافت خواهید کرد. به بازی باز گردید و خرید را انجام دهید.</string>
   <!--Wallet Verification-->
   <string name="verification_notification_verification_needed_title">پاداش آماده است ولی نیازمند تایید است</string>
   <string name="verification_notification_verification_needed_body">به دلایل امنیتی، نیازمند به تایید کیف پول شما با یک کد پیامکی هستیم.</string>
@@ -409,12 +409,12 @@
   <string name="verification_insert_phone_body">برای دریافت پاداش، کیف پول خود را تایید کنید! کد تاییدیه را برای شما ارسال خواهیم کرد.</string>
   <string name="verification_insert_phone_field_country">کشور</string>
   <string name="verification_insert_phone_field_number">شماره تلفن</string>
-  <string name="verification_insert_phone_field_number_error">شمشماره تلفن نامعتبر</string>
+  <string name="verification_insert_phone_field_number_error">شماره تلفن نامعتبر</string>
   <string name="verification_insert_phone_security_disclaimer">این به دلایل امنیتی است، ما هیچ اطلاعات شخصی شما را ذخیره نمی‌کنیم.</string>
   <string name="verification_notification_code_title">کیف پول AppCoins</string>
   <string name="verification_notification_code_body">کد تاییدیه شما %s است. از آن برای تایید نشانی کیف پول AppCoins خود استفاده کنید.</string>
-  <string name="verification_insert_code_title">کد تاییدیه خود را وارد کنید</string>
-  <string name="verification_insert_code_error">کد نامعتبر</string>
+  <string name="verification_insert_code_title">کد تایید را وارد کنید</string>
+  <string name="verification_insert_code_error">کد نامعتبر است </string>
   <string name="verification_insert_code_resend_button">ارسال مجدد کد</string>
   <string name="verification_validating_title">تایید اعتبار کد شما &#8230;</string>
   <string name="verification_completed_title">تمام!</string>
@@ -425,15 +425,15 @@
   <string name="verification_insert_code_error_common">مشکلی پیش آمده است. دوباره امتحان کنید!</string>
   <string name="verification_settings_unverified_title">تایید کیف پول</string>
   <string name="verification_settings_unverified_body">پاداش دریافت کنید و دوستان را دعوت کنید</string>
-  <string name="verification_settings_verified_title">کیف پول تاییدشد</string>
+  <string name="verification_settings_verified_title">کیف پول تایید شد</string>
   <!--Purchase Flow-->
   <string name="purchase_error_incomplete_transaction_body">به نظر می‌رسد که این خرید پردازش شده است. لطفا منتظر بمانید تا تراکنش تکمیل شود یا با تیم پشتیبانی تماس بگیرید.</string>
   <string name="purchase_more_payment_methods_button">سایر روش‌های پرداخت</string>
   <string name="purchase_appcoins_available_body">برای پرداخت این مبلغ، مقدار اندکی از ETH را پرداخت خواهید کرد.</string>
-  <string name="purchase_appcoins_noavailable_body">به مقدار کافی AppCoins یا Ether برای این خرید ندارید.</string>
-  <string name="purchase_appcoins_credits_available_body">بدون هزینه و بسرعت!</string>
-  <string name="purchase_appcoins_credits_noavailable_body">به مقداری کافی اعتبار APPC ندارید، اقدام به افزایش اعتبار کنید!</string>
-  <string name="purchase_appcoins_credits_default_body">به مقدار کافی اعتبار AppCoins برای این خرید دریافت‌ خواهید کرد. لذت ببرید!</string>
+  <string name="purchase_appcoins_noavailable_body">دارایی کافی برای خرید ندارید</string>
+  <string name="purchase_appcoins_credits_available_body">سریع و بدون هزینه</string>
+  <string name="purchase_appcoins_credits_noavailable_body">اعتبار کافی نیست</string>
+  <string name="purchase_appcoins_credits_default_body">به مقدار کافی اعتبار برای این خرید دریافت‌ خواهید کرد. لذت ببرید!</string>
   <!--Referral Program-->
   <string name="referral_onboarding_title">دوستان خود را دعوت کنید!</string>
   <string name="referral_onboarding_body">شما و دوستان شما می‌توانید از برنامه همکاری ما تا %s کسب درآمد کنید!</string>
@@ -453,20 +453,20 @@
   <string name="referral_view_share_link_button">لینک دعوت را به اشتراک بگذارید</string>
   <string name="referral_view_notifications_title">اعلانات</string>
   <string name="referral_share_sheet_title">لینک دعوت را به اشتراک بگذارید:</string>
-  <string name="referral_view_unverified_body">Receive %s worth of AppCoins Credits for each friend. Your first need to verify your wallet.</string>
+  <string name="referral_view_unverified_body">در ازای دعوت از هر دوست  میزان %s  اعتبار دریافت کنید. ابتدا نیاز است تا کیف پول خود را تایید کنید</string>
   <string name="referral_view_verify_button">تایید کیف پول</string>
   <string name="referral_view_i_have_been_invited_button">دعوت شده‌ام</string>
   <string name="referral_view_dropup_menu_friends_invited">دوستان دعوت‌شده</string>
   <string name="referral_view_dropup_menu_earned">کسب شده</string>
   <string name="referral_dropup_menu_friends_title_1">دوستان دعوت‌شده</string>
   <string name="referral_dropup_menu_requirements_title">الزامات</string>
-  <string name="referral_dropup_menu_requirements_verification">کیف پول خود را با یک شماره تلفن تایید کنید</string>
+  <string name="referral_dropup_menu_requirements_verification">با وارد کردن شماره‌ی تلفن تایید کنید</string>
   <string name="referral_dropup_menu_requirements_purchase">یک خرید داخل اپلیکیشنی یا افزایش اعتباری بیش از %s با هر روش پرداخت به جز اعتبار AppCoins انجام دهید</string>
   <string name="referral_dropup_menu_requirements_body">برای هر دوست که پیش نیاز (تا %2$s) را داشته باشد به ارزش %1$s اعتبار AppCoins بدست می‌آورید</string>
   <!--Promotions-->
   <string name="bottom_navigation_promotions">پیشنهادات تشویقی</string>
-  <string name="bottom_navigation_promotions_detailed">کشف کنید که چگونه می‌توانید با پیشنهادهای تشویقی ما، اعتبار AppCoins رایگان دریافت کنید!</string>
-  <string name="promotions_title">پیشنهادات تشویقی</string>
+  <string name="bottom_navigation_promotions_detailed">اعتبار رایگان دریافت کنید. اطلاعات بیشتر </string>
+  <string name="promotions_title">پیشنهادهای تشویقی</string>
   <string name="promotions_referral_card_title">با دعوت دوستان تا %s کسب درآمد کنید</string>
   <string name="promotions_referral_card_body">لینک دعوت خود را به اشتراک بگذارید و اعتبار AppCoins کسب کنید.</string>
   <string name="promotions_gamification_card_title">برای هر خرید، تا ۳۰% پاداش دریافت کنید</string>
