@@ -56,6 +56,9 @@
         android:name="com.asfoundation.wallet.ui.SettingsActivity"
         android:label="@string/title_activity_settings"/>
     <activity
+            android:name="com.asfoundation.wallet.ui.BazaarcheSettingsActivity"
+            android:label="@string/title_activity_settings" />
+    <activity
         android:name="com.asfoundation.wallet.ui.balance.TransactionDetailActivity"
         android:label=""/>
     <activity
