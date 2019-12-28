@@ -15,15 +15,24 @@ class BazarcheSettingsFragment : Fragment() {
 
   val items = arrayOf(R.string.transactions_list, R.string.language_settings, R.string.bazaarche_guide, R.string.support)
 
+  private val itemClickListener: (Int) -> Unit = { position ->
+    //TODO: handle click
+  }
+
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     return inflater.inflate(R.layout.fragment_bazaarche_settings, container, false)
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-    view.recycler_bazaarche_settings.apply {
+    setupRecyclerView()
+  }
+
+  private fun setupRecyclerView() {
+
+    requireView().recycler_bazaarche_settings.apply {
       layoutManager = LinearLayoutManager(context)
-      adapter = BazaarcheSettingsAdapter(items)
+      adapter = BazaarcheSettingsAdapter(items, itemClickListener)
       val divider = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
       addItemDecoration(divider)
     }
