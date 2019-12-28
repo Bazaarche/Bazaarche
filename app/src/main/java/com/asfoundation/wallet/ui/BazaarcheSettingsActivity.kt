@@ -3,6 +3,7 @@ package com.asfoundation.wallet.ui
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.asf.wallet.R
+import com.asfoundation.wallet.ui.bazarchesettings.BazarcheSettingsFragment
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import javax.inject.Inject
@@ -13,6 +14,10 @@ class BazaarcheSettingsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bazaarche_settings)
         toolbar()
+
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, BazarcheSettingsFragment())
+                .commit()
     }
 
 
