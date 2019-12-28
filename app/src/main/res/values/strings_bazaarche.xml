@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+  <string name="transactions_list">Transactions List</string>
+  <string name="language_settings">Language Settings</string>
+  <string name="bazaarche_guide">Bazaarcheh guide</string>
+  <string name="support">Support</string>
+</resources>

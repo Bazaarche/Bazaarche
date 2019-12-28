@@ -5,11 +5,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.asf.wallet.R
+import com.asfoundation.wallet.ui.widget.DividerItemDecoration
+import kotlinx.android.synthetic.main.fragment_bazaarche_settings.view.*
+
 
 class BazarcheSettingsFragment : Fragment() {
+
+  val items = arrayOf(R.string.transactions_list, R.string.language_settings, R.string.bazaarche_guide, R.string.support)
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     return inflater.inflate(R.layout.fragment_bazaarche_settings, container, false)
   }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+    view.recycler_bazaarche_settings.apply {
+      layoutManager = LinearLayoutManager(context)
+      adapter = BazaarcheSettingsAdapter(items)
+      val divider = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+      addItemDecoration(divider)
+    }
+  }
+
 }

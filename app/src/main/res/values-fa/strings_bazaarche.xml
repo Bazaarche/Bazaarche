@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  
+  <string name="transactions_list">لیست تراکنش‌ها</string>
+  <string name="language_settings">تنظیمات زبان</string>
+  <string name="bazaarche_guide">راهنمای بازارچه</string>
+  <string name="support">پشتیبانی</string>
+</resources>

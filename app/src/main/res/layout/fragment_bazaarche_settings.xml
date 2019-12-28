@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recycler_bazaarche_settings"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:clipToPadding="false"
+      android:paddingStart="@dimen/bazaarche_item_padding"
+      android:paddingEnd="@dimen/bazaarche_item_padding"
+      tools:layout="@layout/item_bazaarche_settings" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
