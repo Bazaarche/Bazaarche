@@ -31,7 +31,7 @@ android {
     buildConfigField 'String', 'DEFAULT_STORE_ADDRESS',
         "\"" + json.stores.default_address + "\""
 
-    applicationId "com.appcoins.wallet"
+    applicationId "com.hezardastaan.wallet"
     minSdkVersion 21
     targetSdkVersion 28
     versionCode 119
