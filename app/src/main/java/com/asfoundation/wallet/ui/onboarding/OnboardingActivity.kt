@@ -120,6 +120,11 @@ class OnboardingActivity : BaseActivity(), OnboardingView {
     return RxView.clicks(next_button)
   }
 
+  override fun getContinueClickMappedToViewPagerPosition(): Observable<Int> {
+    return RxView.clicks(continue_button)
+        .map { onboarding_viewpager.currentItem }
+  }
+
   override fun getRedeemButtonClick(): Observable<Any> {
     return RxView.clicks(been_invited_bonus)
   }
@@ -256,18 +261,14 @@ class OnboardingActivity : BaseActivity(), OnboardingView {
   private fun createReferralsItemList(maxAmount: String): List<OnboardingItem> {
     val item1 = OnboardingItem(R.string.intro_1_title, this.getString(R.string.intro_1_body))
     val item2 = OnboardingItem(R.string.intro_2_title, this.getString(R.string.intro_2_body))
-    val item3 = OnboardingItem(R.string.intro_3_title, this.getString(R.string.intro_3_body))
-    val item4 = OnboardingItem(R.string.referral_onboarding_title,
-        this.getString(R.string.referral_onboarding_body, maxAmount))
-    return listOf(item1, item2, item3, item4)
+
+    return listOf(item1, item2)
   }
 
   private fun createDefaultItemList(): List<OnboardingItem> {
     val item1 = OnboardingItem(R.string.intro_1_title, this.getString(R.string.intro_1_body))
     val item2 = OnboardingItem(R.string.intro_2_title, this.getString(R.string.intro_2_body))
-    val item3 = OnboardingItem(R.string.intro_3_title, this.getString(R.string.intro_3_body))
-    val item4 = OnboardingItem(R.string.intro_5_title,
-        this.getString(R.string.intro_5_body))
-    return listOf(item1, item2, item3, item4)
+
+    return listOf(item1, item2)
   }
 }

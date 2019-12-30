@@ -107,10 +107,10 @@
   <string name="intro_message_first_page">به یک انقلاب در اقتصاد اپلیکیشن خوش آمدید.</string>
   <string name="intro_message_second_page">کلیدهای خصوصی هرگز دستگاه شما را ترک نمی‌کنند.</string>
   <string name="intro_message_third_page">همه پرداخت‌های داخل اپلیکیشنی و جایزه‌های APPC خود را پردازش کنید.</string>
-  <string name="intro_1_title">AppCoins Wallet</string>
-  <string name="intro_1_body">اپلیکیشن شما برای خریدهای داخل اپلیکیشنی.</string>
-  <string name="intro_2_title">بیشتر بازی کن، کمتر پرداخت کن</string>
-  <string name="intro_2_body">برای خرید کردن در بازی‌ها و اپلیکیشن‌های مورد علاقه خود پاداش بگیر.</string>
+  <string name="intro_1_title">بیشتر بازی کنید</string>
+  <string name="intro_1_body">صدها بازی جدید و جذاب خارجی</string>
+  <string name="intro_2_title">خرید با کارت بانکی</string>
+  <string name="intro_2_body">با قابلیت خرید سکه‌ی بازی‌ها با کارت‌های شتاب</string>
   <string name="intro_3_title">ساده و آسان</string>
   <string name="intro_3_body">برای همه خریدهای داخل اپلیکیشن از روش پرداخت مورد علاقه خود استفاده کن.</string>
   <string name="intro_4_title">امن و خصوصی</string>
