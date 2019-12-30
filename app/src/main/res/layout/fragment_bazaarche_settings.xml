@@ -9,9 +9,6 @@
       android:id="@+id/recyclerBazaarcheSettings"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:clipToPadding="false"
-      android:paddingStart="@dimen/bazaarche_item_padding"
-      android:paddingEnd="@dimen/bazaarche_item_padding"
-      tools:layout="@layout/item_bazaarche_settings" />
+      tools:listitem="@layout/item_bazaarche_settings" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

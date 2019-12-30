@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.asf.wallet.R
-import com.asfoundation.wallet.ui.widget.DividerItemDecoration
+import com.asfoundation.wallet.ui.createItemDecoration
 import kotlinx.android.synthetic.main.fragment_bazaarche_settings.view.*
 
 
@@ -47,9 +48,16 @@ class BazarcheSettingsFragment : Fragment() {
     requireView().recyclerBazaarcheSettings.apply {
       layoutManager = LinearLayoutManager(context)
       adapter = BazaarcheSettingsAdapter(items, itemClickListener)
-      val divider = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-      addItemDecoration(divider)
+
+      val itemDecoration = createItemDecoration()
+      addItemDecoration(itemDecoration)
     }
+  }
+
+  private fun createItemDecoration(): DividerItemDecoration {
+
+    val margin = resources.getDimensionPixelSize(R.dimen.bazaarche_item_padding)
+    return createItemDecoration(requireContext(), margin, margin)
   }
 
 }
