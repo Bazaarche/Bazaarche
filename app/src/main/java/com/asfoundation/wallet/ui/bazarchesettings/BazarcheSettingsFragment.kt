@@ -44,7 +44,7 @@ class BazarcheSettingsFragment : Fragment() {
 
   private fun setupRecyclerView() {
 
-    requireView().recycler_bazaarche_settings.apply {
+    requireView().recyclerBazaarcheSettings.apply {
       layoutManager = LinearLayoutManager(context)
       adapter = BazaarcheSettingsAdapter(items, itemClickListener)
       val divider = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)

@@ -35,7 +35,7 @@ class BazaarcheSettingsAdapter(private val items: Array<Int>, private val clickL
 
     internal fun bind(@StringRes textRes: Int) {
 
-      itemView.text_item_bazaarche_settings.setText(textRes)
+      itemView.textItemBazaarcheSettings.setText(textRes)
     }
   }
 
