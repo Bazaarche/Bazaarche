@@ -4,7 +4,7 @@ import android.os.Bundle
 import com.asf.wallet.R
 import com.asfoundation.wallet.ui.BaseActivity
 
-class BazaarcheSettingsActivity : BaseActivity(), InteractionListener {
+class BazaarcheSettingsActivity : BaseActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -14,22 +14,6 @@ class BazaarcheSettingsActivity : BaseActivity(), InteractionListener {
     supportFragmentManager.beginTransaction()
         .replace(R.id.fragment_container, BazarcheSettingsFragment())
         .commit()
-  }
-
-  override fun onTransactionsClicked() {
-    //TODO
-  }
-
-  override fun onLanguageSettingsClicked() {
-    //TODO
-  }
-
-  override fun onGuideClicked() {
-    //TODO
-  }
-
-  override fun onSupportClicked() {
-    //TODO
   }
 
 }

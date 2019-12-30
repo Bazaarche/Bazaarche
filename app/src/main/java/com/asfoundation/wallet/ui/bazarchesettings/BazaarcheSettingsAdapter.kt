@@ -38,4 +38,5 @@ class BazaarcheSettingsAdapter(private val items: Array<Int>, private val clickL
       itemView.text_item_bazaarche_settings.setText(textRes)
     }
   }
+
 }
