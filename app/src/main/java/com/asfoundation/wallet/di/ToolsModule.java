@@ -92,6 +92,8 @@ import com.asfoundation.wallet.billing.purchase.LocalPayementsLinkRepository.Dee
 import com.asfoundation.wallet.billing.share.BdsShareLinkRepository;
 import com.asfoundation.wallet.billing.share.BdsShareLinkRepository.BdsShareLinkApi;
 import com.asfoundation.wallet.billing.share.ShareLinkRepository;
+import com.asfoundation.wallet.catalog.repository.CatalogApi;
+import com.asfoundation.wallet.catalog.repository.CatalogService;
 import com.asfoundation.wallet.entity.NetworkInfo;
 import com.asfoundation.wallet.interact.AutoUpdateInteract;
 import com.asfoundation.wallet.interact.BalanceGetter;
@@ -257,6 +259,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.asfoundation.wallet.AirdropService.BASE_URL;
@@ -838,6 +841,21 @@ import static com.asfoundation.wallet.service.AppsApi.API_BASE_URL;
         .build()
         .create(GamificationApi.class);
   }
+
+  @Singleton @Provides CatalogApi provideCatalogApi(OkHttpClient client) {
+    String baseUrl = CatalogService.SERVICE_HOST;
+    return new Retrofit.Builder().baseUrl(baseUrl)
+        .client(client)
+        .addConverterFactory(ScalarsConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .build()
+        .create(CatalogApi.class);
+  }
+
+//  @Singleton @Provides CatalogRepository provideCatalogRepository(CatalogApi api) {
+//    return new CatalogRepository(new CatalogService(api));
+//  }
 
   @Singleton @Provides BackendApi provideBackendApi(OkHttpClient client, Gson gson) {
     return new Retrofit.Builder().baseUrl(BuildConfig.BACKEND_HOST)
