@@ -32,6 +32,7 @@ import com.asfoundation.wallet.ui.airdrop.AirdropFragment;
 import com.asfoundation.wallet.ui.balance.BalanceFragment;
 import com.asfoundation.wallet.ui.balance.TokenDetailsActivity;
 import com.asfoundation.wallet.ui.balance.TransactionDetailActivity;
+import com.asfoundation.wallet.ui.catalog.CatalogActivity;
 import com.asfoundation.wallet.ui.gamification.HowItWorksFragment;
 import com.asfoundation.wallet.ui.gamification.MyLevelFragment;
 import com.asfoundation.wallet.ui.iab.AdyenAuthorizationFragment;
@@ -106,6 +107,8 @@ import dagger.android.ContributesAndroidInjector;
   abstract OneStepPaymentReceiver bindOneStepPaymentReceiver();
 
   @ActivityScope @ContributesAndroidInjector abstract TopUpActivity bindTopUpActivity();
+
+  @ActivityScope @ContributesAndroidInjector() abstract CatalogActivity bindCatalogActivity();
 
   @ActivityScope @ContributesAndroidInjector abstract OnboardingActivity bindOnboardingModule();
 
