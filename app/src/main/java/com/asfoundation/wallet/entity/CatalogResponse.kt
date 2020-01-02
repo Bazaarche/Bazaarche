@@ -11,6 +11,6 @@ data class Row(val title: String, val more: String, val hasMore: Boolean,
 
 data class HamiPromotion(val link: String, val imageURL: String, val app: App)
 
-class AppListResponse(val applist: Array<App>)
+class AppListResponse(val appList: Array<App>)
 
 data class App(val packageName: String, val name: String, val image: String)
