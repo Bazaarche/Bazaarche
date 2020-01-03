@@ -20,6 +20,8 @@ class CatalogActivity : AppCompatActivity() {
     ViewModelProviders.of(this, viewModelFactory).get(CatalogViewModel::class.java)
   }
 
+  val adapter = CatalogAdapter()
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     AndroidInjection.inject(this)
@@ -31,17 +33,22 @@ class CatalogActivity : AppCompatActivity() {
   private fun initView() {
 
     setContentView(R.layout.activity_catalog)
-    recyclerCatalog.apply {
-
-      layoutManager = LinearLayoutManager(this@CatalogActivity)
-    }
+    setupRecyclerView()
   }
 
   private fun observeData() {
 
     viewModel.getCatalogRows().observeNotNull(this) {
 
-      //TODO
+      adapter.addItems(it)
+    }
+  }
+
+  private fun setupRecyclerView() {
+    recyclerCatalog.also {
+
+      it.layoutManager = LinearLayoutManager(this)
+      it.adapter = adapter
     }
   }
 
