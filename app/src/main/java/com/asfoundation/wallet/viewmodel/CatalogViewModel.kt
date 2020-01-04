@@ -3,7 +3,7 @@ package com.asfoundation.wallet.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.asfoundation.wallet.catalog.repository.CatalogRepository
-import com.asfoundation.wallet.entity.HamiPromotion
+import com.asfoundation.wallet.entity.Hami
 import com.asfoundation.wallet.entity.Row
 import com.asfoundation.wallet.ui.catalog.CatalogItem
 import com.asfoundation.wallet.ui.catalog.toCatalogItems
@@ -19,11 +19,11 @@ class CatalogViewModel(private val catalogRepository: CatalogRepository) : BaseV
   }
 
   private val catalogRows = MutableLiveData<List<CatalogItem>>()
-  private val hami = MutableLiveData<HamiPromotion>()
+  private val hami = MutableLiveData<Hami>()
 
   fun getCatalogRows(): LiveData<List<CatalogItem>> = catalogRows
 
-  fun getHami(): LiveData<HamiPromotion> = hami
+  fun getHami(): LiveData<Hami> = hami
 
 
   private fun loadCatalog() {

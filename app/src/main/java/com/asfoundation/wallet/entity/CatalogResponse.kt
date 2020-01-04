@@ -6,10 +6,11 @@ class GetPageByPathReply(val pages: Array<Page>)
 data class Page(val rows: List<Row>)
 
 data class Row(val title: String, val more: String, val hasMore: Boolean,
-               val hamiPromo: HamiPromotion?, val appList: AppListResponse?)
+               val hamiPromo: Hami?, val appList: AppListResponse?)
 
 
-data class HamiPromotion(val link: String, val imageURL: String, val app: App)
+data class Hami(val title: String, val shortDescription: String, val link: String,
+                val imageURL: String, val app: App)
 
 class AppListResponse(val appList: Array<App>)
 
