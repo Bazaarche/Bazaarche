@@ -2,4 +2,7 @@
 <resources>
 
   <dimen name="intro_button_height">56dp</dimen>
+
+  <dimen name="bazaarche_item_padding">16dp</dimen>
+  <dimen name="bazaarche_medium_text">16sp</dimen>
 </resources>

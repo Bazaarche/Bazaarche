@@ -2,4 +2,9 @@
 <resources>
 
   <string name="continuation">ادامه</string>
+
+  <string name="transactions_list">لیست تراکنش‌ها</string>
+  <string name="language_settings">تنظیمات زبان</string>
+  <string name="bazaarche_guide">راهنمای بازارچه</string>
+  <string name="support">پشتیبانی</string>
 </resources>
