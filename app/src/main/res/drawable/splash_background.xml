@@ -2,9 +2,10 @@
 <layer-list
     xmlns:android="http://schemas.android.com/apk/res/android">
   <item android:drawable="@color/white"/>
-  <item>
-    <bitmap
-        android:gravity="center"
-        android:src="@drawable/ic_splash"/>
-  </item>
+  <item
+      android:drawable="@drawable/ic_splash"
+      android:left="126dp"
+      android:top="235dp"
+      android:right="126dp"
+      android:bottom="235dp" />
 </layer-list>
