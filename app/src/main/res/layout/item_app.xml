@@ -23,7 +23,6 @@
       android:ellipsize="end"
       android:maxLines="1"
       android:textColor="@color/black_color"
-      android:textSize="@dimen/bazaarche_small_text"
       tools:text="مسیریاب بلد" />
 
 </LinearLayout>
