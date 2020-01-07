@@ -3,15 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:ignore="UseCompoundDrawables">
 
   <ImageView
       android:id="@+id/imageApp"
-      android:layout_width="48dp"
-      android:layout_height="48dp"
-      android:layout_marginStart="16dp"
-      android:layout_marginTop="12dp"
-      android:layout_marginBottom="12dp"
+      android:layout_width="@dimen/app_image_size"
+      android:layout_height="@dimen/app_image_size"
+      android:paddingStart="@dimen/bazaarche_sides"
+      android:paddingTop="12dp"
+      android:paddingEnd="8dp"
+      android:paddingBottom="12dp"
       tools:srcCompat="@android:drawable/sym_def_app_icon" />
 
   <TextView
@@ -19,7 +21,6 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
-      android:layout_marginStart="8dp"
       android:ellipsize="end"
       android:maxLines="1"
       android:textColor="@color/black_color"

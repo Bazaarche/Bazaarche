@@ -6,4 +6,5 @@
   <dimen name="bazaarche_small_text">14sp</dimen>
   <dimen name="hami_height">328dp</dimen>
   <dimen name="hami_image_width">166dp</dimen>
+  <dimen name="app_image_size">72dp</dimen>
 </resources>
