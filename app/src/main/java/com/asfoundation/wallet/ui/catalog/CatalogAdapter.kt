@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.item_app.view.*
 import kotlinx.android.synthetic.main.item_apps_header.view.*
 import kotlinx.android.synthetic.main.item_hami.view.*
 
-class CatalogAdapter : RecyclerView.Adapter<CatalogAdapter.ViewHolder<CatalogItem>>() {
+class CatalogAdapter(private val onCatalogItemClicked: OnCatalogItemClicked) : RecyclerView.Adapter<CatalogAdapter.ViewHolder<CatalogItem>>() {
 
   val items = mutableListOf<CatalogItem>()
 
@@ -35,13 +35,13 @@ class CatalogAdapter : RecyclerView.Adapter<CatalogAdapter.ViewHolder<CatalogIte
     @Suppress("UNCHECKED_CAST")
     return when (viewType) {
       R.layout.item_hami -> {
-        HamiViewHolder(itemView)
+        HamiViewHolder(itemView, onCatalogItemClicked::onHamiClicked)
       }
       R.layout.item_apps_header -> {
-        HeaderViewHolder(itemView)
+        HeaderViewHolder(itemView, onCatalogItemClicked::onHeaderClicked)
       }
       else -> {
-        AppViewHolder(itemView)
+        AppViewHolder(itemView, onCatalogItemClicked::onAppClicked)
       }
     } as ViewHolder<CatalogItem>
 
@@ -59,11 +59,11 @@ class CatalogAdapter : RecyclerView.Adapter<CatalogAdapter.ViewHolder<CatalogIte
     notifyDataSetChanged()
   }
 
-  abstract class ViewHolder<T : CatalogItem>(itemView: View) : RecyclerView.ViewHolder(itemView) {
+  abstract class ViewHolder<T : CatalogItem>(itemView: View, protected val clickListener: (T) -> Unit) : RecyclerView.ViewHolder(itemView) {
     abstract fun bind(catalogItem: T)
   }
 
-  class HamiViewHolder(itemView: View) : ViewHolder<Hami>(itemView) {
+  private class HamiViewHolder(itemView: View, clickListener: (Hami) -> Unit) : ViewHolder<Hami>(itemView, clickListener) {
     override fun bind(catalogItem: Hami) {
 
       catalogItem.apply {
@@ -71,7 +71,7 @@ class CatalogAdapter : RecyclerView.Adapter<CatalogAdapter.ViewHolder<CatalogIte
         showHamiImage(imageURL)
         itemView.textHamiTitle.text = title
         itemView.textHamiDescription.text = shortDescription
-        itemView.textHamiMore.setOnClickListener { /*TODO*/ }
+        itemView.textHamiMore.setOnClickListener { clickListener(catalogItem) }
       }
     }
 
@@ -83,22 +83,22 @@ class CatalogAdapter : RecyclerView.Adapter<CatalogAdapter.ViewHolder<CatalogIte
     }
   }
 
-  class HeaderViewHolder(itemView: View) : ViewHolder<Header>(itemView) {
+  private class HeaderViewHolder(itemView: View, clickListener: (Header) -> Unit) : ViewHolder<Header>(itemView, clickListener) {
     override fun bind(catalogItem: Header) {
 
       itemView.textHeaderName.text = catalogItem.title
-      itemView.imageHeaderMore.setOnClickListener { /*TODO*/ }
+      itemView.imageHeaderMore.setOnClickListener { clickListener(catalogItem) }
     }
 
   }
 
-  class AppViewHolder(itemView: View) : ViewHolder<AppItem>(itemView) {
+  private class AppViewHolder(itemView: View, clickListener: (AppItem) -> Unit) : ViewHolder<AppItem>(itemView, clickListener) {
 
     override fun bind(catalogItem: AppItem) {
 
       itemView.textApp.text = catalogItem.name
       showAppImage(catalogItem)
-      itemView.setOnClickListener { /*TODO*/ }
+      itemView.setOnClickListener { clickListener(catalogItem) }
     }
 
     private fun showAppImage(catalogItem: AppItem) {
@@ -108,4 +108,12 @@ class CatalogAdapter : RecyclerView.Adapter<CatalogAdapter.ViewHolder<CatalogIte
     }
   }
 
+  interface OnCatalogItemClicked {
+
+    fun onHamiClicked(hami: Hami)
+
+    fun onHeaderClicked(header: Header)
+
+    fun onAppClicked(appItem: AppItem)
+  }
 }

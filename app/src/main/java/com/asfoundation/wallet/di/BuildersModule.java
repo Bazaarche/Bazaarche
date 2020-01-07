@@ -60,6 +60,7 @@ import com.asfoundation.wallet.wallet_validation.poa.PoaPhoneValidationFragment;
 import com.asfoundation.wallet.wallet_validation.poa.PoaValidationLoadingFragment;
 import com.asfoundation.wallet.wallet_validation.poa.PoaValidationSuccessFragment;
 import com.asfoundation.wallet.wallet_validation.poa.PoaWalletValidationActivity;
+
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
@@ -108,7 +109,9 @@ import dagger.android.ContributesAndroidInjector;
 
   @ActivityScope @ContributesAndroidInjector abstract TopUpActivity bindTopUpActivity();
 
-  @ActivityScope @ContributesAndroidInjector() abstract CatalogActivity bindCatalogActivity();
+  @ActivityScope
+  @ContributesAndroidInjector(modules = CatalogModule.class)
+  abstract CatalogActivity bindCatalogModule();
 
   @ActivityScope @ContributesAndroidInjector abstract OnboardingActivity bindOnboardingModule();
 

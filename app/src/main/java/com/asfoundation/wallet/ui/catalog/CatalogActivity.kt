@@ -29,7 +29,7 @@ class CatalogActivity : AppCompatActivity() {
   @Inject
   lateinit var catalogViewNavigator: CatalogViewNavigator
 
-  val adapter = CatalogAdapter()
+  private val adapter by lazy { CatalogAdapter(catalogViewNavigator) }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -37,6 +37,11 @@ class CatalogActivity : AppCompatActivity() {
 
     initView()
     observeData()
+  }
+
+  override fun onDestroy() {
+    catalogViewNavigator.destroy()
+    super.onDestroy()
   }
 
   private fun initView() {
@@ -79,7 +84,7 @@ class CatalogActivity : AppCompatActivity() {
 
   private fun setSettingsImageClickListener() {
     imageSettings.setOnClickListener {
-      catalogViewNavigator.openSettings(this)
+      catalogViewNavigator.openSettings()
     }
 
   }
