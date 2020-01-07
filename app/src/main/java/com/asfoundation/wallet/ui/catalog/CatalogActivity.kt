@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.asf.wallet.R
+import com.asfoundation.wallet.navigator.CatalogViewNavigator
 import com.asfoundation.wallet.ui.getDividerDrawable
 import com.asfoundation.wallet.ui.widget.CatalogDividerItemDecoration
 import com.asfoundation.wallet.ui.widget.CatalogDividerItemDecoration.VERTICAL
@@ -14,6 +15,7 @@ import com.asfoundation.wallet.viewmodel.CatalogViewModel
 import com.asfoundation.wallet.viewmodel.CatalogViewModelFactory
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_catalog.*
+import kotlinx.android.synthetic.main.layout_catalog_appbar.*
 import javax.inject.Inject
 
 class CatalogActivity : AppCompatActivity() {
@@ -23,6 +25,9 @@ class CatalogActivity : AppCompatActivity() {
   private val viewModel: CatalogViewModel by lazy {
     ViewModelProviders.of(this, viewModelFactory).get(CatalogViewModel::class.java)
   }
+
+  @Inject
+  lateinit var catalogViewNavigator: CatalogViewNavigator
 
   val adapter = CatalogAdapter()
 
@@ -38,6 +43,7 @@ class CatalogActivity : AppCompatActivity() {
 
     setContentView(R.layout.activity_catalog)
     setupRecyclerView()
+    setSettingsImageClickListener()
   }
 
   private fun observeData() {
@@ -68,6 +74,13 @@ class CatalogActivity : AppCompatActivity() {
       it.adapter = adapter
 
       it.addItemDecoration(createItemDecoration())
+    }
+
+  }
+
+  private fun setSettingsImageClickListener() {
+    imageSettings.setOnClickListener {
+      catalogViewNavigator.openSettings(this)
     }
 
   }
