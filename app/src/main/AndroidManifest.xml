@@ -60,6 +60,9 @@
         android:name="com.asfoundation.wallet.ui.SettingsActivity"
         android:label="@string/title_activity_settings"/>
     <activity
+        android:name="com.asfoundation.wallet.ui.bazarchesettings.BazaarcheSettingsActivity"
+        android:label="@string/title_activity_settings" />
+    <activity
         android:name="com.asfoundation.wallet.ui.balance.TransactionDetailActivity"
         android:label=""/>
     <activity
@@ -236,7 +239,7 @@
     <receiver
         android:name="com.asfoundation.wallet.advertise.PoAHandshakeReceiver"
         android:enabled="true"
-        android:exported="true">
+        android:exported="false">
       <intent-filter>
         <action android:name="com.asf.appcoins.service.ACTION_START_HANDSHAKE"/>
       </intent-filter>
