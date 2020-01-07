@@ -9,7 +9,6 @@ class CatalogViewNavigator @Inject constructor() {
 
   fun openSettings(context: Context) {
     val intent = Intent(context, BazaarcheSettingsActivity::class.java)
-    intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
     context.startActivity(intent)
   }
 
