@@ -857,10 +857,6 @@ import static com.asfoundation.wallet.service.AppsApi.API_BASE_URL;
         .create(CatalogApi.class);
   }
 
-//  @Singleton @Provides CatalogRepository provideCatalogRepository(CatalogApi api) {
-//    return new CatalogRepository(new CatalogService(api));
-//  }
-
   @Singleton @Provides BackendApi provideBackendApi(OkHttpClient client, Gson gson) {
     return new Retrofit.Builder().baseUrl(BuildConfig.BACKEND_HOST)
         .client(client)
