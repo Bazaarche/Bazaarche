@@ -15,11 +15,11 @@ class CatalogAdapter(private val onCatalogItemClicked: OnCatalogItemClicked) : R
   val items = mutableListOf<CatalogItem>()
 
   override fun getItemViewType(position: Int): Int =
-      when {
-        items[position] is Hami -> {
+      when (items[position]) {
+        is Hami -> {
           R.layout.item_hami
         }
-        items[position] is Header -> {
+        is Header -> {
           R.layout.item_apps_header
         }
         else -> {
