@@ -12,13 +12,14 @@ import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationCompat.Builder;
 import androidx.room.Room;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-import cm.aptoide.analytics.AnalyticsManager;
+
 import com.appcoins.wallet.appcoins.rewards.AppcoinsRewards;
 import com.appcoins.wallet.appcoins.rewards.repository.BdsAppcoinsRewardsRepository;
 import com.appcoins.wallet.appcoins.rewards.repository.backend.BackendApi;
@@ -232,13 +233,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.jakewharton.rxrelay2.BehaviorRelay;
-import dagger.Module;
-import dagger.Provides;
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.BehaviorSubject;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.text.DateFormat;
@@ -251,15 +248,23 @@ import java.util.Locale;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
+
+import cm.aptoide.analytics.AnalyticsManager;
+import dagger.Module;
+import dagger.Provides;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.BehaviorSubject;
 import okhttp3.OkHttpClient;
-import org.jetbrains.annotations.NotNull;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.asfoundation.wallet.AirdropService.BASE_URL;
@@ -846,7 +851,6 @@ import static com.asfoundation.wallet.service.AppsApi.API_BASE_URL;
     String baseUrl = CatalogService.SERVICE_HOST;
     return new Retrofit.Builder().baseUrl(baseUrl)
         .client(client)
-        .addConverterFactory(ScalarsConverterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
