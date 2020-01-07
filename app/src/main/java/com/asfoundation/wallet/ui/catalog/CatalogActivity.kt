@@ -61,8 +61,7 @@ class CatalogActivity : AppCompatActivity() {
       val rightMargin = resources.getDimensionPixelSize(R.dimen.app_image_size)
       val dividerDrawable = getDividerDrawable(this, 0, rightMargin)
 
-      val itemDecoration = CatalogDividerItemDecoration(this, VERTICAL,
-          R.layout.item_app)
+      val itemDecoration = CatalogDividerItemDecoration(this, VERTICAL, R.layout.item_app)
       itemDecoration.setDrawable(dividerDrawable)
 
       return itemDecoration
