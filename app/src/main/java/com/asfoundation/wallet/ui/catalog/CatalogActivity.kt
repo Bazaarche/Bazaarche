@@ -22,14 +22,14 @@ class CatalogActivity : AppCompatActivity() {
 
   @Inject
   lateinit var viewModelFactory: CatalogViewModelFactory
-  private val viewModel: CatalogViewModel by lazy {
+  private val viewModel: CatalogViewModel by lazy(LazyThreadSafetyMode.NONE) {
     ViewModelProviders.of(this, viewModelFactory).get(CatalogViewModel::class.java)
   }
 
   @Inject
   lateinit var catalogViewNavigator: CatalogViewNavigator
 
-  private val adapter by lazy { CatalogAdapter(catalogViewNavigator) }
+  private val adapter by lazy(LazyThreadSafetyMode.NONE) { CatalogAdapter(catalogViewNavigator) }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
