@@ -41,7 +41,12 @@ class CatalogViewNavigator @Inject constructor(activity: Activity) : CatalogAdap
     val intent = Intent(Intent.ACTION_VIEW)
     intent.data = Uri.parse(uriString)
     intent.setPackage(BAZAAR_PACKAGE_NAME)
-    activity?.startActivity(intent)
+    activity?.let { activity ->
+      if (intent.resolveActivity(activity.packageManager) != null) {
+
+        activity.startActivity(intent)
+      }
+    }
   }
 
 }
