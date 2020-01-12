@@ -1,16 +1,19 @@
 package com.asfoundation.wallet.ui.catalog
 
+import com.asfoundation.wallet.entity.App
 import com.asfoundation.wallet.entity.HamiData
 import com.asfoundation.wallet.entity.Row
 
 sealed class CatalogItem
 
 
-data class Hami(val title: String, val shortDescription: String, val link: String, val imageURL: String) : CatalogItem() {
+data class Hami(val title: String, val shortDescription: String, val link: String,
+                val imageURL: String, val app: App) : CatalogItem() {
 
   companion object {
-    fun from(hamiData: HamiData): Hami = Hami(hamiData.title, hamiData.shortDescription,
-        hamiData.link, hamiData.imageURL)
+    fun from(hamiData: HamiData): Hami = hamiData.run {
+      Hami(title, shortDescription, link, imageURL, app)
+    }
   }
 }
 
