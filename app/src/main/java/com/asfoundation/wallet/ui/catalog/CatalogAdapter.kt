@@ -3,6 +3,7 @@ package com.asfoundation.wallet.ui.catalog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.asf.wallet.R
 import com.squareup.picasso.Picasso
@@ -61,6 +62,12 @@ class CatalogAdapter(private val onCatalogItemClicked: OnCatalogItemClicked) : R
 
   abstract class ViewHolder<T : CatalogItem>(itemView: View, protected val clickListener: (T) -> Unit) : RecyclerView.ViewHolder(itemView) {
     abstract fun bind(catalogItem: T)
+
+    internal fun showImage(what: String, `in`: ImageView) {
+      Picasso.with(itemView.context)
+          .load(what)
+          .into(`in`)
+    }
   }
 
   private class HamiViewHolder(itemView: View, clickListener: (Hami) -> Unit) : ViewHolder<Hami>(itemView, clickListener) {
@@ -69,16 +76,25 @@ class CatalogAdapter(private val onCatalogItemClicked: OnCatalogItemClicked) : R
       catalogItem.apply {
 
         showHamiImage(imageURL)
-        itemView.textHamiTitle.text = title
-        itemView.textHamiDescription.text = shortDescription
-        itemView.textHamiMore.setOnClickListener { clickListener(catalogItem) }
+        showImage(app.image, itemView.imageHamiAppIcon)
+        itemView.textHamiAppName.text = app.name
+        showShortDescription(this)
+        itemView.setOnClickListener { clickListener(catalogItem) }
       }
     }
 
+    private fun showShortDescription(hami: Hami) {
+      if (hami.shortDescription.isEmpty()) {
+        itemView.textHamiShortDescription.visibility = View.GONE
+      } else {
+        itemView.textHamiShortDescription.text = hami.shortDescription
+      }
+    }
 
     private fun showHamiImage(imageURL: String) {
       Picasso.with(itemView.context)
           .load(imageURL)
+          .placeholder(R.drawable.bg_sample_app)
           .into(itemView.imageHami)
     }
   }
@@ -97,15 +113,10 @@ class CatalogAdapter(private val onCatalogItemClicked: OnCatalogItemClicked) : R
     override fun bind(catalogItem: AppItem) {
 
       itemView.textApp.text = catalogItem.name
-      showAppImage(catalogItem)
+      showImage(catalogItem.image, itemView.imageApp)
       itemView.setOnClickListener { clickListener(catalogItem) }
     }
 
-    private fun showAppImage(catalogItem: AppItem) {
-      Picasso.with(itemView.context)
-          .load(catalogItem.image)
-          .into(itemView.imageApp)
-    }
   }
 
   interface OnCatalogItemClicked {
