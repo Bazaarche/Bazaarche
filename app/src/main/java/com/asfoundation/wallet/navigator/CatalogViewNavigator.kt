@@ -2,7 +2,10 @@ package com.asfoundation.wallet.navigator
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import com.asfoundation.wallet.BAZAAR_APP_VIEW_URL
+import com.asfoundation.wallet.BAZAAR_PACKAGE_NAME
 import com.asfoundation.wallet.ui.bazarchesettings.BazaarcheSettingsActivity
 import com.asfoundation.wallet.ui.catalog.AppItem
 import com.asfoundation.wallet.ui.catalog.CatalogAdapter
@@ -30,7 +33,7 @@ class CatalogViewNavigator @Inject constructor(activity: Activity) : CatalogAdap
   }
 
   override fun onAppClicked(appItem: AppItem) {
-    openBazaar("bazaar://details?id=" + appItem.packageName)
+    openBazaar(BAZAAR_APP_VIEW_URL + appItem.packageName)
   }
 
   fun destroy() {
@@ -40,15 +43,19 @@ class CatalogViewNavigator @Inject constructor(activity: Activity) : CatalogAdap
   private fun openBazaar(uriString: String) {
     val intent = Intent(Intent.ACTION_VIEW)
     intent.data = Uri.parse(uriString)
-    intent.setPackage(BAZAAR_PACKAGE_NAME)
-    activity?.let { activity ->
-      if (intent.resolveActivity(activity.packageManager) != null) {
 
+    activity?.let { activity ->
+      val packageManager = activity.packageManager
+      val appsList = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
+
+      if (appsList != null) {
+        if (appsList.any { it.activityInfo.packageName == BAZAAR_PACKAGE_NAME }) {
+          intent.setPackage(BAZAAR_PACKAGE_NAME)
+        }
         activity.startActivity(intent)
       }
+
     }
   }
 
 }
-
-const val BAZAAR_PACKAGE_NAME = "com.farsitel.bazaar"
