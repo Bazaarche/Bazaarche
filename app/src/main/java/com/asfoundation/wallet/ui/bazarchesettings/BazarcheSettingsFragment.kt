@@ -56,7 +56,7 @@ class BazarcheSettingsFragment : Fragment() {
 
   private fun createItemDecoration(): DividerItemDecoration {
 
-    val margin = resources.getDimensionPixelSize(R.dimen.bazaarche_sides)
+    val margin = resources.getDimensionPixelSize(R.dimen.default_margin_double)
     return createItemDecoration(requireContext(), margin, margin)
   }
 

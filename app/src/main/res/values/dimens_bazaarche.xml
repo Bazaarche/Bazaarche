@@ -2,7 +2,6 @@
 <resources>
 
   <dimen name="intro_button_height">56dp</dimen>
-  <dimen name="bazaarche_sides">16dp</dimen>
   <dimen name="bazaarche_medium_text">16sp</dimen>
   <dimen name="hami_height">328dp</dimen>
   <dimen name="hami_image_width">166dp</dimen>
