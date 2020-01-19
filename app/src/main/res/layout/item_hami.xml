@@ -58,6 +58,7 @@
               android:ellipsize="end"
               android:textColor="@color/white"
               android:lines="1"
+              android:textAlignment="viewStart"
               tools:text="نام برنامه" />
 
           <TextView
@@ -67,6 +68,7 @@
               android:ellipsize="end"
               android:textColor="@color/white"
               android:lines="1"
+              android:textAlignment="viewStart"
               tools:text="من توضیحات کوتاه برنامه هستم" />
 
         </LinearLayout>
