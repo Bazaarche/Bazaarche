@@ -48,7 +48,7 @@ class CatalogViewNavigator @Inject constructor(activity: Activity) : CatalogAdap
       val packageManager = activity.packageManager
       val appsList = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
 
-      if (appsList != null) {
+      if (appsList.isNotEmpty()) {
         if (appsList.any { it.activityInfo.packageName == BAZAAR_PACKAGE_NAME }) {
           intent.setPackage(BAZAAR_PACKAGE_NAME)
         }
