@@ -247,6 +247,8 @@ dependencies {
   implementation "com.asfoundation:appcoins-contract-proxy:$project.appcoinsSdkVersion"
   implementation project(path: ':billing')
 
+  implementation "com.phelat:poolakey:1.0.0-alpha02"
+
   //braintreepayments card form dependency
   implementation "com.braintreepayments:card-form:$project.card_form"
   implementation "com.adyen.checkout:core:$project.checkout"
