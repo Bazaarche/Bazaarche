@@ -318,6 +318,18 @@ import static com.asfoundation.wallet.service.AppsApi.API_BASE_URL;
         .build();
   }
 
+  @Singleton
+  @Provides
+  @Named("bazaarcheOkHttpClient")
+  OkHttpClient provideBazaarcheOkHttpClient() {
+    return new OkHttpClient.Builder()
+        .addInterceptor(new LogInterceptor())
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(5, TimeUnit.MINUTES)
+        .writeTimeout(30, TimeUnit.SECONDS)
+        .build();
+  }
+
   @Singleton @Provides SharedPreferencesRepository providePreferencesRepository(Context context) {
     return new SharedPreferencesRepository(context);
   }
@@ -847,7 +859,9 @@ import static com.asfoundation.wallet.service.AppsApi.API_BASE_URL;
         .create(GamificationApi.class);
   }
 
-  @Singleton @Provides CatalogApi provideCatalogApi(OkHttpClient client) {
+  @Singleton
+  @Provides
+  CatalogApi provideCatalogApi(@Named("bazaarcheOkHttpClient") OkHttpClient client) {
     String baseUrl = CatalogService.SERVICE_HOST;
     return new Retrofit.Builder().baseUrl(baseUrl)
         .client(client)
