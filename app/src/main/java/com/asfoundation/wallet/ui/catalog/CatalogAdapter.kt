@@ -23,7 +23,7 @@ class CatalogAdapter(private val onCatalogItemClicked: OnCatalogItemClicked) : R
         is Header -> {
           R.layout.item_apps_header
         }
-        else -> {
+        is AppItem -> {
           R.layout.item_app
         }
       }

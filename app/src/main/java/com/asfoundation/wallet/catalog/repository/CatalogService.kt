@@ -18,7 +18,7 @@ class CatalogService @Inject constructor(val api: CatalogApi) {
 
     private val MEDIA_TYPE = MediaType.parse("text/plain; charset=UTF-8")
 
-    private const val catalogRequestBodyString = "{\n" +
+    private const val catalogRequestBodyString = "{\n" +//TODO refactor this
         "    \"properties\": {\n" +
         "        \"androidClientInfo\": {\n" +
         "            \"adId\": \"28fb2ff9-204f-4cb7-b104-e4072ac63e40\",\n" +
