@@ -63,10 +63,10 @@ class CatalogAdapter(private val onCatalogItemClicked: OnCatalogItemClicked) : R
   abstract class ViewHolder<T : CatalogItem>(itemView: View, protected val clickListener: (T) -> Unit) : RecyclerView.ViewHolder(itemView) {
     abstract fun bind(catalogItem: T)
 
-    internal fun showImage(what: String, `in`: ImageView) {
+    internal fun showImage(what: String, into: ImageView) {
       Picasso.with(itemView.context)
           .load(what)
-          .into(`in`)
+          .into(into)
     }
   }
 
