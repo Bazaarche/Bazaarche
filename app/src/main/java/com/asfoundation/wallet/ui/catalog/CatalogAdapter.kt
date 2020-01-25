@@ -41,9 +41,10 @@ class CatalogAdapter(private val onCatalogItemClicked: OnCatalogItemClicked) : R
       R.layout.item_apps_header -> {
         HeaderViewHolder(itemView, onCatalogItemClicked::onHeaderClicked)
       }
-      else -> {
+      R.layout.item_app -> {
         AppViewHolder(itemView, onCatalogItemClicked::onAppClicked)
       }
+      else -> throw IllegalStateException("Invalid viewType $viewType")
     } as ViewHolder<CatalogItem>
 
   }
