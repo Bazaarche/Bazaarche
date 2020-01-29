@@ -4,25 +4,28 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import androidx.activity.ComponentActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.OnLifecycleEvent
 import com.asfoundation.wallet.BAZAAR_APP_VIEW_URL
 import com.asfoundation.wallet.BAZAAR_PACKAGE_NAME
-import com.asfoundation.wallet.ui.bazarchesettings.BazaarcheSettingsActivity
 import com.asfoundation.wallet.ui.catalog.AppItem
-import com.asfoundation.wallet.ui.catalog.CatalogAdapter
 import com.asfoundation.wallet.ui.catalog.Hami
 import com.asfoundation.wallet.ui.catalog.Header
-import javax.inject.Inject
+import com.asfoundation.wallet.util.BaseLifecycleObserver
 
-class CatalogViewNavigator @Inject constructor(activity: Activity) : CatalogAdapter.OnCatalogItemClicked {
+interface AppsNavigator {
+
+  fun onHamiClicked(hami: Hami)
+
+  fun onHeaderClicked(header: Header)
+
+  fun onAppClicked(appItem: AppItem)
+}
+
+class AppsNavigatorImpl(activity: ComponentActivity) : AppsNavigator, BaseLifecycleObserver(activity.lifecycle) {
 
   var activity: Activity? = activity
-
-  fun openSettings() {
-    activity?.let {
-      val intent = Intent(it, BazaarcheSettingsActivity::class.java)
-      it.startActivity(intent)
-    }
-  }
 
   override fun onHamiClicked(hami: Hami) {
     openBazaar(hami.link)
@@ -36,7 +39,8 @@ class CatalogViewNavigator @Inject constructor(activity: Activity) : CatalogAdap
     openBazaar(BAZAAR_APP_VIEW_URL + appItem.packageName)
   }
 
-  fun destroy() {
+  @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+  fun onDestroy() {
     activity = null
   }
 

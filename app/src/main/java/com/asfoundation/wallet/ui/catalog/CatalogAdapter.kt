@@ -6,12 +6,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.asf.wallet.R
+import com.asfoundation.wallet.navigator.AppsNavigator
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_app.view.*
 import kotlinx.android.synthetic.main.item_apps_header.view.*
 import kotlinx.android.synthetic.main.item_hami.view.*
 
-class CatalogAdapter(private val onCatalogItemClicked: OnCatalogItemClicked) : RecyclerView.Adapter<CatalogAdapter.ViewHolder<CatalogItem>>() {
+class CatalogAdapter(private val appsNavigator: AppsNavigator) : RecyclerView.Adapter<CatalogAdapter.ViewHolder<CatalogItem>>() {
 
   val items = mutableListOf<CatalogItem>()
 
@@ -36,13 +37,13 @@ class CatalogAdapter(private val onCatalogItemClicked: OnCatalogItemClicked) : R
     @Suppress("UNCHECKED_CAST")
     return when (viewType) {
       R.layout.item_hami -> {
-        HamiViewHolder(itemView, onCatalogItemClicked::onHamiClicked)
+        HamiViewHolder(itemView, appsNavigator::onHamiClicked)
       }
       R.layout.item_apps_header -> {
-        HeaderViewHolder(itemView, onCatalogItemClicked::onHeaderClicked)
+        HeaderViewHolder(itemView, appsNavigator::onHeaderClicked)
       }
       R.layout.item_app -> {
-        AppViewHolder(itemView, onCatalogItemClicked::onAppClicked)
+        AppViewHolder(itemView, appsNavigator::onAppClicked)
       }
       else -> throw IllegalStateException("Invalid viewType $viewType")
     } as ViewHolder<CatalogItem>
@@ -120,12 +121,4 @@ class CatalogAdapter(private val onCatalogItemClicked: OnCatalogItemClicked) : R
 
   }
 
-  interface OnCatalogItemClicked {
-
-    fun onHamiClicked(hami: Hami)
-
-    fun onHeaderClicked(header: Header)
-
-    fun onAppClicked(appItem: AppItem)
-  }
 }

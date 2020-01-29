@@ -7,7 +7,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.asf.wallet.R
-import com.asfoundation.wallet.navigator.CatalogViewNavigator
+import com.asfoundation.wallet.navigator.AppsNavigator
+import com.asfoundation.wallet.ui.bazarchesettings.BazaarcheSettingsActivity
 import com.asfoundation.wallet.ui.getDividerDrawable
 import com.asfoundation.wallet.ui.widget.CatalogDividerItemDecoration
 import com.asfoundation.wallet.ui.widget.CatalogDividerItemDecoration.VERTICAL
@@ -25,7 +26,7 @@ class CatalogActivity : AppCompatActivity() {
   lateinit var viewModelFactory: CatalogViewModelFactory
 
   @Inject
-  lateinit var catalogViewNavigator: CatalogViewNavigator
+  lateinit var appsNavigator: AppsNavigator
 
   private lateinit var viewModel: CatalogViewModel
 
@@ -39,11 +40,6 @@ class CatalogActivity : AppCompatActivity() {
     observeData()
   }
 
-  override fun onDestroy() {
-    catalogViewNavigator.destroy()
-    super.onDestroy()
-  }
-
   private fun initView() {
 
     setContentView(R.layout.activity_catalog)
@@ -55,7 +51,7 @@ class CatalogActivity : AppCompatActivity() {
 
     viewModel.getCatalogRows().observeNotNull(this) {
 
-      val adapter = CatalogAdapter(appNavigator)
+      val adapter = CatalogAdapter(appsNavigator)
       recyclerCatalog.adapter = adapter
 
       adapter.addItems(it)
@@ -85,7 +81,8 @@ class CatalogActivity : AppCompatActivity() {
 
   private fun setSettingsImageClickListener() {
     imageSettings.setOnClickListener {
-      catalogViewNavigator.openSettings()
+      val intent = Intent(this, BazaarcheSettingsActivity::class.java)
+      startActivity(intent)
     }
 
   }

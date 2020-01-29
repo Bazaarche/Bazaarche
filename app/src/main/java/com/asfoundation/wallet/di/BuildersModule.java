@@ -60,7 +60,6 @@ import com.asfoundation.wallet.wallet_validation.poa.PoaPhoneValidationFragment;
 import com.asfoundation.wallet.wallet_validation.poa.PoaValidationLoadingFragment;
 import com.asfoundation.wallet.wallet_validation.poa.PoaValidationSuccessFragment;
 import com.asfoundation.wallet.wallet_validation.poa.PoaWalletValidationActivity;
-
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 

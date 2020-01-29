@@ -1,8 +1,8 @@
 package com.asfoundation.wallet.di;
 
-import com.asfoundation.wallet.navigator.CatalogViewNavigator;
+import com.asfoundation.wallet.navigator.AppsNavigator;
+import com.asfoundation.wallet.navigator.AppsNavigatorImpl;
 import com.asfoundation.wallet.ui.catalog.CatalogActivity;
-
 import dagger.Module;
 import dagger.Provides;
 
@@ -10,7 +10,7 @@ import dagger.Provides;
 class CatalogModule {
 
   @Provides
-  CatalogViewNavigator provideCatalogViewNavigator(CatalogActivity activity) {
-    return new CatalogViewNavigator(activity);
+  AppsNavigator provideAppNavigator(CatalogActivity activity) {
+    return new AppsNavigatorImpl(activity);
   }
 }
