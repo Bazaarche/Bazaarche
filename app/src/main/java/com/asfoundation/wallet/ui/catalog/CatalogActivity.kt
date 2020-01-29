@@ -1,5 +1,6 @@
 package com.asfoundation.wallet.ui.catalog
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
@@ -22,20 +23,19 @@ class CatalogActivity : AppCompatActivity() {
 
   @Inject
   lateinit var viewModelFactory: CatalogViewModelFactory
-  private val viewModel: CatalogViewModel by lazy(LazyThreadSafetyMode.NONE) {
-    ViewModelProviders.of(this, viewModelFactory).get(CatalogViewModel::class.java)
-  }
 
   @Inject
   lateinit var catalogViewNavigator: CatalogViewNavigator
 
-  private val adapter by lazy(LazyThreadSafetyMode.NONE) { CatalogAdapter(catalogViewNavigator) }
+  private lateinit var viewModel: CatalogViewModel
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     AndroidInjection.inject(this)
 
     initView()
+
+    viewModel = ViewModelProviders.of(this, viewModelFactory).get(CatalogViewModel::class.java)
     observeData()
   }
 
@@ -55,6 +55,9 @@ class CatalogActivity : AppCompatActivity() {
 
     viewModel.getCatalogRows().observeNotNull(this) {
 
+      val adapter = CatalogAdapter(appNavigator)
+      recyclerCatalog.adapter = adapter
+
       adapter.addItems(it)
     }
   }
@@ -72,12 +75,10 @@ class CatalogActivity : AppCompatActivity() {
       return itemDecoration
     }
 
-    recyclerCatalog.also {
+    recyclerCatalog.apply {
 
-      it.layoutManager = LinearLayoutManager(this)
-      it.adapter = adapter
-
-      it.addItemDecoration(createItemDecoration())
+      layoutManager = LinearLayoutManager(this@CatalogActivity)
+      addItemDecoration(createItemDecoration())
     }
 
   }
