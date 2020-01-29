@@ -1,7 +1,8 @@
 package com.asfoundation.wallet.catalog.repository
 
-import com.asfoundation.wallet.entity.CatalogResponse
+import com.asfoundation.wallet.entity.GetPageByPathReply
 import com.asfoundation.wallet.entity.Row
+import com.asfoundation.wallet.service.GutSingleReply
 import io.reactivex.Single
 import okhttp3.MediaType
 import okhttp3.RequestBody
@@ -63,7 +64,7 @@ class CatalogService @Inject constructor(val api: CatalogApi) {
     val requestBody = RequestBody.create(MEDIA_TYPE, catalogRequestBodyString)
     return api.getCatalog(requestBody)
         .map {
-          it.singleReply.getPageByPathReply.pages[0].rows
+          it.pages[0].rows
         }
         .map { rows ->
           rows.filter { it.hamiPromo != null || it.appList != null }
@@ -73,7 +74,8 @@ class CatalogService @Inject constructor(val api: CatalogApi) {
 
 interface CatalogApi {
 
+  @GutSingleReply
   @POST("GetPageByPathRequest")
   @Headers("Authorization: Bearer PbwHrceJ7K2y4HIR93CqF2MEPVBJWPCslMJ1qooI9BChlTfjdncvClS0djrjPEgNMry8auHaZzXThsPexmqbulkDUQfQ8Rf+JVkfyWTId2heiS17eqM7zW7AH612YhrR2lCTm7oCCX2WQGX8iQ==")
-  fun getCatalog(@Body body: RequestBody): Single<CatalogResponse>
+  fun getCatalog(@Body body: RequestBody): Single<GetPageByPathReply>
 }

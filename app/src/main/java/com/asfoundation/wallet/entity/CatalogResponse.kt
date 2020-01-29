@@ -1,7 +1,5 @@
 package com.asfoundation.wallet.entity
 
-data class CatalogResponse(val singleReply: SingleReply)
-data class SingleReply(val getPageByPathReply: GetPageByPathReply)
 class GetPageByPathReply(val pages: Array<Page>)
 data class Page(val rows: List<Row>)
 

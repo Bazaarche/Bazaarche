@@ -172,6 +172,7 @@ import com.asfoundation.wallet.service.AccountWalletService;
 import com.asfoundation.wallet.service.AppsApi;
 import com.asfoundation.wallet.service.AutoUpdateService;
 import com.asfoundation.wallet.service.BDSAppsApi;
+import com.asfoundation.wallet.service.BazaarcheConverterFactory;
 import com.asfoundation.wallet.service.CampaignService;
 import com.asfoundation.wallet.service.CampaignService.CampaignApi;
 import com.asfoundation.wallet.service.LocalCurrencyConversionService;
@@ -861,11 +862,11 @@ import static com.asfoundation.wallet.service.AppsApi.API_BASE_URL;
 
   @Singleton
   @Provides
-  CatalogApi provideCatalogApi(@Named("bazaarcheOkHttpClient") OkHttpClient client) {
+  CatalogApi provideCatalogApi(@Named("bazaarcheOkHttpClient") OkHttpClient client, Gson gson) {
     String baseUrl = CatalogService.SERVICE_HOST;
     return new Retrofit.Builder().baseUrl(baseUrl)
         .client(client)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(new BazaarcheConverterFactory(gson))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
         .create(CatalogApi.class);
