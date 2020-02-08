@@ -203,8 +203,9 @@ class IabActivity : BaseActivity(), IabView, UriNavigator {
   }
 
   override fun showBazaarIab() {
+
     supportFragmentManager.beginTransaction()
-        .replace(R.id.fragment_container, BazaarIabFragment.newInstance(transaction!!, isBds))
+        .replace(R.id.fragment_container, BazaarIabFragment.newInstance(transaction!!))
         .commit()
   }
 

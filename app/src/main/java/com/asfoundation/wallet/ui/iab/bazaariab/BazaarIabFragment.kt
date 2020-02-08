@@ -16,16 +16,14 @@ class BazaarIabFragment : DaggerFragment() {
 
   companion object {
 
-    private const val ARG_IS_BDS_KEY = "is_bds"
     private const val ARG_TRANSACTION = "transaction"
 
     private const val TAG = "BazaarIabFragment"
 
-    fun newInstance(transaction: TransactionBuilder, isBds: Boolean): BazaarIabFragment {
+    fun newInstance(transaction: TransactionBuilder): BazaarIabFragment {
       val fragment = BazaarIabFragment()
       val bundle = Bundle()
       bundle.putParcelable(ARG_TRANSACTION, transaction)
-      bundle.putBoolean(ARG_IS_BDS_KEY, isBds)
 
       fragment.arguments = bundle
       return fragment
@@ -35,10 +33,6 @@ class BazaarIabFragment : DaggerFragment() {
 
   private val transaction by lazy(LazyThreadSafetyMode.NONE) {
     arguments!!.getParcelable<TransactionBuilder>(ARG_TRANSACTION)!!
-  }
-
-  private val isBds by lazy(LazyThreadSafetyMode.NONE) {
-    arguments!!.getBoolean(ARG_IS_BDS_KEY)
   }
 
   private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
