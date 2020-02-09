@@ -1,8 +1,11 @@
 package com.asfoundation.wallet.util.languagecontroller
 
-enum class Language(val languageString: String) {
-  PERSIAN("fa"),
-  ENGLISH("en");
+import androidx.annotation.StringRes
+import com.asf.wallet.R
+
+enum class Language(val languageString: String, @StringRes val titleRes: Int) {
+  PERSIAN("fa", R.string.persian),
+  ENGLISH("en", R.string.english);
 
   companion object {
 

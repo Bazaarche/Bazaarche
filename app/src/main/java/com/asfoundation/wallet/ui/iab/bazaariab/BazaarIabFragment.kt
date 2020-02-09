@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProviders
 import com.asfoundation.wallet.entity.TransactionBuilder
-import com.asfoundation.wallet.ui.iab.bazaariab.util.IabHelper
-import com.asfoundation.wallet.ui.iab.bazaariab.util.IabResult
-import com.asfoundation.wallet.ui.iab.bazaariab.util.Purchase
+import com.phelat.poolakey.Connection
+import com.phelat.poolakey.Payment
+import com.phelat.poolakey.callback.ConnectionCallback
 import dagger.android.support.DaggerFragment
 
 
@@ -21,10 +21,6 @@ class BazaarIabFragment : DaggerFragment() {
 
     private const val TAG = "BazaarIabFragment"
 
-    private const val BASE64_ENCODED_PUBLIC_KEY = "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwDMPD2GdXOVRi13M5glHo0/0hqMPkdhYZ42rYLGCroxOc0W/lZ9zhWtm+zF5Epa98tHeBXmLr9HWJJz2v4HGCaPYHo0up7ogEMbWCLIniN9N6j42Tt/naPZWOCbkeHZ5b7191Zz2cZUi4zAbEJA9uWOf1dS3tS5+7G+lG2yhhtu1dWoAng0wRj2hCoIcy/YENacQRtrRRohp8zWUdPQaK1xwX2mXMuq/Le2c7onjrUCAwEAAQ=="
-
-    private const val PURCHASE_REQUEST = 10001
-
     fun newInstance(transaction: TransactionBuilder, isBds: Boolean): BazaarIabFragment {
       val fragment = BazaarIabFragment()
       val bundle = Bundle()
@@ -35,13 +31,6 @@ class BazaarIabFragment : DaggerFragment() {
       return fragment
     }
 
-  }
-
-  private val iabHelper by lazy(LazyThreadSafetyMode.NONE) {
-    IabHelper(requireContext(), BASE64_ENCODED_PUBLIC_KEY)
-        .apply {
-          enableDebugLogging(true)
-        }
   }
 
   private val transaction by lazy(LazyThreadSafetyMode.NONE) {
@@ -56,47 +45,44 @@ class BazaarIabFragment : DaggerFragment() {
     ViewModelProviders.of(this)[BazaarIabViewModel::class.java]
   }
 
-  private fun onPurchaseFinished(result: IabResult, purchase: Purchase) {
-    if (!iabHelper.disposed) {
-      viewModel.onPurchaseFinished(result, purchase)
-    }
+  private val payment by lazy(LazyThreadSafetyMode.NONE) {
+    Payment(context = requireContext(), config = viewModel.paymentConfiguration)
   }
+
+  private lateinit var paymentConnection: Connection
+
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    iabHelper.startSetup()
+    connectPayment()
   }
 
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-    iabHelper.handleActivityResult(requestCode, resultCode, data)
+    payment.onActivityResult(requestCode, resultCode, data, viewModel::onPurchaseFinished)
   }
 
   override fun onDestroy() {
+    paymentConnection.disconnect()
     super.onDestroy()
-
-    iabHelper.dispose()
   }
 
-  private fun IabHelper.startSetup() {
-    startSetup(object : IabHelper.OnIabSetupFinishedListener {
-      override fun onIabSetupFinished(result: IabResult) {
-        Log.d(TAG, "Setup finished.")
+  private fun connectPayment() {
+    paymentConnection = payment.connect(::onConnectionFinished)
+  }
 
-        if (disposed || result.isFailure) {
-          return
+
+  private fun onConnectionFinished(connectionCallback: ConnectionCallback) {
+
+    connectionCallback.connectionSucceed {
+      payment.purchaseProduct(fragment = this, request = viewModel.purchaseRequest) {
+        failedToBeginFlow {
+          Log.w(TAG, "Payment failedToBeginFlow.")
         }
-
-        launchPurchaseFlow(this@BazaarIabFragment,
-            viewModel.sku,
-            viewModel.mapToBazaarItemType(transaction.type),
-            PURCHASE_REQUEST,
-            ::onPurchaseFinished,
-            transaction.payload)
       }
+    }
 
-    })
   }
 }

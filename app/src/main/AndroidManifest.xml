@@ -62,7 +62,8 @@
     <activity
         android:name="com.asfoundation.wallet.ui.bazarchesettings.BazaarcheSettingsActivity"
         android:launchMode="singleTop"
-        android:label="@string/title_activity_settings" />
+        android:label="@string/title_activity_settings"
+        android:theme="@style/MaterialAppTheme" />
     <activity
         android:name="com.asfoundation.wallet.ui.balance.TransactionDetailActivity"
         android:label=""/>
@@ -165,7 +166,8 @@
         android:label="@string/title_activity_send"/>
     <activity
         android:name="com.asfoundation.wallet.topup.TopUpActivity"
-        android:label="@string/topup_title">
+        android:label="@string/topup_title"
+        android:screenOrientation="portrait">
       <intent-filter>
         <data
             android:host="aptoide.com"
@@ -208,7 +210,7 @@
     <activity
         android:name="com.asfoundation.wallet.ui.UpdateRequiredActivity"
         android:label=""
-        android:screenOrientation="portrait" />
+        android:screenOrientation="portrait"/>
 
     <activity
         android:name="com.asfoundation.wallet.wallet_blocked.WalletBlockedActivity"
