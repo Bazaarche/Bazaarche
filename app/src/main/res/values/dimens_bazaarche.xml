@@ -2,7 +2,10 @@
 <resources>
 
   <dimen name="intro_button_height">56dp</dimen>
-
-  <dimen name="bazaarche_item_padding">16dp</dimen>
   <dimen name="bazaarche_medium_text">16sp</dimen>
+  <dimen name="app_image_size">72dp</dimen>
+  <dimen name="default_margin">8dp</dimen>
+  <dimen name="default_margin_half">4dp</dimen>
+  <dimen name="default_margin_double">16dp</dimen>
+  <dimen name="default_margin_triple">24dp</dimen>
 </resources>

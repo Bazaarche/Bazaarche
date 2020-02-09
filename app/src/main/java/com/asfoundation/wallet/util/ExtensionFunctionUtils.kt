@@ -1,5 +1,8 @@
 package com.asfoundation.wallet.util
 
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import java.io.IOException
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -24,4 +27,13 @@ fun BigDecimal.formatWithSuffix(scale: Int): String {
 
 fun Throwable?.isNoNetworkException(): Boolean {
   return this != null && (this is IOException || this.cause != null && this.cause is IOException)
+}
+
+inline fun <T> LiveData<T>.observeNotNull(owner: LifecycleOwner, crossinline observer: (T) -> Unit) {
+
+  observe(owner, Observer {
+    if (it != null) {
+      observer(it)
+    }
+  })
 }

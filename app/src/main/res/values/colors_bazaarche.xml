@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="black_color">#000000</color>
 
+  <color name="black_color">#000000</color>
+  <color name="catalog_header_color">#1f1f1f</color>
+  <color name="bazaarche_green">#0ea960</color>
+  <color name="grey_300">#E0E0E0</color>
 </resources>

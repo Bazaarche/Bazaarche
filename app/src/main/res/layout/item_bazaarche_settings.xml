@@ -4,7 +4,7 @@
     android:id="@+id/textItemBazaarcheSettings"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/bazaarche_item_padding"
+    android:padding="@dimen/default_margin_double"
     android:textColor="@color/black_color"
     android:textSize="@dimen/bazaarche_medium_text"
     tools:text="@string/transactions_list" />
