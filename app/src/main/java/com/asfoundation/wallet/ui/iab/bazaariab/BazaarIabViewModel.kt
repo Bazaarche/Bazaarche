@@ -1,22 +1,24 @@
 package com.asfoundation.wallet.ui.iab.bazaariab
 
+import android.content.Intent
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.asf.wallet.BuildConfig
-import com.phelat.poolakey.callback.PurchaseCallback
+import com.asfoundation.wallet.entity.TransactionBuilder
 import com.phelat.poolakey.config.PaymentConfiguration
 import com.phelat.poolakey.config.SecurityCheck
 import com.phelat.poolakey.entity.PurchaseEntity
 import com.phelat.poolakey.request.PurchaseRequest
+import io.reactivex.Scheduler
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Consumer
 
-class BazaarIabViewModel : ViewModel() {
+internal class BazaarIabViewModel(private val transaction: TransactionBuilder,
+                                  private val bazaarIabInteract: BazaarIabInteract,
+                                  private val scheduler: Scheduler) : ViewModel() {
 
-  companion object {
-
-    private const val PURCHASE_REQUEST = 10001
-
-  }
-
-  private val sku = "test"/*transaction.skuId*///TODO: remove this and use transaction.skuId
+  private val disposables = CompositeDisposable()
 
   internal val paymentConfiguration = run {
     val securityCheck = SecurityCheck.Enable(rsaPublicKey = BuildConfig.BAZAARCHE_IAB_KEY)
@@ -24,47 +26,34 @@ class BazaarIabViewModel : ViewModel() {
   }
 
 
-  internal val purchaseRequest = PurchaseRequest(
-      productId = sku,
-      requestCode = PURCHASE_REQUEST,
-      payload = ""
-  )
+  internal fun getPurchaseRequest(): LiveData<PurchaseRequest> {
 
-  fun onPurchaseFinished(purchaseCallback: PurchaseCallback) {
+    val purchaseRequestLiveData = MutableLiveData<PurchaseRequest>()
 
-    purchaseCallback.purchaseSucceed {
+    disposables.add(bazaarIabInteract.getPurchaseRequest()
+        .subscribeOn(scheduler)
+        .subscribe(Consumer {
+          purchaseRequestLiveData.postValue(it)
+        })
+    )
 
-      if (!verifyDeveloperPayload(it.purchaseInfo.payload)) {
-        return@purchaseSucceed
-      }
-
-      if (it.purchaseInfo.productId == sku) {
-
-        createTransaction(it)
-      }
-    }
-
+    return purchaseRequestLiveData
   }
 
 
-  private fun verifyDeveloperPayload(payload: String): Boolean {
-    /*
-     * TODO: verify that the developer payload of the purchase is correct.
-     */
-    return true
+  fun onPurchaseFinished(data: Intent, purchaseEntity: PurchaseEntity) {
+
+    disposables.add(bazaarIabInteract.getPurchaseInfo(data, purchaseEntity)
+        .flatMapCompletable {
+          bazaarIabInteract.waitTransactionCompletion(it.uid)
+        }
+        .andThen(bazaarIabInteract.getPurchaseBundle(transaction.domain, transaction.skuId))
+        .subscribeOn(scheduler)
+        .subscribe(Consumer {
+        }))
   }
 
-
-  private fun createTransaction(purchase: PurchaseEntity) {//TODO
-//    val disposable = bazaarIabUtils.start(transaction, purchase.developerPayload,
-//        purchase.token, isBds, activity.packageName)
-//
-//        .observeOn(AndroidSchedulers.mainThread())
-//        .subscribe({
-//          Log.d(TAG, "status: " + it.status + " ,uid: " + it.uid + " ,data: " + it.data)
-//        }, {
-//          Log.d(TAG, it.message)
-//        })
+  override fun onCleared() {
+    disposables.clear()
   }
-
 }

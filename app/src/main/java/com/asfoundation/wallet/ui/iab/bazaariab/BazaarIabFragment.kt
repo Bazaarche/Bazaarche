@@ -1,11 +1,11 @@
 package com.asfoundation.wallet.ui.iab.bazaariab
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.asfoundation.wallet.entity.TransactionBuilder
-import com.phelat.poolakey.Connection
 import com.phelat.poolakey.Payment
 import com.phelat.poolakey.rx.connect
 import com.phelat.poolakey.rx.onActivityResult
@@ -39,9 +39,10 @@ class BazaarIabFragment : DaggerFragment() {
     arguments!!.getParcelable<TransactionBuilder>(ARG_TRANSACTION)!!
   }
 
-  private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
-    ViewModelProviders.of(this)[BazaarIabViewModel::class.java]
-  }
+  @Inject
+  lateinit var bazaarIabViewModelFactory: BazaarIabViewModelFactory
+
+  private lateinit var viewModel: BazaarIabViewModel
 
   private val payment by lazy(LazyThreadSafetyMode.NONE) {
     Payment(context = requireContext(), config = viewModel.paymentConfiguration)
@@ -53,6 +54,7 @@ class BazaarIabFragment : DaggerFragment() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
+    viewModel = ViewModelProviders.of(this, bazaarIabViewModelFactory)[BazaarIabViewModel::class.java]
     connectPayment()
   }
 
@@ -61,7 +63,7 @@ class BazaarIabFragment : DaggerFragment() {
 
     payment.onActivityResult(requestCode, resultCode, data)
         .doOnSuccess {
-          viewModel.onPurchaseFinished(it)
+          viewModel.onPurchaseFinished(data!!, it)
         }.subscribe()
   }
 
@@ -76,13 +78,13 @@ class BazaarIabFragment : DaggerFragment() {
 
   private fun onConnectionFinished() {
 
-    connectionCallback.connectionSucceed {
-      payment.purchaseProduct(fragment = this, request = viewModel.purchaseRequest) {
-        failedToBeginFlow {
-          Log.w(TAG, "Payment failedToBeginFlow.")
-        }
-      }
-    }
-
+    viewModel.getPurchaseRequest().observe(this, Observer {
+      payment.purchaseProduct(this, it)
+          .subscribe(::onPurchaseFlowBegan)
+    })
   }
+
+  private fun onPurchaseFlowBegan() {
+  }
+
 }
