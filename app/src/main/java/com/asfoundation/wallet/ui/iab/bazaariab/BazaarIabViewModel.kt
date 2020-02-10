@@ -1,6 +1,7 @@
 package com.asfoundation.wallet.ui.iab.bazaariab
 
 import android.content.Intent
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,6 +20,9 @@ internal class BazaarIabViewModel(private val transaction: TransactionBuilder,
                                   private val scheduler: Scheduler) : ViewModel() {
 
   private val disposables = CompositeDisposable()
+
+  private val _purchaseFinished = MutableLiveData<Bundle>()
+  internal val purchaseFinished: LiveData<Bundle> = _purchaseFinished
 
   internal val paymentConfiguration = run {
     val securityCheck = SecurityCheck.Enable(rsaPublicKey = BuildConfig.BAZAARCHE_IAB_KEY)
@@ -50,6 +54,7 @@ internal class BazaarIabViewModel(private val transaction: TransactionBuilder,
         .andThen(bazaarIabInteract.getPurchaseBundle(transaction.domain, transaction.skuId))
         .subscribeOn(scheduler)
         .subscribe(Consumer {
+          _purchaseFinished.postValue(it)
         }))
   }
 

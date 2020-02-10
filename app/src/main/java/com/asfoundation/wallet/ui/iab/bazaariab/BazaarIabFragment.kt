@@ -6,6 +6,8 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.asfoundation.wallet.entity.TransactionBuilder
+import com.asfoundation.wallet.ui.iab.IabView
+import com.asfoundation.wallet.util.observeNotNull
 import com.phelat.poolakey.Payment
 import com.phelat.poolakey.rx.connect
 import com.phelat.poolakey.rx.onActivityResult
@@ -35,9 +37,7 @@ class BazaarIabFragment : DaggerFragment() {
 
   }
 
-  private val transaction by lazy(LazyThreadSafetyMode.NONE) {
-    arguments!!.getParcelable<TransactionBuilder>(ARG_TRANSACTION)!!
-  }
+  private lateinit var iabView: IabView
 
   @Inject
   lateinit var bazaarIabViewModelFactory: BazaarIabViewModelFactory
@@ -50,6 +50,12 @@ class BazaarIabFragment : DaggerFragment() {
 
   private lateinit var paymentConnection: Disposable
 
+
+  override fun onAttach(context: Context) {
+    super.onAttach(context)
+    check(context is IabView) { "BazaarIabFragment must be attached to IabActivity" }
+    iabView = context
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -85,6 +91,14 @@ class BazaarIabFragment : DaggerFragment() {
   }
 
   private fun onPurchaseFlowBegan() {
+    viewModel.purchaseFinished.observeNotNull(this) {
+      onPurchaseFlowFinished(it)
+    }
+  }
+
+
+  private fun onPurchaseFlowFinished(bundle: Bundle) {
+    iabView.finish(bundle)
   }
 
 }
