@@ -18,7 +18,6 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -61,10 +60,8 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
   override fun waitTransactionCompletion(uid: String): Completable {
 
     return Observable.interval(0, 5, TimeUnit.SECONDS, scheduler)
-        .timeInterval()
-        .switchMap {
+        .switchMapSingle {
           billing.getAppcoinsTransaction(uid, scheduler)
-              .toObservable()
         }
         .takeUntil { pendingTransaction ->
           pendingTransaction.status != Transaction.Status.PROCESSING
@@ -74,7 +71,7 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
 
 
   override fun getPurchaseBundle(domain: String, sku: String): Single<Bundle> {
-    return billing.getSkuPurchase(domain, sku, Schedulers.io())
+    return billing.getSkuPurchase(domain, sku, scheduler)
         .map { billingMessagesMapper.mapPurchase(it, transaction.orderReference) }
   }
 
