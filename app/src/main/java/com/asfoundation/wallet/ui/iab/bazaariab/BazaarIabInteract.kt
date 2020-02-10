@@ -27,7 +27,7 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
                                             private val billing: Billing,
                                             private val billingMessagesMapper: BillingMessagesMapper,
                                             private val gson: Gson,
-                                            private val scheduler: Scheduler) {
+                                            private val scheduler: Scheduler) : BazaarIabUseCases {
 
   companion object {
 
@@ -40,7 +40,7 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
 
   }
 
-  fun getPurchaseRequest(): Single<PurchaseRequest> {
+  override fun getPurchaseRequest(): Single<PurchaseRequest> {
     return walletService.getWalletAddress()
         .map { createPayload(it, transaction) }
         .map {
@@ -51,14 +51,14 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
         }
   }
 
-  internal fun getPurchaseInfo(data: Intent, purchaseEntity: PurchaseEntity): Single<BazaarchePurchaseInfo> {
+  override fun getPurchaseInfo(data: Intent, purchaseEntity: PurchaseEntity): Single<BazaarchePurchaseInfo> {
 
     return Single.just(data.getStringExtra(RESPONSE_PURCHASE_DATA))
         .map { mapper(purchaseEntity, it) }
   }
 
 
-  fun waitTransactionCompletion(uid: String): Completable {
+  override fun waitTransactionCompletion(uid: String): Completable {
 
     return Observable.interval(0, 5, TimeUnit.SECONDS, scheduler)
         .timeInterval()
@@ -73,8 +73,8 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
   }
 
 
-  fun getPurchaseBundle(packageName: String, sku: String): Single<Bundle> {
-    return billing.getSkuPurchase(packageName, sku, Schedulers.io())
+  override fun getPurchaseBundle(domain: String, sku: String): Single<Bundle> {
+    return billing.getSkuPurchase(domain, sku, Schedulers.io())
         .map { billingMessagesMapper.mapPurchase(it, transaction.orderReference) }
   }
 
