@@ -16,7 +16,7 @@ class BazaarIabFragment : DaggerFragment() {
 
   companion object {
 
-    private const val ARG_TRANSACTION = "transaction"
+    const val ARG_TRANSACTION = "transaction"
 
     private const val TAG = "BazaarIabFragment"
 

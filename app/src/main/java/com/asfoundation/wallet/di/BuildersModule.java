@@ -59,6 +59,7 @@ import com.asfoundation.wallet.wallet_validation.poa.PoaPhoneValidationFragment;
 import com.asfoundation.wallet.wallet_validation.poa.PoaValidationLoadingFragment;
 import com.asfoundation.wallet.wallet_validation.poa.PoaValidationSuccessFragment;
 import com.asfoundation.wallet.wallet_validation.poa.PoaWalletValidationActivity;
+
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
@@ -199,7 +200,7 @@ import dagger.android.ContributesAndroidInjector;
 
   @ContributesAndroidInjector() abstract EarnAppcoinsFragment bindEarnAppcoinsFragment();
 
-  @ContributesAndroidInjector()
+  @ContributesAndroidInjector(modules = IabModule.class)
   abstract BazaarIabFragment bazaarIabFragment();
 
   @ContributesAndroidInjector() abstract IabUpdateRequiredFragment bindIabUpdateRequiredFragment();
