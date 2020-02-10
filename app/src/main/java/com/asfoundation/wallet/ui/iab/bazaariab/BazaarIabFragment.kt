@@ -7,8 +7,12 @@ import androidx.lifecycle.ViewModelProviders
 import com.asfoundation.wallet.entity.TransactionBuilder
 import com.phelat.poolakey.Connection
 import com.phelat.poolakey.Payment
-import com.phelat.poolakey.callback.ConnectionCallback
+import com.phelat.poolakey.rx.connect
+import com.phelat.poolakey.rx.onActivityResult
+import com.phelat.poolakey.rx.purchaseProduct
 import dagger.android.support.DaggerFragment
+import io.reactivex.disposables.Disposable
+import javax.inject.Inject
 
 
 class BazaarIabFragment : DaggerFragment() {
@@ -43,7 +47,7 @@ class BazaarIabFragment : DaggerFragment() {
     Payment(context = requireContext(), config = viewModel.paymentConfiguration)
   }
 
-  private lateinit var paymentConnection: Connection
+  private lateinit var paymentConnection: Disposable
 
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,20 +59,22 @@ class BazaarIabFragment : DaggerFragment() {
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-    payment.onActivityResult(requestCode, resultCode, data, viewModel::onPurchaseFinished)
+    payment.onActivityResult(requestCode, resultCode, data)
+        .doOnSuccess {
+          viewModel.onPurchaseFinished(it)
+        }.subscribe()
   }
 
   override fun onDestroy() {
-    paymentConnection.disconnect()
+    paymentConnection.dispose()
     super.onDestroy()
   }
 
   private fun connectPayment() {
-    paymentConnection = payment.connect(::onConnectionFinished)
+    paymentConnection = payment.connect().subscribe { onConnectionFinished() }
   }
 
-
-  private fun onConnectionFinished(connectionCallback: ConnectionCallback) {
+  private fun onConnectionFinished() {
 
     connectionCallback.connectionSucceed {
       payment.purchaseProduct(fragment = this, request = viewModel.purchaseRequest) {
