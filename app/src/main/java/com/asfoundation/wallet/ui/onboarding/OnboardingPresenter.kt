@@ -79,10 +79,10 @@ class OnboardingPresenter(private val disposables: CompositeDisposable,
     disposables.add(
         view.getContinueClickMappedToViewPagerPosition()
             .doOnNext { position ->
-              if (position == 0) {
-                view.showViewPagerLastPage()
-              } else {
+              if (position + 1 == ON_BOARDING_PAGE_COUNT) {
                 handleWalletCreation(skipValidation = true, showAnimation = true)
+              } else {
+                view.showNextPage()
               }
             }
             .subscribe()
@@ -202,3 +202,5 @@ class OnboardingPresenter(private val disposables: CompositeDisposable,
     view.finishOnboarding(walletValidationStatus, showAnimation)
   }
 }
+
+private const val ON_BOARDING_PAGE_COUNT = 3

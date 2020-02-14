@@ -235,6 +235,10 @@ class OnboardingActivity : BaseActivity(), OnboardingView {
     layout_validation_no_internet.visibility = View.VISIBLE
   }
 
+  override fun showNextPage() {
+    onboarding_viewpager.currentItem++
+  }
+
   override fun getRetryButtonClicks(): Observable<Any> {
     return RxView.clicks(retry_button)
         .doOnNext { playRetryAnimation() }
