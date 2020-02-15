@@ -1,7 +1,6 @@
 package com.asfoundation.wallet.ui.iab.bazaariab
 
 import android.content.Intent
-import android.os.Bundle
 import com.appcoins.wallet.bdsbilling.Billing
 import com.appcoins.wallet.bdsbilling.WalletService
 import com.appcoins.wallet.bdsbilling.repository.entity.Transaction
@@ -10,6 +9,7 @@ import com.asf.wallet.BuildConfig
 import com.asfoundation.wallet.entity.BazaarchePurchaseInfo
 import com.asfoundation.wallet.entity.Payload
 import com.asfoundation.wallet.entity.TransactionBuilder
+import com.asfoundation.wallet.ui.iab.bazaariab.Status.Companion.statusMapper
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.phelat.poolakey.entity.PurchaseEntity
@@ -63,17 +63,24 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
         .switchMapSingle {
           billing.getAppcoinsTransaction(uid, scheduler)
         }
-        .takeUntil { pendingTransaction ->
-          pendingTransaction.status != Transaction.Status.PROCESSING
+        .map(::statusMapper)
+        .takeUntil { status ->
+          status != Status.PROCESSING
         }
         .ignoreElements()
   }
 
 
-  override fun getPurchaseBundle(domain: String, sku: String): Single<Bundle> {
+  override fun getPurchase(domain: String, sku: String): Single<PurchaseState> {
     return billing.getSkuPurchase(domain, sku, scheduler)
         .map { billingMessagesMapper.mapPurchase(it, transaction.orderReference) }
+        .map { PurchaseState.Purchased(it) }
   }
+
+  override fun getCanceledError(): PurchaseState.Error = PurchaseState.Error(billingMessagesMapper.mapCancellation())
+
+  override fun getGenericError(): PurchaseState.Error = PurchaseState.Error(billingMessagesMapper.genericError())
+
 
   private fun providePurchaseId() = "${transaction.domain}#${transaction.skuId}"
 
@@ -111,5 +118,23 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
 
   }
 
+
+}
+
+
+private enum class Status {
+  PROCESSING,
+  COMPLETED;
+
+  companion object {
+
+    fun statusMapper(transaction: Transaction): Status {
+      return when (transaction.status) {
+        Transaction.Status.PROCESSING -> PROCESSING
+        Transaction.Status.COMPLETED -> COMPLETED
+        else -> error("Not expected status")
+      }
+    }
+  }
 
 }

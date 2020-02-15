@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.asfoundation.wallet.entity.TransactionBuilder
 import com.asfoundation.wallet.ui.iab.IabView
-import com.asfoundation.wallet.util.observeNotNull
 import com.phelat.poolakey.Payment
 import com.phelat.poolakey.rx.connect
 import com.phelat.poolakey.rx.onActivityResult
@@ -61,16 +60,14 @@ class BazaarIabFragment : DaggerFragment() {
     super.onCreate(savedInstanceState)
 
     viewModel = ViewModelProviders.of(this, bazaarIabViewModelFactory)[BazaarIabViewModel::class.java]
+    observePurchaseState()
     connectPayment()
   }
 
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-    payment.onActivityResult(requestCode, resultCode, data)
-        .doOnSuccess {
-          viewModel.onPurchaseFinished(data!!, it)
-        }.subscribe()
+    val purchaseResult = payment.onActivityResult(requestCode, resultCode, data)
+    viewModel.onPurchaseFinished(data, purchaseResult)
   }
 
   override fun onDestroy() {
@@ -78,27 +75,47 @@ class BazaarIabFragment : DaggerFragment() {
     super.onDestroy()
   }
 
+  private fun observePurchaseState() {
+    viewModel.purchaseState.observe(this, Observer {
+
+      when (it) {
+        is PurchaseState.Purchased -> {
+          onPurchaseFlowFinished(it.purchaseData)
+        }
+
+        is PurchaseState.InProgress -> {
+          //TODO
+        }
+
+        is PurchaseState.Error -> {
+          showError(it.errorBundle)
+        }
+      }
+    })
+  }
+
   private fun connectPayment() {
-    paymentConnection = payment.connect().subscribe { onConnectionFinished() }
+    paymentConnection = payment.connect().subscribe({ onConnectionFinished() }, viewModel::onConnectionError)
   }
 
   private fun onConnectionFinished() {
 
     viewModel.getPurchaseRequest().observe(this, Observer {
       payment.purchaseProduct(this, it)
-          .subscribe(::onPurchaseFlowBegan)
+          .subscribe()
     })
-  }
-
-  private fun onPurchaseFlowBegan() {
-    viewModel.purchaseFinished.observeNotNull(this) {
-      onPurchaseFlowFinished(it)
-    }
   }
 
 
   private fun onPurchaseFlowFinished(bundle: Bundle) {
+    //TODO show something when purchase finished
     iabView.finish(bundle)
+  }
+
+
+  private fun showError(errorBundle: Bundle) {
+    //TODO show something when error happened
+    iabView.close(errorBundle)
   }
 
 }
