@@ -1,22 +1,26 @@
 package com.asfoundation.wallet.ui.iab.bazaariab
 
 import android.content.Intent
-import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.asf.wallet.BuildConfig
+import com.asf.wallet.R
+import com.asfoundation.wallet.entity.Resource
 import com.asfoundation.wallet.entity.TransactionBuilder
 import com.phelat.poolakey.config.PaymentConfiguration
 import com.phelat.poolakey.config.SecurityCheck
 import com.phelat.poolakey.entity.PurchaseEntity
+import com.phelat.poolakey.exception.BazaarNotFoundException
 import com.phelat.poolakey.request.PurchaseRequest
+import com.phelat.poolakey.rx.exception.PurchaseCanceledException
 import io.reactivex.Scheduler
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
 
 internal class BazaarIabViewModel(private val transaction: TransactionBuilder,
-                                  private val bazaarIabInteract: BazaarIabInteract,
+                                  private val bazaarIabInteract: BazaarIabUseCases,
                                   private val scheduler: Scheduler) : ViewModel() {
 
   private val disposables = CompositeDisposable()
