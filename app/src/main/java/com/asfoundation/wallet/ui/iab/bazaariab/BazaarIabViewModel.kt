@@ -1,71 +1,91 @@
 package com.asfoundation.wallet.ui.iab.bazaariab
 
+import android.content.Intent
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.phelat.poolakey.callback.PurchaseCallback
+import com.asf.wallet.BuildConfig
+import com.asfoundation.wallet.entity.TransactionBuilder
 import com.phelat.poolakey.config.PaymentConfiguration
 import com.phelat.poolakey.config.SecurityCheck
 import com.phelat.poolakey.entity.PurchaseEntity
+import com.phelat.poolakey.exception.BazaarNotFoundException
 import com.phelat.poolakey.request.PurchaseRequest
+import com.phelat.poolakey.rx.exception.PurchaseCanceledException
+import io.reactivex.Scheduler
+import io.reactivex.Single
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Consumer
 
-class BazaarIabViewModel : ViewModel() {
+internal class BazaarIabViewModel(private val transaction: TransactionBuilder,
+                                  private val bazaarIabInteract: BazaarIabUseCases,
+                                  private val scheduler: Scheduler) : ViewModel() {
 
-  companion object {
+  private val disposables = CompositeDisposable()
 
-    private const val BASE64_ENCODED_PUBLIC_KEY = "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwDMPD2GdXOVRi13M5glHo0/0hqMPkdhYZ42rYLGCroxOc0W/lZ9zhWtm+zF5Epa98tHeBXmLr9HWJJz2v4HGCaPYHo0up7ogEMbWCLIniN9N6j42Tt/naPZWOCbkeHZ5b7191Zz2cZUi4zAbEJA9uWOf1dS3tS5+7G+lG2yhhtu1dWoAng0wRj2hCoIcy/YENacQRtrRRohp8zWUdPQaK1xwX2mXMuq/Le2c7onjrUCAwEAAQ=="
-
-    private const val PURCHASE_REQUEST = 10001
-
+  private val _purchaseState = MutableLiveData<PurchaseState>().apply {
+    value = PurchaseState.InProgress
   }
-
-  private val sku = "test"/*transaction.skuId*///TODO: remove this and use transaction.skuId
+  internal val purchaseState: LiveData<PurchaseState> = _purchaseState
 
   internal val paymentConfiguration = run {
-    val securityCheck = SecurityCheck.Enable(rsaPublicKey = BASE64_ENCODED_PUBLIC_KEY)
+    val securityCheck = SecurityCheck.Enable(rsaPublicKey = BuildConfig.BAZAARCHE_IAB_KEY)
     PaymentConfiguration(localSecurityCheck = securityCheck)
   }
 
-
-  internal val purchaseRequest = PurchaseRequest(
-      productId = sku,
-      requestCode = PURCHASE_REQUEST,
-      payload = ""
-  )
-
-  fun onPurchaseFinished(purchaseCallback: PurchaseCallback) {
-
-    purchaseCallback.purchaseSucceed {
-
-      if (!verifyDeveloperPayload(it.purchaseInfo.payload)) {
-        return@purchaseSucceed
-      }
-
-      if (it.purchaseInfo.productId == sku) {
-
-        createTransaction(it)
-      }
+  internal fun onConnectionError(throwable: Throwable) {
+    if (throwable is BazaarNotFoundException) {
+      _purchaseState.value = bazaarIabInteract.getGenericError()
+    } else {
+      throw throwable
     }
-
   }
 
+  internal fun getPurchaseRequest(): LiveData<PurchaseRequest> {
 
-  private fun verifyDeveloperPayload(payload: String): Boolean {
-    /*
-     * TODO: verify that the developer payload of the purchase is correct.
-     */
-    return true
+    val purchaseRequestLiveData = MutableLiveData<PurchaseRequest>()
+
+    disposables.add(bazaarIabInteract.getPurchaseRequest()
+        .subscribeOn(scheduler)
+        .subscribe(Consumer {
+          purchaseRequestLiveData.postValue(it)
+        })
+    )
+
+    return purchaseRequestLiveData
   }
 
+  internal fun onPurchaseFinished(data: Intent?, purchaseResult: Single<PurchaseEntity>) {
 
-  private fun createTransaction(purchase: PurchaseEntity) {//TODO
-//    val disposable = bazaarIabUtils.start(transaction, purchase.developerPayload,
-//        purchase.token, isBds, activity.packageName)
-//
-//        .observeOn(AndroidSchedulers.mainThread())
-//        .subscribe({
-//          Log.d(TAG, "status: " + it.status + " ,uid: " + it.uid + " ,data: " + it.data)
-//        }, {
-//          Log.d(TAG, it.message)
-//        })
+    disposables.add(purchaseResult
+        .flatMap {
+          bazaarIabInteract.getPurchaseInfo(data!!, it)
+        }
+        .flatMapCompletable {
+          bazaarIabInteract.waitTransactionCompletion(it.uid)
+        }
+        .andThen(bazaarIabInteract.getPurchase(transaction.domain, transaction.skuId))
+        .doOnError(Throwable::printStackTrace)
+        .onErrorReturn(::mapError)
+        .subscribeOn(scheduler)
+        .subscribe(::onSuccess))
+  }
+
+  private fun onSuccess(purchaseState: PurchaseState) {
+    _purchaseState.postValue(purchaseState)
+  }
+
+  override fun onCleared() {
+    disposables.clear()
+  }
+
+  private fun mapError(throwable: Throwable): PurchaseState {
+    return when (throwable) {
+      is PurchaseCanceledException -> {
+        bazaarIabInteract.getCanceledError()
+      }
+      else -> bazaarIabInteract.getGenericError()
+    }
   }
 
 }

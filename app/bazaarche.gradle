@@ -1,0 +1,16 @@
+
+android.buildTypes {
+
+  Properties properties = new Properties()
+  properties.load(file('bazaarche.properties').newDataInputStream())
+
+  release {
+    buildConfigField 'String', 'BAZAARCHE_IAB_KEY',
+        "\"" + properties.bazaarcheIabKey + "\""
+  }
+  debug {
+
+    buildConfigField 'String', 'BAZAARCHE_IAB_KEY',
+        "\"" + properties.bazaarcheIabKeyDev + "\""
+  }
+}
