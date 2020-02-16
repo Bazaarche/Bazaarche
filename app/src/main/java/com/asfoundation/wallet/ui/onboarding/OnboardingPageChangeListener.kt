@@ -18,10 +18,11 @@ class OnboardingPageChangeListener internal constructor(private val view: View,
 
   companion object {
     var ANIMATION_TRANSITIONS = 3
-    var pageCount = 2
+    var pageCount = 3
   }
 
-  private val imageResources = arrayOf(R.drawable.ic_joystick, R.drawable.ic_onboarding_buy)
+  private val imageResources = arrayOf(R.drawable.onboarding_one, R.drawable.onboarding_two,
+      R.drawable.onboarding_three)
 
   private lateinit var onboardingImage: ImageView
   private lateinit var skipButton: Button
@@ -68,9 +69,9 @@ class OnboardingPageChangeListener internal constructor(private val view: View,
   }
 
   private fun handleUI(position: Int) {
-    if (position < 1) {
+    if (position < 2) {
       showFirstPageLayout()
-    } else if (position == 1) {
+    } else if (position == 2) {
       showLastPageLayout()
     }
   }
