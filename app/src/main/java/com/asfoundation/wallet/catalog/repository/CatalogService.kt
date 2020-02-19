@@ -7,7 +7,6 @@ import io.reactivex.Single
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import retrofit2.http.Body
-import retrofit2.http.Headers
 import retrofit2.http.POST
 import javax.inject.Inject
 
@@ -73,6 +72,5 @@ interface CatalogApi {
 
   @GutSingleReply
   @POST("GetPageByPathRequest")
-  @Headers("Authorization: Bearer PbwHrceJ7K2y4HIR93CqF2MEPVBJWPCslMJ1qooI9BChlTfjdncvClS0djrjPEgNMry8auHaZzXThsPexmqbulkDUQfQ8Rf+JVkfyWTId2heiS17eqM7zW7AH612YhrR2lCTm7oCCX2WQGX8iQ==")
   fun getCatalog(@Body body: RequestBody): Single<GetPageByPathReply>
 }
