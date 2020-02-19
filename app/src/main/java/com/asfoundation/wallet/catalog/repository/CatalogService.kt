@@ -52,7 +52,7 @@ class CatalogService @Inject constructor(val api: CatalogApi) {
         "    \"singleRequest\": {\n" +
         "        \"getPageByPathRequest\": {\n" +
         "            \"offset\": 0,\n" +
-        "            \"path\": \"home\",\n" +
+        "            \"path\": \"home_wallet\",\n" +
         "            \"referrers\": []\n" +
         "        }\n" +
         "    }\n" +
@@ -65,9 +65,6 @@ class CatalogService @Inject constructor(val api: CatalogApi) {
     return api.getCatalog(requestBody)
         .map {
           it.pages[0].rows
-        }
-        .map { rows ->
-          rows.filter { it.hamiPromo != null || it.appList != null }
         }
   }
 }

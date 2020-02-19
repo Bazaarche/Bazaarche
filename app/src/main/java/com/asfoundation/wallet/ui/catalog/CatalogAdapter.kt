@@ -11,6 +11,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_app.view.*
 import kotlinx.android.synthetic.main.item_apps_header.view.*
 import kotlinx.android.synthetic.main.item_hami.view.*
+import kotlinx.android.synthetic.main.item_promo.view.*
 
 class CatalogAdapter(private val appsNavigator: AppsNavigator) : RecyclerView.Adapter<CatalogAdapter.ViewHolder<CatalogItem>>() {
 
@@ -20,6 +21,9 @@ class CatalogAdapter(private val appsNavigator: AppsNavigator) : RecyclerView.Ad
       when (items[position]) {
         is Hami -> {
           R.layout.item_hami
+        }
+        is PromoItem -> {
+          R.layout.item_promo
         }
         is Header -> {
           R.layout.item_apps_header
@@ -38,6 +42,9 @@ class CatalogAdapter(private val appsNavigator: AppsNavigator) : RecyclerView.Ad
     return when (viewType) {
       R.layout.item_hami -> {
         HamiViewHolder(itemView, appsNavigator::onHamiClicked)
+      }
+      R.layout.item_promo -> {
+        PromoViewHolder(itemView, appsNavigator::onPromoClicked)
       }
       R.layout.item_apps_header -> {
         HeaderViewHolder(itemView, appsNavigator::onHeaderClicked)
@@ -99,6 +106,19 @@ class CatalogAdapter(private val appsNavigator: AppsNavigator) : RecyclerView.Ad
           .placeholder(R.drawable.bg_sample_app)
           .into(itemView.imageHami)
     }
+  }
+
+  private class PromoViewHolder(itemView: View, clickListener: (PromoItem) -> Unit) : ViewHolder<PromoItem>(itemView, clickListener) {
+
+    override fun bind(catalogItem: PromoItem) {
+
+      catalogItem.apply {
+
+        showImage(imageURL, itemView.imagePromo)
+        itemView.setOnClickListener { clickListener(catalogItem) }
+      }
+    }
+
   }
 
   private class HeaderViewHolder(itemView: View, clickListener: (Header) -> Unit) : ViewHolder<Header>(itemView, clickListener) {
