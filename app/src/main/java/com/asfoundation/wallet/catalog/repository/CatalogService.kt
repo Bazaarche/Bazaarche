@@ -71,6 +71,6 @@ class CatalogService @Inject constructor(val api: CatalogApi) {
 interface CatalogApi {
 
   @GutSingleReply
-  @POST("GetPageByPathRequest")
+  @POST("GetPageV2Request")
   fun getCatalog(@Body body: RequestBody): Single<GetPageByPathReply>
 }
