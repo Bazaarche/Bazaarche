@@ -26,6 +26,8 @@ interface OnboardingView {
 
   fun showNoInternetView()
 
+  fun showNextPage()
+
   fun showViewPagerLastPage()
 
   fun getRetryButtonClicks(): Observable<Any>

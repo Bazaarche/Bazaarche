@@ -11,6 +11,7 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply from: "bazaarche.gradle"
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
@@ -248,6 +249,7 @@ dependencies {
   implementation project(path: ':billing')
 
   implementation "com.phelat:poolakey:1.0.0-alpha02"
+  implementation "com.phelat:poolakey-rx:1.0.0-alpha02"
 
   //braintreepayments card form dependency
   implementation "com.braintreepayments:card-form:$project.card_form"

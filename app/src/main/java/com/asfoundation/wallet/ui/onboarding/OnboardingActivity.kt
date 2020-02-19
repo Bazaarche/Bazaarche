@@ -235,6 +235,10 @@ class OnboardingActivity : BaseActivity(), OnboardingView {
     layout_validation_no_internet.visibility = View.VISIBLE
   }
 
+  override fun showNextPage() {
+    onboarding_viewpager.currentItem++
+  }
+
   override fun getRetryButtonClicks(): Observable<Any> {
     return RxView.clicks(retry_button)
         .doOnNext { playRetryAnimation() }
@@ -261,14 +265,16 @@ class OnboardingActivity : BaseActivity(), OnboardingView {
   private fun createReferralsItemList(maxAmount: String): List<OnboardingItem> {
     val item1 = OnboardingItem(R.string.intro_1_title, this.getString(R.string.intro_1_body))
     val item2 = OnboardingItem(R.string.intro_2_title, this.getString(R.string.intro_2_body))
+    val item3 = OnboardingItem(R.string.intro_3_title, this.getString(R.string.intro_3_body))
 
-    return listOf(item1, item2)
+    return listOf(item1, item2, item3)
   }
 
   private fun createDefaultItemList(): List<OnboardingItem> {
     val item1 = OnboardingItem(R.string.intro_1_title, this.getString(R.string.intro_1_body))
     val item2 = OnboardingItem(R.string.intro_2_title, this.getString(R.string.intro_2_body))
+    val item3 = OnboardingItem(R.string.intro_3_title, this.getString(R.string.intro_3_body))
 
-    return listOf(item1, item2)
+    return listOf(item1, item2, item3)
   }
 }
