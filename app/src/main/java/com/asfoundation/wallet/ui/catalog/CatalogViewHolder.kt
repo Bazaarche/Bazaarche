@@ -47,8 +47,8 @@ abstract class CatalogViewHolder<T : CatalogItem>(itemView: View, protected val 
       catalogItem.apply {
 
         showHamiImage(imageURL)
-        showImage(app.image, itemView.imageHamiAppIcon)
-        itemView.textHamiAppName.text = app.name
+        showImage(appInfo.image, itemView.imageHamiAppIcon)
+        itemView.textHamiAppName.text = appInfo.name
         showShortDescription(this)
         itemView.setOnClickListener { clickListener(catalogItem) }
       }
