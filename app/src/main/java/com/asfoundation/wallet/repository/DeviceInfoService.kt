@@ -1,16 +1,13 @@
 package com.asfoundation.wallet.repository
 
 import android.annotation.SuppressLint
-import android.app.UiModeManager
 import android.content.Context
-import android.net.ConnectivityManager
 import android.os.Build
 import android.provider.Settings
 import android.telephony.TelephonyManager
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.WindowManager
-import androidx.core.net.ConnectivityManagerCompat
 import com.asf.wallet.BuildConfig
 import com.asfoundation.wallet.util.languagecontroller.LanguageController
 import javax.inject.Inject
@@ -60,18 +57,11 @@ class DeviceInfoService @Inject constructor(private val context: Context) {
     if (simNetworkDetails.size > 1) simNetworkDetails[1] else 0
   }
 
-  fun isDeviceThemeDark(): Boolean {
-    val uiModeManager = context.getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
-    return uiModeManager.nightMode == UiModeManager.MODE_NIGHT_YES
-  }
-
-  fun getNetworkType(): String = context.getNetworkType()
   @SuppressLint("HardwareIds")
   fun getAndroidId(): String {
     return Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
   }
 
-  fun getNetworkOperator(): String = context.getNetworkOperator()
   val cpu: String by lazy {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       Build.SUPPORTED_ABIS.joinToString(",")
@@ -82,72 +72,6 @@ class DeviceInfoService @Inject constructor(private val context: Context) {
   }
   val dpi: Int by lazy {
     metrics.densityDpi
-  }
-
-  private fun Context.getNetworkType(): String {
-    val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as? TelephonyManager
-    telephonyManager?.run {
-      if (isOnWifi()) {
-        return "WIFI"
-      }
-      return try {
-        when (networkType) {
-          TelephonyManager.NETWORK_TYPE_1xRTT -> "1xRTT"
-          TelephonyManager.NETWORK_TYPE_CDMA -> "CDMA"
-          TelephonyManager.NETWORK_TYPE_EDGE -> "EDGE"
-          TelephonyManager.NETWORK_TYPE_EHRPD -> "eHRPD"
-          TelephonyManager.NETWORK_TYPE_EVDO_0 -> "EVDO rev. 0"
-          TelephonyManager.NETWORK_TYPE_EVDO_A -> "EVDO rev. A"
-          TelephonyManager.NETWORK_TYPE_EVDO_B -> "EVDO rev. B"
-          TelephonyManager.NETWORK_TYPE_GPRS -> "GPRS"
-          TelephonyManager.NETWORK_TYPE_HSDPA -> "HSDPA"
-          TelephonyManager.NETWORK_TYPE_HSPA -> "HSPA"
-          TelephonyManager.NETWORK_TYPE_HSPAP -> "HSPA+"
-          TelephonyManager.NETWORK_TYPE_HSUPA -> "HSUPA"
-          TelephonyManager.NETWORK_TYPE_IDEN -> "iDen"
-          TelephonyManager.NETWORK_TYPE_LTE -> "LTE"
-          TelephonyManager.NETWORK_TYPE_UMTS -> "UMTS"
-          TelephonyManager.NETWORK_TYPE_UNKNOWN -> "Unknown"
-          else -> "Unknown"
-        }
-      } catch (e: Exception) {
-        // NoSuchMethodError
-        "Unknown"
-      }
-    }
-    return "Unknown"
-  }
-
-  private fun Context.getNetworkOperator(): String {
-    val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as? TelephonyManager
-    telephonyManager?.run {
-      var networkOperator: String? = telephonyManager.networkOperator
-      if (networkOperator != null) {
-        when (networkOperator) {
-          "43220" -> networkOperator = "Rightel"
-          "43235" -> networkOperator = "Irancell"
-          "43211" -> networkOperator = "MCI"
-          "43270" -> networkOperator = "TCI"
-          "43232" -> networkOperator = "Taliya"
-          "26207" -> networkOperator = "O2_Germany"
-          "42402" -> networkOperator = "Etisalat"
-          "28601" -> networkOperator = "Turkcell"
-        }
-      } else {
-        networkOperator = "unknown"
-      }
-      return networkOperator
-    }
-    return "unknown"
-  }
-
-  private fun Context.isOnWifi(): Boolean {
-    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
-    return if (connectivityManager != null) {
-      !ConnectivityManagerCompat.isActiveNetworkMetered(connectivityManager)
-    } else {
-      false
-    }
   }
 
   companion object {
