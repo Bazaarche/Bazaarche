@@ -13,7 +13,7 @@ class RequestPropertiesDataSource @Inject constructor(private val deviceInfoServ
 
   fun getRequestProperties(lastKnownLocation: Location? = null): RequestProperties {
     return RequestProperties(
-        clientID = deviceInfoService.getClientId(),
+        clientID = DeviceInfoService.CLIENT_ID,
         clientVersion = deviceInfoService.clientVersion,
         clientVersionCode = deviceInfoService.bazaarcheVersionCode,
         language = deviceInfoService.language.value,

@@ -7,15 +7,12 @@ import android.net.ConnectivityManager
 import android.os.Build
 import android.provider.Settings
 import android.telephony.TelephonyManager
-import android.telephony.gsm.GsmCellLocation
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.WindowManager
 import androidx.core.net.ConnectivityManagerCompat
 import com.asf.wallet.BuildConfig
-import com.asfoundation.wallet.util.languagecontroller.Language
 import com.asfoundation.wallet.util.languagecontroller.LanguageController
-import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -37,20 +34,6 @@ class DeviceInfoService @Inject constructor(private val context: Context) {
   val model: String = Build.MODEL ?: "UNKNOWN"
   val product: String = Build.PRODUCT ?: "UNKNOWN"
   val manufacturer: String = Build.MANUFACTURER ?: "UNKNOWN"
-  fun getClientId(): String = "05701d5cd23f43ff82bd7e440d3429be"
-//    fun getClientId(randomUuidGenerator: () -> UUID = UUID::randomUUID): String {
-//        var clientId = "hfCuKMmjSGm7E5xfKYX2fA"
-//        if (clientId.isEmpty()) {
-//            val uuid = randomUuidGenerator()
-//            val uuidArr = asBytes(uuid)
-//            clientId = Base64.encodeWebSafe(uuidArr, false)
-//            if (clientId.length > DEVICE_ID_MAX_LENGTH) {
-//                clientId = clientId.substring(0, DEVICE_ID_MAX_LENGTH)
-//            }
-//            settingsRepository.setClientId(clientId)
-//        }
-//        return clientId
-//    }
 
   /**
    * @return [mcc, mnc]
@@ -168,8 +151,8 @@ class DeviceInfoService @Inject constructor(private val context: Context) {
   }
 
   companion object {
-    const val DEVICE_ID_MAX_LENGTH = 31
     const val TAG = "DeviceInfoDataSource"
     const val APP_NAME = "web"//TODO: convert to bazaarche when fixed by backend
+    const val CLIENT_ID = "iNnISiq2TGqk8KnQryUIsw"
   }
 }
