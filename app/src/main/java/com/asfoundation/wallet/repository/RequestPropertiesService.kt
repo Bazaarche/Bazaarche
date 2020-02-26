@@ -9,7 +9,8 @@ import javax.inject.Singleton
 
 
 @Singleton
-class RequestPropertiesDataSource @Inject constructor(private val deviceInfoService: DeviceInfoService) {
+class RequestPropertiesDataSource @Inject constructor(private val deviceInfoService: DeviceInfoService,
+                                                      private val preferencesDataSource: PreferencesDataSource) {
 
   fun getRequestProperties(lastKnownLocation: Location? = null): RequestProperties {
     return RequestProperties(
@@ -36,7 +37,7 @@ class RequestPropertiesDataSource @Inject constructor(private val deviceInfoServ
             dpi = deviceInfoService.dpi,
             width = deviceInfoService.width,
             height = deviceInfoService.height,
-            adId = "28fb2ff9-204f-4cb7-b104-e4072ac63e40",//TODO
+            adId = preferencesDataSource.adId,
             adOptOut = false,
             androidId = deviceInfoService.getAndroidId()
         ),

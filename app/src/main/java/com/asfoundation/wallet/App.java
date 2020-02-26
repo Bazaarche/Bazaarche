@@ -14,6 +14,7 @@ import com.appcoins.wallet.billing.BillingMessagesMapper;
 import com.asf.wallet.BuildConfig;
 import com.asfoundation.wallet.di.DaggerAppComponent;
 import com.asfoundation.wallet.poa.ProofOfAttentionService;
+import com.asfoundation.wallet.repository.PreferencesDataSource;
 import com.asfoundation.wallet.ui.iab.AppcoinsOperationsDataSaver;
 import com.asfoundation.wallet.ui.iab.InAppPurchaseInteractor;
 import com.asfoundation.wallet.util.languagecontroller.Language;
@@ -39,6 +40,7 @@ public class App extends MultiDexApplication
   @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
   @Inject DispatchingAndroidInjector<Service> dispatchingServiceInjector;
   @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
+  @Inject PreferencesDataSource preferences;
   @Inject ProofOfAttentionService proofOfAttentionService;
   @Inject InAppPurchaseInteractor inAppPurchaseInteractor;
   @Inject AppcoinsOperationsDataSaver appcoinsOperationsDataSaver;
@@ -66,6 +68,8 @@ public class App extends MultiDexApplication
         new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG)
             .build())
         .build());
+
+    BazaarcheAppSetup.startSetup(this, preferences);
 
     LanguageController.init(this, Language.PERSIAN);
 
