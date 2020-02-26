@@ -3,15 +3,21 @@
 package com.asfoundation.wallet
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.content.Context
 import com.asfoundation.wallet.repository.PreferencesDataSource
+import com.asfoundation.wallet.util.languagecontroller.LanguageController
+import com.asfoundation.wallet.util.languagecontroller.Language
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 
-fun startSetup(context: Context, preferencesDataSource: PreferencesDataSource) {
+fun startSetup(application: Application, preferencesDataSource: PreferencesDataSource) {
 
-  checkAdId(context, preferencesDataSource)
+  checkAdId(application, preferencesDataSource)
+
+  LanguageController.init(application, Language.PERSIAN)
+
 }
 
 @SuppressLint("CheckResult")

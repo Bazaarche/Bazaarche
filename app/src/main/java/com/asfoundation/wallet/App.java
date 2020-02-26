@@ -17,8 +17,6 @@ import com.asfoundation.wallet.poa.ProofOfAttentionService;
 import com.asfoundation.wallet.repository.PreferencesDataSource;
 import com.asfoundation.wallet.ui.iab.AppcoinsOperationsDataSaver;
 import com.asfoundation.wallet.ui.iab.InAppPurchaseInteractor;
-import com.asfoundation.wallet.util.languagecontroller.Language;
-import com.asfoundation.wallet.util.languagecontroller.LanguageController;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.flurry.android.FlurryAgent;
@@ -70,8 +68,6 @@ public class App extends MultiDexApplication
         .build());
 
     BazaarcheAppSetup.startSetup(this, preferences);
-
-    LanguageController.init(this, Language.PERSIAN);
 
     inAppPurchaseInteractor.start();
     proofOfAttentionService.start();
