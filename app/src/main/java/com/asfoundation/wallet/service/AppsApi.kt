@@ -7,7 +7,7 @@ import retrofit2.http.GET
 
 interface AppsApi {
   companion object{
-    const val API_BASE_URL = "https://ws75.aptoide.com/api/7/"
+    const val API_BASE_URL = "http://94.130.76.177/primary/api/7/"
   }
 
   @GET("listApps/store_name=bds-store/group_id=10358961/limit=10/order=rand")
