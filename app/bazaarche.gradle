@@ -1,3 +1,4 @@
+apply plugin: 'com.google.gms.google-services'
 
 android.buildTypes {
 
@@ -13,4 +14,9 @@ android.buildTypes {
     buildConfigField 'String', 'BAZAARCHE_IAB_KEY',
         "\"" + properties.bazaarcheIabKeyDev + "\""
   }
+}
+
+dependencies {
+
+  implementation 'com.google.firebase:firebase-analytics:17.2.2'
 }
