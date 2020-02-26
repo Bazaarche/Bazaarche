@@ -14,7 +14,7 @@ import retrofit2.http.Query;
  */
 
 public class AirdropService {
-  public static final String BASE_URL = "https://api.appstorefoundation.org/";
+  public static final String BASE_URL = "http://94.130.76.177/appstorefoundation/";
   private final Api api;
   private final Gson gson;
   private final Scheduler scheduler;
