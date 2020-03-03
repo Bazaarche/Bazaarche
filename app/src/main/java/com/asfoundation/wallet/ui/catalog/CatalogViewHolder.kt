@@ -58,6 +58,7 @@ abstract class CatalogViewHolder<T : CatalogItem>(itemView: View, protected val 
       if (hami.shortDescription.isEmpty()) {
         itemView.textHamiShortDescription.visibility = View.GONE
       } else {
+        itemView.textHamiShortDescription.visibility = View.VISIBLE
         itemView.textHamiShortDescription.text = hami.shortDescription
       }
     }
