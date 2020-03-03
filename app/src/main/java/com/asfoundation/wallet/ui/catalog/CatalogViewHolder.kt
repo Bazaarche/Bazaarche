@@ -35,10 +35,10 @@ abstract class CatalogViewHolder<T : CatalogItem>(itemView: View, protected val 
   }
 
   abstract fun bind(catalogItem: T)
-  protected fun showImage(what: String, into: ImageView) {
+  protected fun showImage(imageURL: String, imageView: ImageView) {
     Picasso.with(itemView.context)
-        .load(what)
-        .into(into)
+        .load(imageURL)
+        .into(imageView)
   }
 
   private class HamiViewHolder(itemView: View, clickListener: (Hami) -> Unit) : CatalogViewHolder<Hami>(itemView, clickListener) {
