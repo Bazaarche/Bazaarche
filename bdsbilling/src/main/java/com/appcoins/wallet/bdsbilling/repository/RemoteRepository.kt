@@ -155,7 +155,7 @@ class RemoteRepository(private val api: BdsApi, private val responseMapper: BdsA
     fun getPackage(@Path("packageName") packageName: String, @Query("type")
     type: String): Single<GetPackageResponse>
 
-    @GET("inapp/8.20180518/packages/{packageName}/products")
+    @GET("inapp/8.20180518/packages/{packageName}/products?country=IR")
     fun getPackages(@Path("packageName") packageName: String,
                     @Query("names") names: String): Single<DetailsResponseBody>
 
