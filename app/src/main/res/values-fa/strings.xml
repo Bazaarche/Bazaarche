@@ -55,7 +55,7 @@
   <string name="do_manage_make_backup">آیا نسخه‌ی پشتیبان گرفتید؟</string>
   <string name="yes_continue">بله، ادامه</string>
   <string name="no_repeat">نه، تکرار</string>
-  <string name="skip">رد کردن</string>
+  <string name="skip">بی‌خیال</string>
   <string name="skip_with_arrow">ردکردن &gt;</string>
   <string name="root_title">امنیت دستگاه به خطر افتاده است</string>
   <string name="root_body">برنامه می‌تواند به اطلاعات کیف پول شما دسترسی داشته باشد. کیف پول را پاک کنید و روی دستگاه امنی بازیابی کنید. </string>

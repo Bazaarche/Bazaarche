@@ -49,7 +49,7 @@ class DialogWalletInstall(context: Context) : Dialog(context) {
   private fun buildMessage() {
 
     val bazaar = context.getString(R.string.bazaar)
-    val dialogMessage = context.getString(R.string.app_wallet_install_wallet_from_iab, bazaar)
+    val dialogMessage = context.getString(R.string.dialog_install_bazaar_message, bazaar)
 
     val messageStylized = SpannableStringBuilder(dialogMessage)
     val indexOfBazaar = dialogMessage.indexOf(bazaar)

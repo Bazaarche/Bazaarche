@@ -7,10 +7,9 @@
   <string name="bazaarche_guide">Bazaarche guide</string>
   <string name="support">Support</string>
   <string name="more_info">More Info</string>
-  <string name="app_wallet_install_wallet_from_iab">To complete your purchase, you have to install %s</string>
+  <string name="dialog_install_bazaar_message">To complete your purchase, you have to install %s</string>
   <string name="bazaar">Bazaar</string>
-  <string name="app_wallet_install">install</string>
-  <string name="app_wallet_skip">skip</string>
+  <string name="bazaar_install">install</string>
 
   <string name="english" translatable="false">English</string>
   <string name="persian" translatable="false">فارسی</string>
