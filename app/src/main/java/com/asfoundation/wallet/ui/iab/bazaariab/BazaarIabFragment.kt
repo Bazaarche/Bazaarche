@@ -117,9 +117,10 @@ class BazaarIabFragment : DaggerFragment() {
   }
 
   private fun showBazaarInstallDialog() {
-    val dialog = DialogWalletInstall(requireContext())
-    dialog.setOnCancelListener { viewModel.onCancelInstallation() }
-    dialog.show()
+    DialogWalletInstall(requireContext()).apply {
+      setOnCancelListener { viewModel.onCancelInstallation() }
+      show()
+    }
   }
 
   private fun showError(errorBundle: Bundle) {
