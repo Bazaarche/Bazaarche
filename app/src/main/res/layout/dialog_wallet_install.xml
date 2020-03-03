@@ -24,7 +24,6 @@
       android:layout_marginTop="20dp"
       android:layout_marginEnd="@dimen/half_large_margin"
       android:maxLines="2"
-      android:text="@string/app_wallet_install_wallet_from_iab"
       android:textAlignment="center"
       android:textColor="@color/install_bazaar_dialog_text_color"
       android:textSize="@dimen/bazaarche_medium_text"
