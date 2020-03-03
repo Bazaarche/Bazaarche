@@ -1,5 +1,3 @@
-@file:JvmName("BazaarcheAppSetup")
-
 package com.asfoundation.wallet
 
 import android.annotation.SuppressLint

@@ -31,6 +31,8 @@ import io.fabric.sdk.android.Fabric;
 import io.reactivex.exceptions.UndeliverableException;
 import io.reactivex.plugins.RxJavaPlugins;
 
+import static com.asfoundation.wallet.BazaarcheAppSetupKt.startSetup;
+
 public class App extends MultiDexApplication
     implements HasActivityInjector, HasServiceInjector, HasSupportFragmentInjector,
     BillingDependenciesProvider {
@@ -67,7 +69,7 @@ public class App extends MultiDexApplication
             .build())
         .build());
 
-    BazaarcheAppSetup.startSetup(this, preferences);
+    startSetup(this, preferences);
 
     inAppPurchaseInteractor.start();
     proofOfAttentionService.start();
