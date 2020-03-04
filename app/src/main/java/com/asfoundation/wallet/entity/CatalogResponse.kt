@@ -1,19 +1,31 @@
 package com.asfoundation.wallet.entity
 
-class GetPageByPathReply(val pages: Array<Page>)
-data class Page(val rows: List<Row>)
+import com.google.gson.annotations.SerializedName
 
-data class Row(val title: String, val more: String, val hasMore: Boolean,
-               val hamiPromo: HamiData?, val promoList: PromoListResponse?, val appList: AppListResponse?)
+class GetPageV2Reply(val page: Page)
+data class Page(val pageBodyInfo: PageBodyInfo)
+data class PageBodyInfo(val pageBody: PageBody)
+data class PageBody(val rows: List<Row>)
+
+data class Row(val hamiItem: HamiData?, val promoList: PromoListResponse?,
+               @SerializedName("simpleAppList") val appsList: AppListResponse?)
 
 
 data class HamiData(val title: String, val shortDescription: String, val link: String,
-                    val imageURL: String, val app: App)
+                    val imageURL: String, val appInfo: AppInfo)
 
-class PromoListResponse(val promoList: Array<Promo>)
+class PromoListResponse(val title: String, val promos: Array<Promo>) {
 
-class AppListResponse(val appList: Array<App>)
+  data class PromoInfo(val title: String, val link: String, val image: String)
+  data class Promo(val info: PromoInfo)
+}
 
-data class Promo(val title: String, val link: String, val image: String)
+class AppListResponse(val title: String, val expandInfo: ExpandInfo, val apps: Array<App>) {
 
-data class App(val packageName: String, val name: String, val image: String)
+  data class ExpandInfo(val vitrinExpandInfo: VitrinExpandInfo)
+  data class VitrinExpandInfo(val path: String)
+
+  data class App(val info: AppInfo)
+}
+
+data class AppInfo(val packageName: String, val name: String, val image: String)

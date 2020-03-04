@@ -14,10 +14,9 @@ import com.appcoins.wallet.billing.BillingMessagesMapper;
 import com.asf.wallet.BuildConfig;
 import com.asfoundation.wallet.di.DaggerAppComponent;
 import com.asfoundation.wallet.poa.ProofOfAttentionService;
+import com.asfoundation.wallet.repository.PreferencesDataSource;
 import com.asfoundation.wallet.ui.iab.AppcoinsOperationsDataSaver;
 import com.asfoundation.wallet.ui.iab.InAppPurchaseInteractor;
-import com.asfoundation.wallet.util.languagecontroller.Language;
-import com.asfoundation.wallet.util.languagecontroller.LanguageController;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.flurry.android.FlurryAgent;
@@ -32,6 +31,8 @@ import io.fabric.sdk.android.Fabric;
 import io.reactivex.exceptions.UndeliverableException;
 import io.reactivex.plugins.RxJavaPlugins;
 
+import static com.asfoundation.wallet.BazaarcheAppSetupKt.startBazaarcheSetup;
+
 public class App extends MultiDexApplication
     implements HasActivityInjector, HasServiceInjector, HasSupportFragmentInjector,
     BillingDependenciesProvider {
@@ -39,6 +40,7 @@ public class App extends MultiDexApplication
   @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
   @Inject DispatchingAndroidInjector<Service> dispatchingServiceInjector;
   @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
+  @Inject PreferencesDataSource preferences;
   @Inject ProofOfAttentionService proofOfAttentionService;
   @Inject InAppPurchaseInteractor inAppPurchaseInteractor;
   @Inject AppcoinsOperationsDataSaver appcoinsOperationsDataSaver;
@@ -67,7 +69,7 @@ public class App extends MultiDexApplication
             .build())
         .build());
 
-    LanguageController.init(this, Language.PERSIAN);
+    startBazaarcheSetup(this, preferences);
 
     inAppPurchaseInteractor.start();
     proofOfAttentionService.start();

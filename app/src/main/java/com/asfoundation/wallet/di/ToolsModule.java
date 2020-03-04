@@ -867,6 +867,7 @@ import static com.asfoundation.wallet.service.AppsApi.API_BASE_URL;
     return new Retrofit.Builder().baseUrl(baseUrl)
         .client(client)
         .addConverterFactory(new BazaarcheConverterFactory(gson))
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
         .create(CatalogApi.class);
