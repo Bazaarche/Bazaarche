@@ -14,11 +14,14 @@ import com.asfoundation.wallet.BAZAAR_PACKAGE_NAME
 import com.asfoundation.wallet.ui.catalog.AppItem
 import com.asfoundation.wallet.ui.catalog.Hami
 import com.asfoundation.wallet.ui.catalog.Header
+import com.asfoundation.wallet.ui.catalog.PromoItem
 import com.asfoundation.wallet.util.BaseLifecycleObserver
 
 interface AppsNavigator {
 
   fun onHamiClicked(hami: Hami)
+
+  fun onPromoClicked(promoItem: PromoItem)
 
   fun onHeaderClicked(header: Header)
 
@@ -31,6 +34,10 @@ class AppsNavigatorImpl(activity: ComponentActivity) : AppsNavigator, BaseLifecy
 
   override fun onHamiClicked(hami: Hami) {
     openBazaar(hami.link)
+  }
+
+  override fun onPromoClicked(promoItem: PromoItem) {
+    openBazaar(promoItem.link)
   }
 
   override fun onHeaderClicked(header: Header) {

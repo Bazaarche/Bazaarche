@@ -7,9 +7,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.asf.wallet.R
+import com.asfoundation.wallet.BAZAARCHE_ABOUT_URL
 import com.asfoundation.wallet.navigator.AppsNavigator
 import com.asfoundation.wallet.ui.bazarchesettings.BazaarcheSettingsActivity
 import com.asfoundation.wallet.ui.getDividerDrawable
+import com.asfoundation.wallet.ui.iab.WebViewActivity
 import com.asfoundation.wallet.ui.widget.CatalogDividerItemDecoration
 import com.asfoundation.wallet.ui.widget.CatalogDividerItemDecoration.VERTICAL
 import com.asfoundation.wallet.util.observeNotNull
@@ -45,6 +47,7 @@ class CatalogActivity : AppCompatActivity() {
     setContentView(R.layout.activity_catalog)
     setupRecyclerView()
     setSettingsImageClickListener()
+    setHelpImageClickListener()
   }
 
   private fun observeData() {
@@ -85,6 +88,14 @@ class CatalogActivity : AppCompatActivity() {
       startActivity(intent)
     }
 
+  }
+
+  private fun setHelpImageClickListener() {
+
+    imageHelp.setOnClickListener {
+      val intent = WebViewActivity.newIntent(this, BAZAARCHE_ABOUT_URL)
+      startActivity(intent)
+    }
   }
 
 }

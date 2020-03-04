@@ -15,11 +15,19 @@
       app:popupTheme="@style/AppTheme.PopupOverlay">
 
     <ImageView
+        android:id="@+id/imageHelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="@dimen/default_margin_double"
+        android:src="@drawable/ic_help" />
+
+    <ImageView
         android:id="@+id/imageSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|center_vertical"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="@dimen/default_margin_triple"
         android:src="@drawable/ic_settings_black" />
 
 
