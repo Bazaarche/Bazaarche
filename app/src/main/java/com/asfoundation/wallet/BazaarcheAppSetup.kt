@@ -10,7 +10,7 @@ import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 
-fun startSetup(application: Application, preferencesDataSource: PreferencesDataSource) {
+fun startBazaarcheSetup(application: Application, preferencesDataSource: PreferencesDataSource) {
 
   checkAdId(application, preferencesDataSource)
 
