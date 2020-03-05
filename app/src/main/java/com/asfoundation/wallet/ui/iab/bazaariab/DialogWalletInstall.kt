@@ -52,10 +52,15 @@ class DialogWalletInstall(context: Context) : Dialog(context) {
     val dialogMessage = context.getString(R.string.dialog_install_bazaar_message, bazaar)
 
     val messageStylized = SpannableStringBuilder(dialogMessage)
+
     val indexOfBazaar = dialogMessage.indexOf(bazaar)
-    messageStylized.setSpan(StyleSpan(Typeface.BOLD), indexOfBazaar,
-        indexOfBazaar + bazaar.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-    dialogWalletInstallTextMessage.text = messageStylized
+
+    if (indexOfBazaar in dialogMessage.indices) {
+
+      messageStylized.setSpan(StyleSpan(Typeface.BOLD), indexOfBazaar,
+          indexOfBazaar + bazaar.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+      dialogWalletInstallTextMessage.text = messageStylized
+    }
   }
 
   private fun buildDownloadButton() {
