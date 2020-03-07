@@ -20,11 +20,15 @@ import kotlinx.android.synthetic.main.fragment_bazaarche_settings.view.*
 
 class BazarcheSettingsFragment : Fragment() {
 
-  private val items = arrayOf(R.string.transactions_list, R.string.language_settings, R.string.bazaarche_guide, R.string.support)
+  private val items = arrayOf(R.string.action_wallets, R.string.transactions_list,
+      R.string.language_settings, R.string.bazaarche_guide, R.string.support)
 
   private val itemClickListener: (Int) -> Unit = { position ->
 
     when (items[position]) {
+      R.string.action_wallets -> {
+        //TODO
+      }
       R.string.transactions_list -> {
         //TODO
       }
