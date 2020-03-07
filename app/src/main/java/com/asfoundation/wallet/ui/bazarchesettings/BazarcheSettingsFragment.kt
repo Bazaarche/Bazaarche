@@ -5,20 +5,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.asf.wallet.R
+import com.asfoundation.wallet.router.ManageWalletsRouter
 import com.asfoundation.wallet.ui.SplashActivity
 import com.asfoundation.wallet.ui.createItemDecoration
 import com.asfoundation.wallet.util.languagecontroller.Language
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_bazaarche_settings.view.*
+import javax.inject.Inject
 
 
-class BazarcheSettingsFragment : Fragment() {
+class BazarcheSettingsFragment : DaggerFragment() {
+
+  @Inject
+  internal lateinit var manageWalletsRouter: ManageWalletsRouter
 
   private val items = arrayOf(R.string.action_wallets, R.string.transactions_list,
       R.string.language_settings, R.string.bazaarche_guide, R.string.support)
@@ -27,7 +32,7 @@ class BazarcheSettingsFragment : Fragment() {
 
     when (items[position]) {
       R.string.action_wallets -> {
-        //TODO
+        manageWalletsRouter.open(requireContext())
       }
       R.string.transactions_list -> {
         //TODO
