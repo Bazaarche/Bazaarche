@@ -12,7 +12,7 @@ class BazaarcheSettingsActivity : BaseActivity() {
     toolbar()
 
     supportFragmentManager.beginTransaction()
-        .replace(R.id.fragment_container, BazarcheSettingsFragment())
+        .replace(R.id.fragment_container, BazaarcheSettingsFragment())
         .commit()
   }
 

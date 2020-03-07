@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_bazaarche_settings.view.*
 import javax.inject.Inject
 
 
-class BazarcheSettingsFragment : DaggerFragment() {
+class BazaarcheSettingsFragment : DaggerFragment() {
 
   @Inject
   internal lateinit var manageWalletsRouter: ManageWalletsRouter
@@ -53,7 +53,8 @@ class BazarcheSettingsFragment : DaggerFragment() {
     ViewModelProviders.of(this)[BazaarcheSettingsViewModel::class.java]
   }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                            savedInstanceState: Bundle?): View? {
     return inflater.inflate(R.layout.fragment_bazaarche_settings, container, false)
   }
 
@@ -81,9 +82,11 @@ class BazarcheSettingsFragment : DaggerFragment() {
 
   private fun showChangeLanguageDialog() {
 
-    val languages = Language.values().map {
-      getString(it.titleRes)
-    }.toTypedArray()
+    val languages = Language.values()
+        .map {
+          getString(it.titleRes)
+        }
+        .toTypedArray()
 
     var selectedPosition = viewModel.getSelectedLanguagePosition()
 
