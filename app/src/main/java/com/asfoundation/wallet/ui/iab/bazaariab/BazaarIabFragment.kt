@@ -87,6 +87,10 @@ class BazaarIabFragment : DaggerFragment() {
           //TODO
         }
 
+        is PurchaseState.BazaarNotFoundError -> {
+          showBazaarInstallDialog()
+        }
+
         is PurchaseState.Error -> {
           showError(it.errorBundle)
         }
@@ -112,6 +116,12 @@ class BazaarIabFragment : DaggerFragment() {
     iabView.finish(bundle)
   }
 
+  private fun showBazaarInstallDialog() {
+    DialogWalletInstall(requireContext()).apply {
+      setOnCancelListener { viewModel.onCancelInstallation() }
+      show()
+    }
+  }
 
   private fun showError(errorBundle: Bundle) {
     //TODO show something when error happened
