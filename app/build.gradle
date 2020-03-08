@@ -35,8 +35,8 @@ android {
     applicationId "com.hezardastaan.wallet"
     minSdkVersion 21
     targetSdkVersion 28
-    versionCode 120
-    versionName "1.11.1.0"
+    versionCode 1
+    versionName "0.0.8"
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     multiDexEnabled = true
 
@@ -277,7 +277,7 @@ def renameArtifact(defaultConfig) {
   android.applicationVariants.all { variant ->
     variant.outputs.all {
       def formattedDate = new Date().format('yyMMdd-HHmm')
-      def fileName = "AppCoins_Wallet_V${defaultConfig.versionCode}_${formattedDate}_${variant.name}"
+      def fileName = "Bazaarche_V${defaultConfig.versionCode}_${formattedDate}_${variant.name}"
       outputFileName = new File("${fileName}.apk")
     }
   }
