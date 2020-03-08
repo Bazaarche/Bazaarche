@@ -59,8 +59,8 @@ class DialogWalletInstall(context: Context) : Dialog(context) {
 
       messageStylized.setSpan(StyleSpan(Typeface.BOLD), indexOfBazaar,
           indexOfBazaar + bazaar.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-      dialogWalletInstallTextMessage.text = messageStylized
     }
+    dialogWalletInstallTextMessage.text = messageStylized
   }
 
   private fun buildDownloadButton() {
