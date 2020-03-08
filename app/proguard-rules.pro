@@ -24,6 +24,36 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keepattributes *Annotation*
--keepattributes SourceFile,LineNumberTable
--keep public class * extends java.lang.Exception
+# We just enabled code and resource shrinking but don't need obfuscation
+-dontobfuscate
+
+##---------------Begin: proguard configuration for Gson  ----------
+# Gson specific classes
+-dontwarn sun.misc.**
+
+##---------------Begin: proguard configuration for Picasso  ----------
+-dontwarn com.squareup.okhttp.**
+
+##---------------Begin: proguard configuration for Material  ----------
+-dontwarn com.google.android.material.snackbar.*
+
+##---------------Begin: proguard configuration for Retrofit  ----------
+# TODO: Remove this part when R8 enabled(maybe with updating gradle plugin)
+
+# Ignore JSR 305 annotations for embedding nullability information.
+-dontwarn javax.annotation.**
+
+# Guarded by a NoClassDefFoundError try/catch and only used when on the classpath.
+-dontwarn kotlin.Unit
+
+# Top-level functions that can only be used by Kotlin.
+-dontwarn retrofit2.KotlinExtensions
+-dontwarn retrofit2.KotlinExtensions$*
+##---------------Begin: proguard configuration for okhttp  ----------
+# TODO: Remove this part when R8 enabled(maybe with updating gradle plugin)
+
+# Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
+-dontwarn org.codehaus.mojo.animal_sniffer.*
+
+# OkHttp platform used only on JVM and when Conscrypt dependency is available.
+-dontwarn okhttp3.internal.platform.ConscryptPlatform
