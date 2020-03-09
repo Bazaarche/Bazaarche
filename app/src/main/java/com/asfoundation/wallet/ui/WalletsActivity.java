@@ -147,7 +147,7 @@ public class WalletsActivity extends BaseActivity
         }
       } else {
         dialog = buildDialog().setMessage(R.string.do_manage_make_backup)
-            .setPositiveButton(R.string.yes_continue, (dialog, which) -> {
+            .setPositiveButton(R.string.button_yes, (dialog, which) -> {
               viewModel.saveWalletBackup(walletAddress);
               hideDialog();
               backupWarning.hide();
@@ -156,7 +156,7 @@ public class WalletsActivity extends BaseActivity
                 onBackPressed();
               }
             })
-            .setNegativeButton(R.string.no_repeat, (dialog, which) -> {
+            .setNegativeButton(R.string.no, (dialog, which) -> {
               openShareDialog(viewModel.exportedStore()
                   .getValue());
               hideDialog();
