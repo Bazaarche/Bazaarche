@@ -35,7 +35,7 @@ internal class BazaarIabViewModel(private val transaction: TransactionBuilder,
 
   internal fun onConnectionError(throwable: Throwable) {
     if (throwable is BazaarNotFoundException) {
-      _purchaseState.value = bazaarIabInteract.getGenericError()
+      _purchaseState.value = PurchaseState.BazaarNotFoundError
     } else {
       throw throwable
     }
@@ -86,6 +86,11 @@ internal class BazaarIabViewModel(private val transaction: TransactionBuilder,
       }
       else -> bazaarIabInteract.getGenericError()
     }
+  }
+
+  fun onCancelInstallation() {
+
+    _purchaseState.value = bazaarIabInteract.getCanceledError()
   }
 
 }

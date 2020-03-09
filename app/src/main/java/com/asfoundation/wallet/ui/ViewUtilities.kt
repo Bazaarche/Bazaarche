@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.InsetDrawable
 import androidx.recyclerview.widget.DividerItemDecoration
+import kotlin.math.roundToInt
 
 
 fun createItemDecoration(context: Context, leftMargin: Int, rightMargin: Int): DividerItemDecoration {
@@ -26,4 +27,8 @@ fun getDividerDrawable(context: Context, leftMargin: Int, rightMargin: Int): Dra
   typedArray.recycle()
 
   return insetDivider
+}
+
+fun Context.dp(px: Int): Int {
+  return (px * resources.displayMetrics.density).roundToInt()
 }

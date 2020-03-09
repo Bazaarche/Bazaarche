@@ -6,5 +6,6 @@ sealed class PurchaseState {
 
   data class Purchased(val purchaseData: Bundle) : PurchaseState()
   object InProgress : PurchaseState()
+  object BazaarNotFoundError : PurchaseState()
   data class Error(val errorBundle: Bundle) : PurchaseState()
 }
