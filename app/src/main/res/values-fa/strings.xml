@@ -67,7 +67,7 @@
   <string name="already_have_account">کیف پول دارید؟</string>
   <string name="action_create_new_account">ساختن کیف پول</string>
   <string name="unknown_error">خطا</string>
-  <string name="action_backup_wallet">نسخه‌ی پشتیبان از کیف پول</string>
+  <string name="action_backup_wallet">گرفتن نسخه‌ی پشتیبان از کیف پول</string>
   <string name="no_tokens">شما تاکنون هیچ توکنی را اضافه نکرده‌اید.</string>
   <string name="title_email">ارسال ایمیل</string>
   <string name="action_donate">کمک مالی</string>
