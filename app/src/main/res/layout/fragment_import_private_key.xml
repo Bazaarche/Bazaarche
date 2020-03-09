@@ -30,6 +30,7 @@
         style="@style/ButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
+        android:layout_marginBottom="@dimen/small_margin"
         android:text="@string/action_import"
         />
   </LinearLayout>
