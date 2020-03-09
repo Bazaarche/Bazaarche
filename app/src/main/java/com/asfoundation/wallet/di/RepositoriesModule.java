@@ -64,12 +64,12 @@ import static com.asfoundation.wallet.C.ROPSTEN_NETWORK_NAME;
   @Singleton @Provides NetworkInfo providesDefaultNetwork() {
     if (BuildConfig.DEBUG) {
       return new com.asfoundation.wallet.entity.NetworkInfo(ROPSTEN_NETWORK_NAME, ETH_SYMBOL,
-          "https://ropsten.infura.io/v3/df5b41e6a3a44d9dbf9142fa3f58cabc",
-          "https://ropsten.trustwalletapp.com/", "https://ropsten.etherscan.io/tx/", 3, false);
+          "http://94.130.76.177/ropsteninfura/v3/df5b41e6a3a44d9dbf9142fa3f58cabc",
+          "http://94.130.76.177/ropstentrustwalletapp/", "http://94.130.76.177/ropstenetherscan/tx/", 3, false);
     } else {
       return new com.asfoundation.wallet.entity.NetworkInfo(ETHEREUM_NETWORK_NAME, ETH_SYMBOL,
-          "https://mainnet.infura.io/v3/df5b41e6a3a44d9dbf9142fa3f58cabc",
-          "https://api.trustwalletapp.com/", "https://etherscan.io/tx/", 1, true);
+          "http://94.130.76.177/mainnetinfura/v3/df5b41e6a3a44d9dbf9142fa3f58cabc",
+          "http://94.130.76.177/apitrustwalletapp/", "http://94.130.76.177/etherscanio/tx/", 1, true);
     }
   }
 
