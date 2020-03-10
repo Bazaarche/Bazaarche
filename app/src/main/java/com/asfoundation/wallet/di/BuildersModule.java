@@ -2,6 +2,7 @@ package com.asfoundation.wallet.di;
 
 import com.asfoundation.wallet.advertise.AdvertisingService;
 import com.asfoundation.wallet.advertise.WalletPoAService;
+import com.asfoundation.wallet.fcm.FcmService;
 import com.asfoundation.wallet.permissions.manage.view.PermissionsListFragment;
 import com.asfoundation.wallet.permissions.request.view.CreateWalletFragment;
 import com.asfoundation.wallet.permissions.request.view.PermissionFragment;
@@ -165,6 +166,8 @@ import dagger.android.ContributesAndroidInjector;
   @ContributesAndroidInjector() abstract MergedAppcoinsFragment bindMergedAppcoinsFragment();
 
   @ActivityScope @ContributesAndroidInjector abstract AdvertisingService bindAdvertisingService();
+
+  @ContributesAndroidInjector abstract FcmService bindFcmService();
 
   @ActivityScope @ContributesAndroidInjector
   abstract PoaWalletValidationActivity bindPoaWalletValidationActivity();
