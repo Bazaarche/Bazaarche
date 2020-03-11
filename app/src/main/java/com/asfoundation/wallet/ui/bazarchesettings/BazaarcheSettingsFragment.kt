@@ -17,6 +17,7 @@ import com.asfoundation.wallet.util.languagecontroller.Language
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_bazaarche_settings.view.*
+import com.asfoundation.wallet.ui.bazarchesettings.SettingsItem.*
 import javax.inject.Inject
 
 
@@ -25,25 +26,22 @@ class BazaarcheSettingsFragment : DaggerFragment() {
   @Inject
   internal lateinit var manageWalletsRouter: ManageWalletsRouter
 
-  private val items = arrayOf(R.string.action_wallets, R.string.transactions_list,
-      R.string.language_settings, R.string.bazaarche_guide, R.string.support)
-
   private val itemClickListener: (Int) -> Unit = { position ->
 
     when (items[position]) {
-      R.string.action_wallets -> {
+      ACTION_WALLETS -> {
         manageWalletsRouter.open(requireContext())
       }
-      R.string.transactions_list -> {
+      TRANSACTIONS_LIST -> {
         //TODO
       }
-      R.string.language_settings -> {
+      LANGUAGE_SETTINGS -> {
         showChangeLanguageDialog()
       }
-      R.string.bazaarche_guide -> {
+      BAZAARCHE_GUIDE -> {
         //TODO
       }
-      R.string.support -> {
+      SUPPORT -> {
         //TODO
       }
     }
