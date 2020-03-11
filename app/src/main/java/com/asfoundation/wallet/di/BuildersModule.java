@@ -32,6 +32,7 @@ import com.asfoundation.wallet.ui.airdrop.AirdropFragment;
 import com.asfoundation.wallet.ui.balance.BalanceFragment;
 import com.asfoundation.wallet.ui.balance.TokenDetailsActivity;
 import com.asfoundation.wallet.ui.balance.TransactionDetailActivity;
+import com.asfoundation.wallet.ui.bazarchesettings.BazaarcheSettingsFragment;
 import com.asfoundation.wallet.ui.catalog.CatalogActivity;
 import com.asfoundation.wallet.ui.gamification.HowItWorksFragment;
 import com.asfoundation.wallet.ui.gamification.MyLevelFragment;
@@ -207,6 +208,9 @@ import dagger.android.ContributesAndroidInjector;
 
   @ContributesAndroidInjector(modules = IabModule.class)
   abstract BazaarIabFragment bazaarIabFragment();
+
+  @ContributesAndroidInjector(modules = SettingsFragmentModule.class)
+  abstract BazaarcheSettingsFragment bazaarcheSettingsFragment();
 
   @ContributesAndroidInjector() abstract IabUpdateRequiredFragment bindIabUpdateRequiredFragment();
 

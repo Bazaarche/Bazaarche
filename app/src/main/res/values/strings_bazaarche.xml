@@ -10,6 +10,7 @@
   <string name="dialog_install_bazaar_message">To complete your purchase, you have to install %s</string>
   <string name="bazaar">Bazaar</string>
   <string name="bazaar_install">install</string>
+  <string name="no">No</string>
 
   <string name="english" translatable="false">English</string>
   <string name="persian" translatable="false">فارسی</string>

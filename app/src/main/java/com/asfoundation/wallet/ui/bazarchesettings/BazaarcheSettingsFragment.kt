@@ -5,36 +5,43 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.asf.wallet.R
+import com.asfoundation.wallet.router.ManageWalletsRouter
 import com.asfoundation.wallet.ui.SplashActivity
 import com.asfoundation.wallet.ui.createItemDecoration
 import com.asfoundation.wallet.util.languagecontroller.Language
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_bazaarche_settings.view.*
+import com.asfoundation.wallet.ui.bazarchesettings.SettingsItem.*
+import javax.inject.Inject
 
 
-class BazarcheSettingsFragment : Fragment() {
+class BazaarcheSettingsFragment : DaggerFragment() {
 
-  private val items = arrayOf(R.string.transactions_list, R.string.language_settings, R.string.bazaarche_guide, R.string.support)
+  @Inject
+  internal lateinit var manageWalletsRouter: ManageWalletsRouter
 
   private val itemClickListener: (Int) -> Unit = { position ->
 
     when (items[position]) {
-      R.string.transactions_list -> {
+      ACTION_WALLETS -> {
+        manageWalletsRouter.open(requireContext())
+      }
+      TRANSACTIONS_LIST -> {
         //TODO
       }
-      R.string.language_settings -> {
+      LANGUAGE_SETTINGS -> {
         showChangeLanguageDialog()
       }
-      R.string.bazaarche_guide -> {
+      BAZAARCHE_GUIDE -> {
         //TODO
       }
-      R.string.support -> {
+      SUPPORT -> {
         //TODO
       }
     }
@@ -44,7 +51,8 @@ class BazarcheSettingsFragment : Fragment() {
     ViewModelProviders.of(this)[BazaarcheSettingsViewModel::class.java]
   }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                            savedInstanceState: Bundle?): View? {
     return inflater.inflate(R.layout.fragment_bazaarche_settings, container, false)
   }
 
@@ -72,9 +80,11 @@ class BazarcheSettingsFragment : Fragment() {
 
   private fun showChangeLanguageDialog() {
 
-    val languages = Language.values().map {
-      getString(it.titleRes)
-    }.toTypedArray()
+    val languages = Language.values()
+        .map {
+          getString(it.titleRes)
+        }
+        .toTypedArray()
 
     var selectedPosition = viewModel.getSelectedLanguagePosition()
 
