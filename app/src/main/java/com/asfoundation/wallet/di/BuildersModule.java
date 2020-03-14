@@ -3,6 +3,7 @@ package com.asfoundation.wallet.di;
 import com.asfoundation.wallet.advertise.AdvertisingService;
 import com.asfoundation.wallet.advertise.WalletPoAService;
 import com.asfoundation.wallet.fcm.FcmService;
+import com.asfoundation.wallet.billing.adyen.AdyenPaymentFragment;
 import com.asfoundation.wallet.permissions.manage.view.PermissionsListFragment;
 import com.asfoundation.wallet.permissions.request.view.CreateWalletFragment;
 import com.asfoundation.wallet.permissions.request.view.PermissionFragment;
@@ -15,7 +16,7 @@ import com.asfoundation.wallet.referrals.ReferralsFragment;
 import com.asfoundation.wallet.topup.TopUpActivity;
 import com.asfoundation.wallet.topup.TopUpFragment;
 import com.asfoundation.wallet.topup.TopUpSuccessFragment;
-import com.asfoundation.wallet.topup.payment.PaymentAuthFragment;
+import com.asfoundation.wallet.topup.payment.AdyenTopUpFragment;
 import com.asfoundation.wallet.ui.BaseActivity;
 import com.asfoundation.wallet.ui.ConfirmationActivity;
 import com.asfoundation.wallet.ui.Erc681Receiver;
@@ -33,10 +34,10 @@ import com.asfoundation.wallet.ui.airdrop.AirdropFragment;
 import com.asfoundation.wallet.ui.balance.BalanceFragment;
 import com.asfoundation.wallet.ui.balance.TokenDetailsActivity;
 import com.asfoundation.wallet.ui.balance.TransactionDetailActivity;
+import com.asfoundation.wallet.ui.bazarchesettings.BazaarcheSettingsFragment;
 import com.asfoundation.wallet.ui.catalog.CatalogActivity;
 import com.asfoundation.wallet.ui.gamification.HowItWorksFragment;
 import com.asfoundation.wallet.ui.gamification.MyLevelFragment;
-import com.asfoundation.wallet.ui.iab.AdyenAuthorizationFragment;
 import com.asfoundation.wallet.ui.iab.AppcoinsRewardsBuyFragment;
 import com.asfoundation.wallet.ui.iab.BillingWebViewFragment;
 import com.asfoundation.wallet.ui.iab.EarnAppcoinsFragment;
@@ -129,9 +130,6 @@ import dagger.android.ContributesAndroidInjector;
 
   @ContributesAndroidInjector() abstract MyLevelFragment bindMyLevelFragment();
 
-  @ContributesAndroidInjector()
-  abstract AdyenAuthorizationFragment bindCreditCardAuthorizationFragment();
-
   @ContributesAndroidInjector() abstract BillingWebViewFragment bindWebViewFragment();
 
   @ContributesAndroidInjector() abstract WebViewActivity bindWebViewActivity();
@@ -154,8 +152,6 @@ import dagger.android.ContributesAndroidInjector;
   abstract AppcoinsCreditsTransferSuccessFragment bindAppcoinsCreditsTransactSuccessFragment();
 
   @ContributesAndroidInjector() abstract TopUpFragment bindTopUpFragment();
-
-  @ContributesAndroidInjector() abstract PaymentAuthFragment bindPaymentAuthFragment();
 
   @ContributesAndroidInjector() abstract TopUpSuccessFragment bindTopUpSuccessFragment();
 
@@ -211,7 +207,15 @@ import dagger.android.ContributesAndroidInjector;
   @ContributesAndroidInjector(modules = IabModule.class)
   abstract BazaarIabFragment bazaarIabFragment();
 
+  @ContributesAndroidInjector(modules = SettingsFragmentModule.class)
+  abstract BazaarcheSettingsFragment bazaarcheSettingsFragment();
+
   @ContributesAndroidInjector() abstract IabUpdateRequiredFragment bindIabUpdateRequiredFragment();
+
+  @FragmentScope @ContributesAndroidInjector()
+  abstract AdyenPaymentFragment bindAdyenPaymentFragment();
+
+  @FragmentScope @ContributesAndroidInjector() abstract AdyenTopUpFragment bindAdyenTopUpFragment();
 
   @ActivityScope @ContributesAndroidInjector()
   abstract WalletBlockedActivity walletBlockedActivity();

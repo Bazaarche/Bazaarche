@@ -67,14 +67,14 @@ class CampaignService(
 
   interface CampaignApi {
     @Headers("Content-Type: application/json")
-    @POST("/campaign/submitpoa")
+    @POST("campaign/submitpoa")
     fun submitProof(@Body body: SerializedProof?, @Query("version_code")
     versionCode: Int): Observable<SubmitPoAResponse>
 
-    @GET("/campaign/remaining_poa")
+    @GET("campaign/remaining_poa")
     fun getPoaInformation(@Query("address") address: String): Observable<PoaInformationResponse>
 
-    @GET("/campaign/eligible")
+    @GET("campaign/eligible")
     fun getCampaign(@Query("address") address: String,
                     @Query("package_name") packageName: String,
                     @Query("vercode") versionCode: Int): Observable<GetCampaignResponse>

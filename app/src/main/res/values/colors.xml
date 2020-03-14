@@ -6,9 +6,9 @@
   <color name="white">#FFFFFFFF</color>
   <color name="black">#313849</color>
 
-  <color name="colorPrimary">#fc9d48</color>
-  <color name="colorPrimaryDark">#e44b46</color>
-  <color name="colorAccent">#e44b46</color>
+  <color name="colorPrimary">#7b48d5</color>
+  <color name="colorPrimaryDark">#512DA8</color>
+  <color name="colorAccent">#7b48d5</color>
 
   <color name="statusBarColor">#154868</color>
   <color name="activity_background_color">#fafafa</color>
@@ -50,7 +50,7 @@
   <color name="btn_end_gradient_color">#ff578c</color>
   <color name="floating_btn_start_gradient_color">#0e1d4d</color>
   <color name="floating_btn_end_gradient_color">#161616</color>
-  <color name="btn_light_enabled_color">#e44b46</color>
+  <color name="btn_light_enabled_color">@color/colorPrimaryDark</color>
   <color name="btn_light_disable_color">#42000000</color>
 
   <color name="dialog_buy_value_text">#4e4e4e</color>
@@ -89,4 +89,5 @@
   <color name="gamification_how_it_works">#33eaeaea</color>
 
   <color name="transparent">#00000000</color>
+  <color name="pending_payment_text_color">#727272</color>
 </resources>

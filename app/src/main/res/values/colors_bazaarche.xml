@@ -5,4 +5,6 @@
   <color name="catalog_header_color">#1f1f1f</color>
   <color name="bazaarche_green">#0ea960</color>
   <color name="grey_300">#E0E0E0</color>
+  <color name="install_bazaar_dialog_text_color">#4a4a4a</color>
+  <color name="btn_color">@color/colorPrimary</color>
 </resources>
