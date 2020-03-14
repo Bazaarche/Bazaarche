@@ -1,8 +1,7 @@
 package com.asfoundation.wallet;
 
-import android.app.Activity;
-import android.app.Service;
-import androidx.fragment.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
 import androidx.multidex.MultiDexApplication;
 import com.appcoins.wallet.appcoins.rewards.AppcoinsRewards;
 import com.appcoins.wallet.bdsbilling.ProxyService;
@@ -13,6 +12,7 @@ import com.appcoins.wallet.billing.BillingDependenciesProvider;
 import com.appcoins.wallet.billing.BillingMessagesMapper;
 import com.asf.wallet.BuildConfig;
 import com.asfoundation.wallet.di.DaggerAppComponent;
+import com.asfoundation.wallet.identification.IdsRepository;
 import com.asfoundation.wallet.poa.ProofOfAttentionService;
 import com.asfoundation.wallet.repository.PreferencesDataSource;
 import com.asfoundation.wallet.ui.iab.AppcoinsOperationsDataSaver;
@@ -24,22 +24,30 @@ import org.jetbrains.annotations.NotNull;
 import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
-import dagger.android.HasActivityInjector;
-import dagger.android.HasServiceInjector;
-import dagger.android.support.HasSupportFragmentInjector;
+import dagger.android.HasAndroidInjector;
 import io.fabric.sdk.android.Fabric;
+import io.intercom.android.sdk.Intercom;
+import io.rakam.api.Rakam;
+import io.rakam.api.RakamClient;
+import io.rakam.api.TrackingOptions;
+import io.reactivex.Single;
 import io.reactivex.exceptions.UndeliverableException;
 import io.reactivex.plugins.RxJavaPlugins;
+import io.reactivex.schedulers.Schedulers;
+import java.net.MalformedURLException;
+import java.net.URL;
+import javax.inject.Inject;
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import static com.asfoundation.wallet.BazaarcheAppSetupKt.startBazaarcheSetup;
 
 public class App extends MultiDexApplication
-    implements HasActivityInjector, HasServiceInjector, HasSupportFragmentInjector,
-    BillingDependenciesProvider {
+    implements HasAndroidInjector, BillingDependenciesProvider {
 
-  @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
-  @Inject DispatchingAndroidInjector<Service> dispatchingServiceInjector;
-  @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
+  private static final String TAG = App.class.getName();
+  @Inject DispatchingAndroidInjector<Object> androidInjector;
   @Inject PreferencesDataSource preferences;
   @Inject ProofOfAttentionService proofOfAttentionService;
   @Inject InAppPurchaseInteractor inAppPurchaseInteractor;
@@ -50,6 +58,7 @@ public class App extends MultiDexApplication
   @Inject AppcoinsRewards appcoinsRewards;
   @Inject BillingMessagesMapper billingMessagesMapper;
   @Inject BdsApiSecondary bdsapiSecondary;
+  @Inject IdsRepository idsRepository;
 
   @Override public void onCreate() {
     super.onCreate();
@@ -75,6 +84,11 @@ public class App extends MultiDexApplication
     proofOfAttentionService.start();
     appcoinsOperationsDataSaver.start();
     appcoinsRewards.start();
+
+    Intercom.initialize(this, BuildConfig.INTERCOM_API_KEY, BuildConfig.INTERCOM_APP_ID);
+    Intercom.client()
+        .setInAppMessageVisibility(Intercom.Visibility.GONE);
+    initializeRakam();
   }
 
   private void setupRxJava() {
@@ -91,16 +105,61 @@ public class App extends MultiDexApplication
     });
   }
 
-  @Override public AndroidInjector<Activity> activityInjector() {
-    return dispatchingActivityInjector;
+  private void initializeRakam() {
+    Single.just(idsRepository.getAndroidId())
+        .flatMap(this::startRakam)
+        .flatMap(rakamClient -> idsRepository.getInstallerPackage(BuildConfig.APPLICATION_ID)
+            .flatMap(installerPackage -> Single.just(idsRepository.getGamificationLevel())
+                .flatMap(level -> Single.just(idsRepository.getActiveWalletAddress())
+                    .doOnSuccess(
+                        walletAddress -> setRakamSuperProperties(rakamClient, installerPackage,
+                            level, walletAddress)))))
+        .subscribeOn(Schedulers.newThread())
+        .subscribe();
   }
 
-  @Override public AndroidInjector<Service> serviceInjector() {
-    return dispatchingServiceInjector;
+  private Single<RakamClient> startRakam(String deviceId) {
+    RakamClient instance = Rakam.getInstance();
+    TrackingOptions options = new TrackingOptions();
+    options.disableAdid();
+    try {
+      instance.initialize(this, new URL(BuildConfig.RAKAM_BASE_HOST), BuildConfig.RAKAM_API_KEY);
+    } catch (MalformedURLException e) {
+      Log.e(TAG, "error: ", e);
+    }
+    instance.setTrackingOptions(options);
+    instance.setDeviceId(deviceId);
+    instance.trackSessionEvents(true);
+    instance.setLogLevel(Log.VERBOSE);
+    instance.setEventUploadPeriodMillis(1);
+    instance.enableLogging(true);
+
+    return Single.just(instance);
   }
 
-  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
-    return dispatchingFragmentInjector;
+  private void setRakamSuperProperties(RakamClient instance, String installerPackage, int userLevel,
+      String userId) {
+    if (TextUtils.isEmpty(installerPackage)) installerPackage = "other";
+
+    JSONObject superProperties = instance.getSuperProperties();
+    if (superProperties == null) {
+      superProperties = new JSONObject();
+    }
+    try {
+      superProperties.put("aptoide_package", BuildConfig.APPLICATION_ID);
+      superProperties.put("version_code", BuildConfig.VERSION_CODE);
+      superProperties.put("entry_point", installerPackage);
+      superProperties.put("user_level", userLevel);
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+    instance.setSuperProperties(superProperties);
+    if (!userId.isEmpty()) instance.setUserId(userId);
+    instance.enableForegroundTracking(this);
+  }
+
+  @Override public AndroidInjector<Object> androidInjector() {
+    return androidInjector;
   }
 
   @Override public int getSupportedVersion() {

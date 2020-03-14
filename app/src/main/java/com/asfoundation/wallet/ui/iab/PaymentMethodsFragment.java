@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -26,6 +25,8 @@ import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import com.appcoins.wallet.bdsbilling.Billing;
 import com.asf.wallet.R;
+import com.asfoundation.wallet.GlideApp;
+import com.asfoundation.wallet.analytics.RakamAnalyticsSetup;
 import com.asfoundation.wallet.billing.adyen.PaymentType;
 import com.asfoundation.wallet.billing.analytics.BillingAnalytics;
 import com.asfoundation.wallet.entity.TransactionBuilder;
@@ -35,7 +36,6 @@ import com.asfoundation.wallet.ui.gamification.GamificationInteractor;
 import com.asfoundation.wallet.wallet_blocked.WalletBlockedInteract;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxRadioGroup;
-import com.squareup.picasso.Picasso;
 import dagger.android.support.DaggerFragment;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -44,7 +44,6 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -72,6 +71,7 @@ public class PaymentMethodsFragment extends DaggerFragment implements PaymentMet
   private final CompositeDisposable compositeDisposable = new CompositeDisposable();
   @Inject InAppPurchaseInteractor inAppPurchaseInteractor;
   @Inject BillingAnalytics analytics;
+  @Inject RakamAnalyticsSetup analyticsSetup;
   @Inject BdsPendingTransactionService bdsPendingTransactionService;
   @Inject Billing billing;
   @Inject GamificationInteractor gamification;
@@ -79,7 +79,7 @@ public class PaymentMethodsFragment extends DaggerFragment implements PaymentMet
   @Inject BalanceInteract balanceInteractor;
   @Inject WalletBlockedInteract walletBlockedInteract;
   private PaymentMethodsPresenter presenter;
-  private List<String> paymentMethodList = new ArrayList<>();
+  private List<PaymentMethod> paymentMethodList = new ArrayList<>();
   private ProgressBar loadingView;
   private View dialog;
   private TextView errorMessage;
@@ -115,7 +115,7 @@ public class PaymentMethodsFragment extends DaggerFragment implements PaymentMet
   private boolean isDonation;
   private Group paymentMethodsGroup;
   private Group preSelectedPaymentMethodGroup;
-  private BehaviorSubject<String> preSelectedPaymentMethod;
+  private BehaviorSubject<PaymentMethod> preSelectedPaymentMethod;
   private TextView morePaymentMethods;
 
   private View preSelectedMethodView;
@@ -171,7 +171,7 @@ public class PaymentMethodsFragment extends DaggerFragment implements PaymentMet
     presenter = new PaymentMethodsPresenter(this, appPackage, AndroidSchedulers.mainThread(),
         Schedulers.io(), new CompositeDisposable(), inAppPurchaseInteractor, balanceInteractor,
         inAppPurchaseInteractor.getBillingMessagesMapper(), bdsPendingTransactionService, billing,
-        analytics, isBds, developerPayload, uri, gamification, transaction, paymentMethodsMapper,
+        analytics, analyticsSetup, isBds, developerPayload, uri, gamification, transaction, paymentMethodsMapper,
         walletBlockedInteract, transactionValue);
   }
 
@@ -268,10 +268,6 @@ public class PaymentMethodsFragment extends DaggerFragment implements PaymentMet
     super.onDestroyView();
   }
 
-  @Override public void onDestroy() {
-    super.onDestroy();
-  }
-
   @Override public void onDetach() {
     super.onDetach();
     iabView = null;
@@ -309,19 +305,19 @@ public class PaymentMethodsFragment extends DaggerFragment implements PaymentMet
     updateHeaderInfo(fiatValue, isDonation, currency);
     setupPaymentMethods(paymentMethods, paymentMethodId);
 
-    presenter.sendPurchaseDetailsEvent();
+    presenter.sendPaymentMethodsEvents();
 
     setupSubject.onNext(true);
   }
 
   @Override public void showPreSelectedPaymentMethod(@NotNull PaymentMethod paymentMethod,
       @NotNull FiatValue fiatValue, boolean isDonation, @NotNull String currency) {
-    preSelectedPaymentMethod.onNext(paymentMethod.getId());
+    preSelectedPaymentMethod.onNext(paymentMethod);
     updateHeaderInfo(fiatValue, isDonation, currency);
 
     setupPaymentMethod(paymentMethod);
 
-    presenter.sendPurchaseDetailsEvent();
+    presenter.sendPreSelectedPaymentMethodsEvents();
 
     setupSubject.onNext(true);
   }
@@ -374,8 +370,9 @@ public class PaymentMethodsFragment extends DaggerFragment implements PaymentMet
     }
   }
 
-  @Override public Observable<Object> getCancelClick() {
-    return RxView.clicks(cancelButton);
+  @Override public Observable<PaymentMethod> getCancelClick() {
+    return RxView.clicks(cancelButton)
+        .map(__ -> getSelectedPaymentMethod());
   }
 
   @Override public void close(Bundle data) {
@@ -397,38 +394,27 @@ public class PaymentMethodsFragment extends DaggerFragment implements PaymentMet
     processingDialog.setVisibility(View.VISIBLE);
   }
 
-  @Override public Observable<String> getBuyClick() {
+  @Override public Observable<PaymentMethod> getBuyClick() {
     return RxView.clicks(buyButton)
-        .map(__ -> {
-          boolean hasPreSelectedPaymentMethod =
-              inAppPurchaseInteractor.hasPreSelectedPaymentMethod();
-
-          if (!paymentMethodList.isEmpty() && radioGroup.getCheckedRadioButtonId() != -1) {
-            return paymentMethodList.get(radioGroup.getCheckedRadioButtonId());
-          } else if (hasPreSelectedPaymentMethod && radioGroup.getCheckedRadioButtonId() == -1) {
-            return preSelectedPaymentMethod.getValue();
-          } else {
-            return "";
-          }
-        });
+        .map(__ -> getSelectedPaymentMethod());
   }
 
-  @Override public void showPaypal() {
+  @Override public void showPaypal(int gamificationLevel) {
     iabView.showAdyenPayment(fiatValue.getAmount(), fiatValue.getCurrency(), isBds,
-        PaymentType.PAYPAL, bonusMessageValue, false, null);
+        PaymentType.PAYPAL, bonusMessageValue, false, null, gamificationLevel);
   }
 
   @Override public void showAdyen(@NotNull FiatValue fiatValue, @NotNull PaymentType paymentType,
-      String iconUrl) {
+      String iconUrl, int gamificationLevel) {
     if (!itemAlreadyOwnedError) {
       iabView.showAdyenPayment(fiatValue.getAmount(), fiatValue.getCurrency(), isBds, paymentType,
-          bonusMessageValue, true, iconUrl);
+          bonusMessageValue, true, iconUrl, gamificationLevel);
     }
   }
 
-  @Override public void showCreditCard() {
+  @Override public void showCreditCard(int gamificationLevel) {
     iabView.showAdyenPayment(fiatValue.getAmount(), fiatValue.getCurrency(), isBds,
-        PaymentType.CARD, bonusMessageValue, false, null);
+        PaymentType.CARD, bonusMessageValue, false, null, gamificationLevel);
   }
 
   @Override public void showAppCoins() {
@@ -450,29 +436,33 @@ public class PaymentMethodsFragment extends DaggerFragment implements PaymentMet
 
   @NotNull @Override public Observable<String> getPaymentSelection() {
     return Observable.merge(RxRadioGroup.checkedChanges(radioGroup)
-            .filter(checkedRadioButtonId -> checkedRadioButtonId >= 0)
-            .map(checkedRadioButtonId -> paymentMethodList.get(checkedRadioButtonId)),
-        preSelectedPaymentMethod);
+        .filter(checkedRadioButtonId -> checkedRadioButtonId >= 0)
+        .map(checkedRadioButtonId -> paymentMethodList.get(checkedRadioButtonId)
+            .getId()), preSelectedPaymentMethod.map(paymentMethod -> paymentMethod.getId()));
   }
 
-  @NotNull @Override public Observable<Object> getMorePaymentMethodsClicks() {
-    return RxView.clicks(morePaymentMethods);
+  @Override public @NotNull Observable<PaymentMethod> getMorePaymentMethodsClicks() {
+    return RxView.clicks(morePaymentMethods)
+        .map(__ -> getSelectedPaymentMethod());
   }
 
-  @Override public void showLocalPayment(@NotNull String selectedPaymentMethod) {
+  @Override
+  public void showLocalPayment(@NotNull String selectedPaymentMethod, @NotNull String iconUrl,
+      @NotNull String label) {
     boolean isOneStep = transaction.getType()
         .equalsIgnoreCase("INAPP_UNMANAGED");
     iabView.showLocalPayment(transaction.getDomain(), transaction.getSkuId(),
         isOneStep ? transaction.getOriginalOneStepValue() : null,
         isOneStep ? transaction.getOriginalOneStepCurrency() : null, bonusMessageValue,
         selectedPaymentMethod, transaction.toAddress(), transaction.getType(), transaction.amount(),
-        transaction.getCallbackUrl(), transaction.getOrderReference(), transaction.getPayload());
+        transaction.getCallbackUrl(), transaction.getOrderReference(), transaction.getPayload(),
+        iconUrl, label);
   }
 
   @Override public void setBonus(@NotNull BigDecimal bonus, @NotNull String currency) {
     BigDecimal scaledBonus = bonus.stripTrailingZeros()
         .setScale(2, BigDecimal.ROUND_DOWN);
-    if (scaledBonus.compareTo(new BigDecimal(0.01)) < 0) {
+    if (scaledBonus.compareTo(new BigDecimal("0.01")) < 0) {
       currency = "~" + currency;
     }
     scaledBonus = scaledBonus.max(new BigDecimal("0.01"));
@@ -549,6 +539,8 @@ public class PaymentMethodsFragment extends DaggerFragment implements PaymentMet
     String priceText = decimalFormat.format(fiatValue.getAmount()) + ' ' + currency;
     appcPriceTv.setText(valueText);
     fiatPriceTv.setText(priceText);
+    appcPriceTv.setVisibility(View.VISIBLE);
+    fiatPriceTv.setVisibility(View.VISIBLE);
     int buyButtonText = isDonation ? R.string.action_donate : R.string.action_buy;
     buyButton.setText(getResources().getString(buyButtonText));
 
@@ -562,18 +554,15 @@ public class PaymentMethodsFragment extends DaggerFragment implements PaymentMet
 
   private void loadIcons(PaymentMethod paymentMethod, RadioButton radioButton, boolean showNew) {
     compositeDisposable.add(Observable.fromCallable(() -> {
-      try {
-        Context context = getContext();
-        Bitmap bitmap = Picasso.with(context)
-            .load(paymentMethod.getIconUrl())
-            .get();
-        BitmapDrawable drawable = new BitmapDrawable(context.getResources(),
-            Bitmap.createScaledBitmap(bitmap, iconSize, iconSize, true));
-        return drawable.getCurrent();
-      } catch (IOException e) {
-        Log.w(TAG, "setupPaymentMethods: Failed to load icons!");
-        throw new RuntimeException(e);
-      }
+      Context context = getContext();
+      Bitmap bitmap = GlideApp.with(context)
+          .asBitmap()
+          .load(paymentMethod.getIconUrl())
+          .submit()
+          .get();
+      BitmapDrawable drawable = new BitmapDrawable(context.getResources(),
+          Bitmap.createScaledBitmap(bitmap, iconSize, iconSize, true));
+      return drawable.getCurrent();
     })
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -588,15 +577,12 @@ public class PaymentMethodsFragment extends DaggerFragment implements PaymentMet
 
   private void loadIcons(PaymentMethod paymentMethod, ImageView view) {
     compositeDisposable.add(Observable.fromCallable(() -> {
-      try {
-        Context context = getContext();
-        return Picasso.with(context)
-            .load(paymentMethod.getIconUrl())
-            .get();
-      } catch (IOException e) {
-        Log.w(TAG, "setupPaymentMethods: Failed to load icons!");
-        throw new RuntimeException(e);
-      }
+      Context context = getContext();
+      return GlideApp.with(context)
+          .asBitmap()
+          .load(paymentMethod.getIconUrl())
+          .submit()
+          .get();
     })
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -626,7 +612,7 @@ public class PaymentMethodsFragment extends DaggerFragment implements PaymentMet
           appcEnabled = ((AppCoinsPaymentMethod) paymentMethod).isAppcEnabled();
           creditsEnabled = ((AppCoinsPaymentMethod) paymentMethod).isCreditsEnabled();
         }
-        paymentMethodList.add(paymentMethod.getId());
+        paymentMethodList.add(paymentMethod);
         radioGroup.addView(radioButton);
       }
     } else {
@@ -636,7 +622,7 @@ public class PaymentMethodsFragment extends DaggerFragment implements PaymentMet
           radioButton = createPaymentRadioButton(paymentMethod, 0);
           radioButton.setEnabled(true);
           radioButton.setChecked(true);
-          paymentMethodList.add(paymentMethod.getId());
+          paymentMethodList.add(paymentMethod);
           radioGroup.addView(radioButton);
         }
       }
@@ -676,5 +662,17 @@ public class PaymentMethodsFragment extends DaggerFragment implements PaymentMet
     radioButton.setId(index);
     loadIcons(paymentMethod, radioButton, false);
     return radioButton;
+  }
+
+  private PaymentMethod getSelectedPaymentMethod() {
+    boolean hasPreSelectedPaymentMethod = inAppPurchaseInteractor.hasPreSelectedPaymentMethod();
+
+    if (!paymentMethodList.isEmpty() && radioGroup.getCheckedRadioButtonId() != -1) {
+      return paymentMethodList.get(radioGroup.getCheckedRadioButtonId());
+    } else if (hasPreSelectedPaymentMethod && radioGroup.getCheckedRadioButtonId() == -1) {
+      return preSelectedPaymentMethod.getValue();
+    } else {
+      return null;
+    }
   }
 }

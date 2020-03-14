@@ -5,7 +5,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.asf.wallet.R
 import com.asfoundation.wallet.navigator.AppsNavigator
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_app.view.*
 import kotlinx.android.synthetic.main.item_apps_header.view.*
 import kotlinx.android.synthetic.main.item_hami.view.*
@@ -36,7 +36,7 @@ abstract class CatalogViewHolder<T : CatalogItem>(itemView: View, protected val 
 
   abstract fun bind(catalogItem: T)
   protected fun showImage(imageURL: String, imageView: ImageView) {
-    Picasso.with(itemView.context)
+    Glide.with(itemView.context)
         .load(imageURL)
         .into(imageView)
   }
@@ -64,7 +64,7 @@ abstract class CatalogViewHolder<T : CatalogItem>(itemView: View, protected val 
     }
 
     private fun showHamiImage(imageURL: String) {
-      Picasso.with(itemView.context)
+      Glide.with(itemView.context)
           .load(imageURL)
           .placeholder(R.drawable.bg_sample_app)
           .into(itemView.imageHami)
