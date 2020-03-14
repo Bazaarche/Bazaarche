@@ -31,9 +31,6 @@
 # Gson specific classes
 -dontwarn sun.misc.**
 
-##---------------Begin: proguard configuration for Picasso  ----------
--dontwarn com.squareup.okhttp.**
-
 ##---------------Begin: proguard configuration for Material  ----------
 -dontwarn com.google.android.material.snackbar.*
 
@@ -51,9 +48,9 @@
 -dontwarn retrofit2.KotlinExtensions$*
 ##---------------Begin: proguard configuration for okhttp  ----------
 # TODO: Remove this part when R8 enabled(maybe with updating gradle plugin)
+# This is because this version of proguard bug. Can be removed when R8 Enabled
+-dontwarn okhttp3.**
 
-# Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
--dontwarn org.codehaus.mojo.animal_sniffer.*
-
-# OkHttp platform used only on JVM and when Conscrypt dependency is available.
--dontwarn okhttp3.internal.platform.ConscryptPlatform
+##---------------Begin: proguard configuration for dagger.android  ----------
+# TODO: Remove this part when R8 enabled(maybe with updating gradle plugin)
+-dontwarn com.google.errorprone.annotations.**

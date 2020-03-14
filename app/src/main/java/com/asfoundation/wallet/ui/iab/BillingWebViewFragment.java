@@ -28,7 +28,7 @@ import javax.inject.Inject;
 
 public class BillingWebViewFragment extends DaggerFragment {
 
-  private static final String BILLING_SCHEMA = "billing://";
+  private static final String ADYEN_PAYMENT_SCHEMA = "adyencheckout://";
   private static final String LOCAL_PAYMENTS_SCHEMA = "myappcoins.com/t/";
   private static final String GO_PAY_PAYMENTS_SCHEMA = "gojek://gopay/merchanttransfer";
   private static final String URL = "url";
@@ -39,7 +39,6 @@ public class BillingWebViewFragment extends DaggerFragment {
   private ProgressBar webviewProgressBar;
   private String currentUrl;
   private ScheduledExecutorService executorService;
-  private AndroidBug5497Workaround androidBug5497Workaround;
   private WebViewActivity webViewActivity;
   private WebView webView;
 
@@ -62,8 +61,6 @@ public class BillingWebViewFragment extends DaggerFragment {
       throw new IllegalStateException("WebView fragment must be attached to WebView Activity");
     }
     webViewActivity = (WebViewActivity) context;
-    androidBug5497Workaround = new AndroidBug5497Workaround(webViewActivity);
-    androidBug5497Workaround.addListener();
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,13 +93,7 @@ public class BillingWebViewFragment extends DaggerFragment {
     webView.setWebViewClient(new WebViewClient() {
 
       @Override public boolean shouldOverrideUrlLoading(WebView view, String clickUrl) {
-        if (clickUrl.startsWith(BILLING_SCHEMA)) {
-          currentUrl = clickUrl;
-          Intent intent = new Intent();
-          intent.setData(Uri.parse(clickUrl));
-          webViewActivity.setResult(WebViewActivity.SUCCESS, intent);
-          webViewActivity.finish();
-        } else if (clickUrl.contains(LOCAL_PAYMENTS_SCHEMA)) {
+        if (clickUrl.contains(LOCAL_PAYMENTS_SCHEMA) || clickUrl.contains(ADYEN_PAYMENT_SCHEMA)) {
           currentUrl = clickUrl;
           Intent intent = new Intent();
           intent.setData(Uri.parse(clickUrl));
@@ -154,7 +145,6 @@ public class BillingWebViewFragment extends DaggerFragment {
   }
 
   @Override public void onDetach() {
-    androidBug5497Workaround.removeListener();
     webViewActivity = null;
     webView.setWebViewClient(null);
     super.onDetach();
