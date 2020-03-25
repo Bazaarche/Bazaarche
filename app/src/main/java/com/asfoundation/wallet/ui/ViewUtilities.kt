@@ -4,7 +4,6 @@ import android.R
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.InsetDrawable
-import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import kotlin.math.roundToInt
 
@@ -32,12 +31,4 @@ fun getDividerDrawable(context: Context, leftMargin: Int, rightMargin: Int): Dra
 
 fun Context.dp(px: Int): Int {
   return (px * resources.displayMetrics.density).roundToInt()
-}
-
-fun View.setVisible(visible: Boolean) {
-  visibility = if (visible) {
-    View.VISIBLE
-  } else {
-    View.GONE
-  }
 }

@@ -4,10 +4,10 @@ import android.os.Bundle
 import androidx.annotation.StringRes
 import com.asf.wallet.R
 
-sealed class PurchaseState(val isLoading: Boolean = false) {
+sealed class PurchaseState {
 
   data class Purchased(val purchaseData: Bundle) : PurchaseState()
-  object InProgress : PurchaseState(isLoading = true)
+  object InProgress : PurchaseState()
   object BazaarNotFoundError : PurchaseState()
   data class Canceled(val cancelBundle: Bundle) : PurchaseState()
 
