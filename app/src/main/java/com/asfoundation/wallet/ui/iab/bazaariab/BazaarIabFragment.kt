@@ -104,7 +104,6 @@ class BazaarIabFragment : DaggerFragment() {
     viewModel.purchaseState.observe(this, Observer {
 
       loadingView.setVisible(it.isLoading)
-      errorView.setVisible(it.isError)
 
       when (it) {
         is PurchaseState.Purchased -> {
@@ -112,7 +111,7 @@ class BazaarIabFragment : DaggerFragment() {
         }
 
 
-        PurchaseState.BazaarNotFound -> {
+        PurchaseState.BazaarNotFoundError -> {
           showBazaarInstallDialog()
         }
 
@@ -148,6 +147,7 @@ class BazaarIabFragment : DaggerFragment() {
   }
 
   private fun onError(error: PurchaseState.Error) {
+    errorView.visibility = View.VISIBLE
     errorMessageView.setText(error.textRes)
     setOkErrorClickListener(error.errorBundle)
   }
