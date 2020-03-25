@@ -110,7 +110,7 @@ class BazaarIabFragment : DaggerFragment() {
         }
 
 
-        is PurchaseState.BazaarNotFoundError -> {
+        PurchaseState.BazaarNotFound -> {
           showBazaarInstallDialog()
         }
 

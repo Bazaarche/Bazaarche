@@ -35,7 +35,7 @@ internal class BazaarIabViewModel(private val transaction: TransactionBuilder,
 
   internal fun onConnectionError(throwable: Throwable) {
     if (throwable is BazaarNotFoundException) {
-      _purchaseState.value = PurchaseState.BazaarNotFoundError
+      _purchaseState.value = PurchaseState.BazaarNotFound
     } else {
       throw throwable
     }
