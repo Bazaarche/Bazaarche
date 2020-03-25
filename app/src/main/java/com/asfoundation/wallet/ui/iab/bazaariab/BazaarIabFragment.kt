@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -48,7 +49,7 @@ class BazaarIabFragment : DaggerFragment() {
 
   private lateinit var transactionCompleteAnimationView: LottieAnimationView
   private lateinit var errorMessageView: TextView
-  private lateinit var errorOkButton: View
+  private lateinit var errorOkButton: Button
 
   @Inject
   lateinit var bazaarIabViewModelFactory: BazaarIabViewModelFactory
