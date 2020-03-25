@@ -47,7 +47,7 @@ class BazaarIabFragment : DaggerFragment() {
   private lateinit var iabView: IabView
 
   private lateinit var transactionCompleteAnimationView: LottieAnimationView
-  private lateinit var errorMessage: TextView
+  private lateinit var errorMessageView: TextView
   private lateinit var errorOkButton: View
 
   @Inject
@@ -84,7 +84,7 @@ class BazaarIabFragment : DaggerFragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-    errorMessage = view.findViewById(R.id.activity_iab_error_message)
+    errorMessageView = view.findViewById(R.id.activity_iab_error_message)
     errorOkButton = view.findViewById(R.id.activity_iab_error_ok_button)
     transactionCompleteAnimationView = view.findViewById(R.id.lottie_transaction_success)
   }
@@ -147,7 +147,7 @@ class BazaarIabFragment : DaggerFragment() {
   }
 
   private fun onError(error: PurchaseState.Error) {
-    errorMessage.setText(error.textRes)
+    errorMessageView.setText(error.textRes)
     setOkErrorClickListener(error.errorBundle)
   }
 
