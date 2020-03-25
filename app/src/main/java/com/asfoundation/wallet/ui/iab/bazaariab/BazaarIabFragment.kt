@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.airbnb.lottie.LottieAnimationView
 import com.asf.wallet.R
 import com.asfoundation.wallet.entity.TransactionBuilder
 import com.asfoundation.wallet.ui.iab.IabView
@@ -46,7 +45,6 @@ class BazaarIabFragment : DaggerFragment() {
 
   private lateinit var iabView: IabView
 
-  private lateinit var transactionCompleteAnimationView: LottieAnimationView
   private lateinit var errorMessageView: TextView
   private lateinit var errorOkButton: Button
 
@@ -86,7 +84,6 @@ class BazaarIabFragment : DaggerFragment() {
 
     errorMessageView = view.findViewById(R.id.activity_iab_error_message)
     errorOkButton = view.findViewById(R.id.activity_iab_error_ok_button)
-    transactionCompleteAnimationView = view.findViewById(R.id.lottie_transaction_success)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
