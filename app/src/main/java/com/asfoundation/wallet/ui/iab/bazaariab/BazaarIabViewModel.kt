@@ -16,6 +16,9 @@ import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
+import java.net.ConnectException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 internal class BazaarIabViewModel(private val transaction: TransactionBuilder,
                                   private val bazaarIabInteract: BazaarIabUseCases,
@@ -81,16 +84,16 @@ internal class BazaarIabViewModel(private val transaction: TransactionBuilder,
 
   private fun mapError(throwable: Throwable): PurchaseState {
     return when (throwable) {
-      is PurchaseCanceledException -> {
-        bazaarIabInteract.getCanceledError()
+      is PurchaseCanceledException -> PurchaseState.Canceled(bazaarIabInteract.getCancelBundle())
+      is UnknownHostException, is ConnectException, is SocketTimeoutException -> {
+        PurchaseState.NetworkError(bazaarIabInteract.getErrorBundle())
       }
-      else -> bazaarIabInteract.getGenericError()
+      else -> PurchaseState.Error(bazaarIabInteract.getErrorBundle())
     }
   }
 
   fun onCancelInstallation() {
-
-    _purchaseState.value = bazaarIabInteract.getCanceledError()
+    _purchaseState.value = PurchaseState.Canceled(bazaarIabInteract.getCancelBundle())
   }
 
 }

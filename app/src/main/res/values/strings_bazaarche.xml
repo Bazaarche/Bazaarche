@@ -11,6 +11,7 @@
   <string name="bazaar">Bazaar</string>
   <string name="bazaar_install">install</string>
   <string name="no">No</string>
+  <string name="iab_network_error_message">There is an error while connecting to the server. Please check your internet connection.</string>
 
   <string name="english" translatable="false">English</string>
   <string name="persian" translatable="false">فارسی</string>

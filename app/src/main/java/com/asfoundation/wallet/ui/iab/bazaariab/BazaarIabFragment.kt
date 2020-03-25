@@ -103,6 +103,7 @@ class BazaarIabFragment : DaggerFragment() {
     viewModel.purchaseState.observe(this, Observer {
 
       loadingView.setVisible(it.isLoading)
+      errorView.setVisible(it.isError)
 
       when (it) {
         is PurchaseState.Purchased -> {
@@ -114,8 +115,12 @@ class BazaarIabFragment : DaggerFragment() {
           showBazaarInstallDialog()
         }
 
+        is PurchaseState.Canceled -> {
+          onCancelled(it.cancelBundle)
+        }
+
         is PurchaseState.Error -> {
-          showError(it.errorBundle)
+          onError(it)
         }
       }
     })
@@ -124,15 +129,6 @@ class BazaarIabFragment : DaggerFragment() {
   private fun connectPayment() {
     paymentConnection = payment.connect().subscribe({ onConnectionFinished() }, viewModel::onConnectionError)
   }
-
-  private fun onConnectionFinished() {
-
-    viewModel.getPurchaseRequest().observe(this, Observer {
-      payment.purchaseProduct(this, it)
-          .subscribe()
-    })
-  }
-
 
   private fun onPurchaseFlowFinished(bundle: Bundle) {
     //TODO show something when purchase finished
@@ -146,9 +142,31 @@ class BazaarIabFragment : DaggerFragment() {
     }
   }
 
-  private fun showError(errorBundle: Bundle) {
-    //TODO show something when error happened
-    iabView.close(errorBundle)
+  private fun onCancelled(cancelBundle: Bundle) {
+    close(cancelBundle)
+  }
+
+  private fun onError(error: PurchaseState.Error) {
+    errorMessage.setText(error.textRes)
+    setOkErrorClickListener(error.errorBundle)
+  }
+
+  private fun onConnectionFinished() {
+
+    viewModel.getPurchaseRequest().observe(this, Observer {
+      payment.purchaseProduct(this, it)
+          .subscribe()
+    })
+  }
+
+  private fun setOkErrorClickListener(errorBundle: Bundle) {
+    errorOkButton.setOnClickListener {
+      close(errorBundle)
+    }
+  }
+
+  private fun close(bundle: Bundle) {
+    iabView.close(bundle)
   }
 
 }
