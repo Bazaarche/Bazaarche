@@ -13,6 +13,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.asf.wallet.R
 import com.asfoundation.wallet.entity.TransactionBuilder
 import com.asfoundation.wallet.ui.iab.IabView
+import com.asfoundation.wallet.ui.setVisible
 import com.phelat.poolakey.Payment
 import com.phelat.poolakey.rx.connect
 import com.phelat.poolakey.rx.onActivityResult
@@ -101,14 +102,13 @@ class BazaarIabFragment : DaggerFragment() {
   private fun observePurchaseState() {
     viewModel.purchaseState.observe(this, Observer {
 
+      loadingView.setVisible(it.isLoading)
+
       when (it) {
         is PurchaseState.Purchased -> {
           onPurchaseFlowFinished(it.purchaseData)
         }
 
-        is PurchaseState.InProgress -> {
-          //TODO
-        }
 
         is PurchaseState.BazaarNotFoundError -> {
           showBazaarInstallDialog()
