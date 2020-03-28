@@ -20,6 +20,7 @@ import com.phelat.poolakey.rx.purchaseProduct
 import dagger.android.support.DaggerFragment
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_bazaar_iab.*
+import kotlinx.android.synthetic.main.fragment_iab_transaction_completed.*
 import javax.inject.Inject
 
 
@@ -84,6 +85,7 @@ class BazaarIabFragment : DaggerFragment() {
 
     errorMessageView = view.findViewById(R.id.activity_iab_error_message)
     errorOkButton = view.findViewById(R.id.activity_iab_error_ok_button)
+    setupTransactionCompleteAnimationView()
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -107,8 +109,12 @@ class BazaarIabFragment : DaggerFragment() {
           onInProgress()
         }
 
-        is PurchaseState.Purchased -> {
-          onPurchaseFlowFinished(it.purchaseData)
+        PurchaseState.Purchased -> {
+          onPurchased()
+        }
+
+        is PurchaseState.Finished -> {
+          onFinish(it.purchaseData)
         }
 
         PurchaseState.BazaarNotFoundError -> {
@@ -130,12 +136,24 @@ class BazaarIabFragment : DaggerFragment() {
     paymentConnection = payment.connect().subscribe({ onConnectionFinished() }, viewModel::onConnectionError)
   }
 
+  private fun setupTransactionCompleteAnimationView() {
+    lottie_transaction_success.apply {
+      setAnimation(R.raw.success_animation)
+      addLottieOnCompositionLoadedListener {
+        viewModel.animationDuration(duration)
+      }
+    }
+  }
+
   private fun onInProgress() {
     loadingView.visibility = View.VISIBLE
   }
 
-  private fun onPurchaseFlowFinished(bundle: Bundle) {
-    //TODO show something when purchase finished
+  private fun onPurchased() {
+    transactionCompletedView.visibility = View.VISIBLE
+  }
+
+  private fun onFinish(bundle: Bundle) {
     iabView.finish(bundle)
   }
 

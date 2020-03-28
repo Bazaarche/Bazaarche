@@ -12,13 +12,16 @@ import com.phelat.poolakey.entity.PurchaseEntity
 import com.phelat.poolakey.exception.BazaarNotFoundException
 import com.phelat.poolakey.request.PurchaseRequest
 import com.phelat.poolakey.rx.exception.PurchaseCanceledException
+import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import java.util.concurrent.TimeUnit
 
 internal class BazaarIabViewModel(private val transaction: TransactionBuilder,
                                   private val bazaarIabInteract: BazaarIabUseCases,
@@ -34,6 +37,12 @@ internal class BazaarIabViewModel(private val transaction: TransactionBuilder,
   internal val paymentConfiguration = run {
     val securityCheck = SecurityCheck.Enable(rsaPublicKey = BuildConfig.BAZAARCHE_IAB_KEY)
     PaymentConfiguration(localSecurityCheck = securityCheck)
+  }
+
+  private var animationDuration: Long = 0
+
+  fun animationDuration(animationDuration: Long) {
+    this.animationDuration = animationDuration
   }
 
   internal fun onConnectionError(throwable: Throwable) {
@@ -68,14 +77,21 @@ internal class BazaarIabViewModel(private val transaction: TransactionBuilder,
           bazaarIabInteract.waitTransactionCompletion(it.uid)
         }
         .andThen(bazaarIabInteract.getPurchase(transaction.domain, transaction.skuId))
+        .flatMapObservable { purchaseState: PurchaseState ->
+          Observable.just(purchaseState)
+              .delay(animationDuration, TimeUnit.MILLISECONDS)
+              .observeOn(AndroidSchedulers.mainThread())
+              .startWith(PurchaseState.Purchased)
+        }
         .doOnError(Throwable::printStackTrace)
         .onErrorReturn(::mapError)
         .subscribeOn(scheduler)
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe(::onSuccess))
   }
 
   private fun onSuccess(purchaseState: PurchaseState) {
-    _purchaseState.postValue(purchaseState)
+    _purchaseState.value = purchaseState
   }
 
   override fun onCleared() {
