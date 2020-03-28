@@ -12,6 +12,7 @@
   <string name="bazaar">بازار</string>
   <string name="bazaar_install">نصب</string>
   <string name="no">خیر</string>
+  <string name="iab_network_error_message">مشکلی در ارتباط با سرور رخ داده است، لطفا از اتصال شبکه خود مطمئن شوید.</string>
 
   <string name="choose_language">انتخاب زبان</string>
   <string name="confirm">اعمال</string>

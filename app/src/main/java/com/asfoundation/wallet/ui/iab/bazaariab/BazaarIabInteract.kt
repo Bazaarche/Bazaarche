@@ -1,6 +1,7 @@
 package com.asfoundation.wallet.ui.iab.bazaariab
 
 import android.content.Intent
+import android.os.Bundle
 import com.appcoins.wallet.bdsbilling.Billing
 import com.appcoins.wallet.bdsbilling.WalletService
 import com.appcoins.wallet.bdsbilling.repository.entity.Transaction
@@ -77,9 +78,9 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
         .map { PurchaseState.Purchased(it) }
   }
 
-  override fun getCanceledError(): PurchaseState.Error = PurchaseState.Error(billingMessagesMapper.mapCancellation())
+  override fun getCancelBundle(): Bundle = billingMessagesMapper.mapCancellation()
 
-  override fun getGenericError(): PurchaseState.Error = PurchaseState.Error(billingMessagesMapper.genericError())
+  override fun getErrorBundle(): Bundle = billingMessagesMapper.genericError()
 
 
   private fun providePurchaseId() = "${transaction.domain}#${transaction.skuId}"

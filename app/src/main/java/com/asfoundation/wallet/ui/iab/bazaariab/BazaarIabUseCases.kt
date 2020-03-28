@@ -1,6 +1,7 @@
 package com.asfoundation.wallet.ui.iab.bazaariab
 
 import android.content.Intent
+import android.os.Bundle
 import com.asfoundation.wallet.entity.BazaarchePurchaseInfo
 import com.phelat.poolakey.entity.PurchaseEntity
 import com.phelat.poolakey.request.PurchaseRequest
@@ -17,7 +18,7 @@ interface BazaarIabUseCases {
 
   fun getPurchase(domain: String, sku: String): Single<PurchaseState>
 
-  fun getCanceledError(): PurchaseState.Error
+  fun getCancelBundle(): Bundle
 
-  fun getGenericError(): PurchaseState.Error
+  fun getErrorBundle(): Bundle
 }
