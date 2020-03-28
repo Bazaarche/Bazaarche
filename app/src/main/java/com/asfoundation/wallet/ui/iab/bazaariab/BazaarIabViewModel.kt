@@ -39,11 +39,7 @@ internal class BazaarIabViewModel(private val transaction: TransactionBuilder,
     PaymentConfiguration(localSecurityCheck = securityCheck)
   }
 
-  private var animationDuration: Long = 0
-
-  fun animationDuration(animationDuration: Long) {
-    this.animationDuration = animationDuration
-  }
+  var animationDuration: Long = 0
 
   internal fun onConnectionError(throwable: Throwable) {
     if (throwable is BazaarNotFoundException) {

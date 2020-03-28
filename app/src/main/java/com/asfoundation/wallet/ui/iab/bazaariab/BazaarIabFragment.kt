@@ -140,7 +140,7 @@ class BazaarIabFragment : DaggerFragment() {
     lottie_transaction_success.apply {
       setAnimation(R.raw.success_animation)
       addLottieOnCompositionLoadedListener {
-        viewModel.animationDuration(duration)
+        viewModel.animationDuration = duration
       }
     }
   }
