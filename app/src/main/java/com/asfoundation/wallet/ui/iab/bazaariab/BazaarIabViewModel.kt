@@ -98,18 +98,19 @@ internal class BazaarIabViewModel(private val transaction: TransactionBuilder,
     disposables.clear()
   }
 
+  fun onCancelInstallation() {
+    _purchaseState.value = PurchaseState.Canceled(bazaarIabInteract.getCancelBundle())
+  }
+
   private fun mapError(throwable: Throwable): PurchaseState {
     return when (throwable) {
       is PurchaseCanceledException -> PurchaseState.Canceled(bazaarIabInteract.getCancelBundle())
+
       is UnknownHostException, is ConnectException, is SocketTimeoutException -> {
         PurchaseState.NetworkError(bazaarIabInteract.getErrorBundle())
       }
       else -> PurchaseState.Error(bazaarIabInteract.getErrorBundle())
     }
-  }
-
-  fun onCancelInstallation() {
-    _purchaseState.value = PurchaseState.Canceled(bazaarIabInteract.getCancelBundle())
   }
 
 }
