@@ -75,7 +75,7 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
   override fun getPurchase(domain: String, sku: String): Single<PurchaseState> {
     return billing.getSkuPurchase(domain, sku, scheduler)
         .map { billingMessagesMapper.mapPurchase(it, transaction.orderReference) }
-        .map { PurchaseState.Purchased(it) }
+        .map { PurchaseState.Finished(it) }
   }
 
   override fun getCancelBundle(): Bundle = billingMessagesMapper.mapCancellation()

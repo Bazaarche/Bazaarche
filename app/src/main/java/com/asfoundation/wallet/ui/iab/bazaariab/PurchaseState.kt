@@ -6,7 +6,8 @@ import com.asf.wallet.R
 
 sealed class PurchaseState {
 
-  data class Purchased(val purchaseData: Bundle) : PurchaseState()
+  object Purchased : PurchaseState()
+  data class Finished(val purchaseData: Bundle) : PurchaseState()
   object InProgress : PurchaseState()
   object BazaarNotFoundError : PurchaseState()
   data class Canceled(val cancelBundle: Bundle) : PurchaseState()
