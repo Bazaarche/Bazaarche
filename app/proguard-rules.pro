@@ -54,3 +54,9 @@
 ##---------------Begin: proguard configuration for dagger.android  ----------
 # TODO: Remove this part when R8 enabled(maybe with updating gradle plugin)
 -dontwarn com.google.errorprone.annotations.**
+
+##---------------Begin: proguard configuration for Jackson  ----------
+-keep @com.fasterxml.jackson.annotation.* class *
+-keepclassmembers class * {
+    @com.fasterxml.jackson.annotation.* *;
+}
