@@ -560,12 +560,12 @@
 
 <!--Update-->
   <string name="update_wallet_poa_notification_title">Update to receive rewards</string>
-  <string name="update_wallet_poa_notification_body">Please update the AppCoins Wallet to receive this reward.</string>
+  <string name="update_wallet_poa_notification_body">Please update the Bazaarche to receive this reward.</string>
   <string name="update_wallet_purchase_title">You need to update!</string>
-  <string name="update_wallet_purchase_body">Update the AppCoins Wallet to complete this purchase.</string>
-  <string name="update_wallet_hard_body">It seems you\'re using an old version of the AppCoins Wallet. Please update it to guarantee the best experience and security.</string>
+  <string name="update_wallet_purchase_body">Update the Bazaarche to complete this purchase.</string>
+  <string name="update_wallet_hard_body">It seems you\'re using an old version of the Bazaarche. Please update it to guarantee the best experience and security.</string>
   <string name="update_wallet_soft_title">Don\'t get left behind!</string>
-  <string name="update_wallet_soft_body">Keeping the AppCoins Wallet updated guarantees the best experience.</string>
+  <string name="update_wallet_soft_body">Keeping the Bazaarche updated guarantees the best experience.</string>
   <string name="update_button">UPDATE</string>
 
 <!--Backup and Import-->
