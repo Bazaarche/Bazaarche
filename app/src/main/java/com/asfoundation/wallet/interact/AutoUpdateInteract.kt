@@ -4,6 +4,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import com.asf.wallet.R
+import com.asfoundation.wallet.BAZAAR_APP_DETAILS_DEEP_LINK
+import com.asfoundation.wallet.BAZAAR_APP_DETAILS_URL
+import com.asfoundation.wallet.BAZAAR_PACKAGE_NAME
 import com.asfoundation.wallet.referrals.CardNotification
 import com.asfoundation.wallet.repository.AutoUpdateRepository
 import com.asfoundation.wallet.repository.PreferencesRepositoryType
@@ -33,9 +36,8 @@ class AutoUpdateInteract(private val autoUpdateRepository: AutoUpdateRepository,
 
   fun retrieveRedirectUrl(): String {
     return when {
-      isInstalled(APTOIDE_PACKAGE_NAME) -> APTOIDE_APP_VIEW_URL
-      isInstalled(PLAY_PACKAGE_NAME) -> PLAY_APP_VIEW_URL + walletPackageName
-      else -> APTOIDE_APP_VIEW_URL
+      isInstalled(BAZAAR_PACKAGE_NAME) -> BAZAAR_APP_DETAILS_DEEP_LINK + walletPackageName
+      else -> BAZAAR_APP_DETAILS_URL + walletPackageName
     }
   }
 
