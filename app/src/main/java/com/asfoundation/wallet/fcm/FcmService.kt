@@ -13,7 +13,7 @@ import javax.inject.Inject
 class FcmService : FirebaseMessagingService() {
 
   @Inject
-  @field:[Bazaarche]
+  @Bazaarche
   internal lateinit var notificationBuilder: NotificationCompat.Builder
 
   override fun onCreate() {
