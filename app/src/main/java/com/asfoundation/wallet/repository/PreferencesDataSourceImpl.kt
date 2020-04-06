@@ -11,10 +11,12 @@ class PreferencesDataSourceImpl @Inject constructor(context: Context) : Preferen
   private val preferences: SharedPreferences = context.getSharedPreferences(PREFERENCES_FILE_NAME, Context.MODE_PRIVATE)
 
   override var adId by StringPrefProperty(PREF_AD_ID)
+  override var lowestSupportedVersion: Int by IntPrefProperty(LOWEST_SUPPORTED_VERSION)
 
   companion object {
     private const val PREFERENCES_FILE_NAME = "bazaarche_preferences"
     private const val PREF_AD_ID = "ad_id"
+    private const val LOWEST_SUPPORTED_VERSION = "lowest_supported_version"
   }
 
 
@@ -26,6 +28,19 @@ class PreferencesDataSourceImpl @Inject constructor(context: Context) : Preferen
 
     override fun setValue(thisRef: PreferencesDataSourceImpl, property: KProperty<*>, value: String) {
       thisRef.preferences.edit().putString(key, value).apply()
+    }
+  }
+
+
+  private class IntPrefProperty(private val key: String) :
+      ReadWriteProperty<PreferencesDataSourceImpl, Int> {
+
+    override fun getValue(thisRef: PreferencesDataSourceImpl, property: KProperty<*>): Int {
+      return thisRef.preferences.getInt(key, 0)
+    }
+
+    override fun setValue(thisRef: PreferencesDataSourceImpl, property: KProperty<*>, value: Int) {
+      thisRef.preferences.edit().putInt(key, value).apply()
     }
   }
 }
