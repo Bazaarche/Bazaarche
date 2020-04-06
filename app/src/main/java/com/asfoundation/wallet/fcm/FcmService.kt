@@ -16,6 +16,9 @@ class FcmService : FirebaseMessagingService() {
   @Bazaarche
   internal lateinit var notificationBuilder: NotificationCompat.Builder
 
+  @Inject
+  internal lateinit var fcmInterActor: FcmInterActor
+
   override fun onCreate() {
     AndroidInjection.inject(this)
     super.onCreate()
@@ -24,7 +27,7 @@ class FcmService : FirebaseMessagingService() {
   override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
     if (remoteMessage.data.isNotEmpty()) {
-      //TODO: handle data notification
+      fcmInterActor.handleDataNotification(remoteMessage.data)
     } else {
       sendNotification(remoteMessage.notification ?: return)
     }
