@@ -23,8 +23,10 @@ class UpdateNavigator {
           if (info.activityInfo.packageName == "com.android.vending")
             intent.setPackage(info.activityInfo.packageName)
         }
+        if (appsList.isNotEmpty()) {
+          context.startActivity(intent)
+        }
       }
-      context.startActivity(intent)
     }
   }
 }
