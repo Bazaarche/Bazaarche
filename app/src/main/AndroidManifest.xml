@@ -220,8 +220,8 @@
 
     <service
         android:name="com.asfoundation.wallet.advertise.WalletPoAService"
-        android:enabled="true"
-        android:exported="true">
+        android:enabled="false"
+        android:exported="false">
       <intent-filter>
         <action android:name="com.asf.appcoins.service.ACTION_BIND" />
       </intent-filter>
@@ -235,8 +235,8 @@
     </service>
     <service
         android:name="com.asfoundation.wallet.advertise.AdvertisingService"
-        android:enabled="true"
-        android:exported="true">
+        android:enabled="false"
+        android:exported="false">
       <intent-filter>
         <action android:name="com.appcoins.wallet.advertising.action.BIND" />
       </intent-filter>
