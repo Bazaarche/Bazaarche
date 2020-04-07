@@ -45,7 +45,7 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
         .map { createPayload(it, transaction) }
         .map {
           PurchaseRequest(
-              productId = providePurchaseId(),
+              productId = provideProductId(),
               requestCode = PURCHASE_REQUEST,
               payload = it)
         }
@@ -83,7 +83,7 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
   override fun getErrorBundle(): Bundle = billingMessagesMapper.genericError()
 
 
-  private fun providePurchaseId() = "${transaction.domain}#${transaction.skuId}"
+  private fun provideProductId() : String = "${transaction.domain}#${transaction.skuId}"
 
   private fun createPayload(walletAddress: String, transaction: TransactionBuilder): String {
     return transaction.run {
