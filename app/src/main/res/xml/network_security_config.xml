@@ -3,6 +3,6 @@
   <domain-config cleartextTrafficPermitted="true">
     <domain includeSubdomains="true">pool.img.aptoide.com</domain>
     <domain includeSubdomains="true">fecdn.cafebazaar.ir</domain>
-    <domain includeSubdomains="true">94.130.76.177</domain>
+    <domain includeSubdomains="true">bazaarchewallet.com</domain>
   </domain-config>
 </network-security-config>
