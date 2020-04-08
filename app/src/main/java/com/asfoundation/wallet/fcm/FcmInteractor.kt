@@ -3,7 +3,7 @@ package com.asfoundation.wallet.fcm
 import com.asfoundation.wallet.repository.AutoUpdateRepository
 import javax.inject.Inject
 
-class FcmInterActor @Inject constructor(private var autoUpdateRepository: AutoUpdateRepository) {
+class FcmInteractor @Inject constructor(private var autoUpdateRepository: AutoUpdateRepository) {
 
   internal fun handleDataNotification(data: Map<String, String>) {
     data[APP_LOWEST_SUPPORTED_VERSION]?.also {
