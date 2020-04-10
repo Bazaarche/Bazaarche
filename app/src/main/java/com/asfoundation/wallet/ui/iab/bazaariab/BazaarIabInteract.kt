@@ -8,9 +8,11 @@ import com.appcoins.wallet.bdsbilling.repository.entity.Transaction
 import com.appcoins.wallet.billing.BillingMessagesMapper
 import com.asf.wallet.BuildConfig
 import com.asfoundation.wallet.entity.BazaarchePurchaseInfo
+import com.asfoundation.wallet.entity.ProductInfo
 import com.asfoundation.wallet.entity.Payload
 import com.asfoundation.wallet.entity.TransactionBuilder
 import com.asfoundation.wallet.ui.iab.bazaariab.Status.Companion.statusMapper
+import com.asfoundation.wallet.util.Parameters
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.phelat.poolakey.entity.PurchaseEntity
@@ -82,8 +84,28 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
 
   override fun getErrorBundle(): Bundle = billingMessagesMapper.genericError()
 
+  private fun provideProductId(): String = gson.toJson(getProductInfo())
 
-  private fun provideProductId() : String = "${transaction.domain}#${transaction.skuId}"
+  private fun getProductInfo(): ProductInfo {
+    return transaction.run {
+
+      val amount: Double = if (isOneStep()) {
+        originalOneStepValue.toDouble()
+      } else {
+        amount().toDouble()
+      }
+
+      ProductInfo(
+          dealer = domain,
+          type = type,
+          product = skuId,
+          amount = amount,
+          currency = originalOneStepCurrency
+      )
+    }
+  }
+
+  private fun TransactionBuilder.isOneStep() = type.equals(Parameters.PAYMENT_TYPE_INAPP_UNMANAGED, false)
 
   private fun createPayload(walletAddress: String, transaction: TransactionBuilder): String {
     return transaction.run {
