@@ -56,9 +56,54 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
   override fun getPurchaseInfo(data: Intent, purchaseEntity: PurchaseEntity): Single<BazaarchePurchaseInfo> {
 
     return Single.just(data.getStringExtra(RESPONSE_PURCHASE_DATA))
-        .map { mapper(purchaseEntity, it) }
+        .map { mapToBazaarchePurchaseInfo(purchaseEntity, it) }
   }
 
+  override fun getPurchaseBundle(uid: String): Single<Bundle> {
+    return getCompletedTransaction(uid)
+        .flatMap { providePurchaseBundle(it.hash) }
+  }
+
+  override fun getCancelBundle(): Bundle = billingMessagesMapper.mapCancellation()
+
+  override fun getErrorBundle(): Bundle = billingMessagesMapper.genericError()
+
+  private fun createPayload(walletAddress: String, transaction: TransactionBuilder): String {
+    return transaction.run {
+
+      val payload =
+          Payload(skuId, type, payload, walletAddress, domain, amount().toDouble(), callbackUrl,
+              orderReference, toAddress(), BuildConfig.DEFAULT_OEM_ADDRESS)
+
+      gson.toJson(payload)
+    }
+  }
+
+  private fun provideProductId(): String = gson.toJson(getProductInfo())
+
+  private fun mapToBazaarchePurchaseInfo(purchaseEntity: PurchaseEntity,
+                                         purchaseData: String): BazaarchePurchaseInfo {
+
+    val type = object : TypeToken<Map<String, String>>() {}.type
+    val purchaseDataMap = gson.fromJson<Map<String, String>>(purchaseData, type)
+
+    val purchaseInfo = purchaseEntity.purchaseInfo
+
+    return purchaseInfo.run {
+
+      BazaarchePurchaseInfo(
+          orderId = orderId,
+          purchaseToken = purchaseToken,
+          payload = payload,
+          packageName = packageName,
+          purchaseState = purchaseState,
+          purchaseTime = purchaseTime,
+          skuId = productId,
+          domain = purchaseDataMap.getValue(DOMAIN),
+          uid = purchaseDataMap.getValue(UID)
+      )
+    }
+  }
 
   private fun getCompletedTransaction(uid: String): Single<Transaction> {
 
@@ -74,21 +119,10 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
         }
         .doOnNext(::throwErrorIfUnexpectedStatus)
         .takeUntil {
-          it.status != PROCESSING
+          it.status == COMPLETED
         }
         .singleOrError()
   }
-
-  override fun getPurchaseBundle(uid: String): Single<Bundle> {
-    return getCompletedTransaction(uid)
-        .flatMap { providePurchaseBundle(it.hash) }
-  }
-
-  override fun getCancelBundle(): Bundle = billingMessagesMapper.mapCancellation()
-
-  override fun getErrorBundle(): Bundle = billingMessagesMapper.genericError()
-
-  private fun provideProductId(): String = gson.toJson(getProductInfo())
 
   private fun providePurchaseBundle(transactionHash: String?): Single<Bundle> {
     return transaction.run {
@@ -122,40 +156,7 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
     }
   }
 
-  private fun TransactionBuilder.isOneStep() = type.equals(Parameters.PAYMENT_TYPE_INAPP_UNMANAGED, false)
-
-  private fun createPayload(walletAddress: String, transaction: TransactionBuilder): String {
-    return transaction.run {
-
-      val payload = Payload(skuId, type, payload, walletAddress, domain, amount().toDouble(), callbackUrl,
-          orderReference, toAddress(), BuildConfig.DEFAULT_OEM_ADDRESS)
-
-      gson.toJson(payload)
-    }
-  }
-
-  private fun mapper(purchaseEntity: PurchaseEntity, purchaseData: String): BazaarchePurchaseInfo {
-
-    val type = object : TypeToken<Map<String, String>>() {}.type
-    val purchaseDataMap = gson.fromJson<Map<String, String>>(purchaseData, type)
-
-    val purchaseInfo = purchaseEntity.purchaseInfo
-
-    return purchaseInfo.run {
-
-      BazaarchePurchaseInfo(
-          orderId = orderId,
-          purchaseToken = purchaseToken,
-          payload = payload,
-          packageName = packageName,
-          purchaseState = purchaseState,
-          purchaseTime = purchaseTime,
-          skuId = productId,
-          domain = purchaseDataMap.getValue(DOMAIN),
-          uid = purchaseDataMap.getValue(UID)
-      )
-    }
-
-  }
+  private fun TransactionBuilder.isOneStep() =
+      type.equals(Parameters.PAYMENT_TYPE_INAPP_UNMANAGED, false)
 
 }
