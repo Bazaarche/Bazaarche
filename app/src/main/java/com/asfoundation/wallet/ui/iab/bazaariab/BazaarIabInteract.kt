@@ -8,6 +8,7 @@ import com.appcoins.wallet.bdsbilling.repository.entity.Transaction
 import com.appcoins.wallet.bdsbilling.repository.entity.Transaction.Status.PROCESSING
 import com.appcoins.wallet.bdsbilling.repository.entity.Transaction.Status.COMPLETED
 import com.appcoins.wallet.billing.BillingMessagesMapper
+import com.asf.wallet.BuildConfig
 import com.asfoundation.wallet.entity.BazaarchePurchaseInfo
 import com.asfoundation.wallet.entity.ProductInfo
 import com.asfoundation.wallet.entity.TransactionBuilder
@@ -75,7 +76,7 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
         }
 
         ProductInfo(skuId, type, walletAddress, domain, amount, callbackUrl,
-            orderReference, toAddress(), originalOneStepCurrency)
+            orderReference, toAddress(), originalOneStepCurrency, BuildConfig.VERSION_CODE)
       }
     }
 

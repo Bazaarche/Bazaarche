@@ -10,4 +10,5 @@ data class ProductInfo(val product: String,
                        @SerializedName("callback_url") val callbackUrl: String?,
                        val reference: String?,
                        @SerializedName("wallets_developer") val walletsDeveloper: String,
-                       val currency: String)
+                       val currency: String,
+                       val clientVersion: Int)
