@@ -1,4 +1,13 @@
 package com.asfoundation.wallet.entity
 
-data class ProductInfo(val dealer: String, val type: String, val product: String,
-                       val amount: Double, val currency: String)
+import com.google.gson.annotations.SerializedName
+
+data class ProductInfo(val product: String,
+                       val type: String,
+                       @SerializedName("wallet_address") val walletAddress: String,
+                       val domain: String,
+                       val amount: Double,
+                       @SerializedName("callback_url") val callbackUrl: String?,
+                       val reference: String?,
+                       @SerializedName("wallets_developer") val walletsDeveloper: String,
+                       val currency: String)

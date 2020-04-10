@@ -8,10 +8,8 @@ import com.appcoins.wallet.bdsbilling.repository.entity.Transaction
 import com.appcoins.wallet.bdsbilling.repository.entity.Transaction.Status.PROCESSING
 import com.appcoins.wallet.bdsbilling.repository.entity.Transaction.Status.COMPLETED
 import com.appcoins.wallet.billing.BillingMessagesMapper
-import com.asf.wallet.BuildConfig
 import com.asfoundation.wallet.entity.BazaarchePurchaseInfo
 import com.asfoundation.wallet.entity.ProductInfo
-import com.asfoundation.wallet.entity.Payload
 import com.asfoundation.wallet.entity.TransactionBuilder
 import com.asfoundation.wallet.util.Parameters
 import com.google.gson.Gson
@@ -44,12 +42,9 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
 
   override fun getPurchaseRequest(): Single<PurchaseRequest> {
     return walletService.getWalletAddress()
-        .map { createPayload(it, transaction) }
+        .map { getProductInfoJson(it) }
         .map {
-          PurchaseRequest(
-              productId = provideProductId(),
-              requestCode = PURCHASE_REQUEST,
-              payload = it)
+          PurchaseRequest(it, PURCHASE_REQUEST, it)
         }
   }
 
@@ -68,18 +63,24 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
 
   override fun getErrorBundle(): Bundle = billingMessagesMapper.genericError()
 
-  private fun createPayload(walletAddress: String, transaction: TransactionBuilder): String {
-    return transaction.run {
+  private fun getProductInfoJson(walletAddress: String): String {
 
-      val payload =
-          Payload(skuId, type, payload, walletAddress, domain, amount().toDouble(), callbackUrl,
-              orderReference, toAddress(), BuildConfig.DEFAULT_OEM_ADDRESS)
+    fun getProductInfo(walletAddress: String): ProductInfo {
+      return transaction.run {
 
-      gson.toJson(payload)
+        val amount: Double = if (isOneStep()) {
+          originalOneStepValue.toDouble()
+        } else {
+          amount().toDouble()
+        }
+
+        ProductInfo(skuId, type, walletAddress, domain, amount, callbackUrl,
+            orderReference, toAddress(), originalOneStepCurrency)
+      }
     }
-  }
 
-  private fun provideProductId(): String = gson.toJson(getProductInfo())
+    return gson.toJson(getProductInfo(walletAddress))
+  }
 
   private fun mapToBazaarchePurchaseInfo(purchaseEntity: PurchaseEntity,
                                          purchaseData: String): BazaarchePurchaseInfo {
@@ -134,25 +135,6 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
               billingMessagesMapper.mapPurchase(it, orderReference)
             }
       }
-    }
-  }
-
-  private fun getProductInfo(): ProductInfo {
-    return transaction.run {
-
-      val amount: Double = if (isOneStep()) {
-        originalOneStepValue.toDouble()
-      } else {
-        amount().toDouble()
-      }
-
-      ProductInfo(
-          dealer = domain,
-          type = type,
-          product = skuId,
-          amount = amount,
-          currency = originalOneStepCurrency
-      )
     }
   }
 
