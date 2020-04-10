@@ -44,7 +44,7 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
     return walletService.getWalletAddress()
         .map { getProductInfoJson(it) }
         .map {
-          PurchaseRequest(it, PURCHASE_REQUEST, it)
+          PurchaseRequest(it, PURCHASE_REQUEST, transaction.payload)
         }
   }
 
