@@ -5,19 +5,19 @@ import android.os.Bundle
 import com.appcoins.wallet.bdsbilling.Billing
 import com.appcoins.wallet.bdsbilling.WalletService
 import com.appcoins.wallet.bdsbilling.repository.entity.Transaction
+import com.appcoins.wallet.bdsbilling.repository.entity.Transaction.Status.PROCESSING
+import com.appcoins.wallet.bdsbilling.repository.entity.Transaction.Status.COMPLETED
 import com.appcoins.wallet.billing.BillingMessagesMapper
 import com.asf.wallet.BuildConfig
 import com.asfoundation.wallet.entity.BazaarchePurchaseInfo
 import com.asfoundation.wallet.entity.ProductInfo
 import com.asfoundation.wallet.entity.Payload
 import com.asfoundation.wallet.entity.TransactionBuilder
-import com.asfoundation.wallet.ui.iab.bazaariab.Status.Companion.statusMapper
 import com.asfoundation.wallet.util.Parameters
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.phelat.poolakey.entity.PurchaseEntity
 import com.phelat.poolakey.request.PurchaseRequest
-import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -60,24 +60,28 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
   }
 
 
-  override fun waitTransactionCompletion(uid: String): Completable {
+  private fun getCompletedTransaction(uid: String): Single<Transaction> {
+
+    fun throwErrorIfUnexpectedStatus(transaction: Transaction) {
+      if (transaction.status != PROCESSING && transaction.status != COMPLETED) {
+        error("Not expected status")
+      }
+    }
 
     return Observable.interval(0, 5, TimeUnit.SECONDS, scheduler)
         .switchMapSingle {
           billing.getAppcoinsTransaction(uid, scheduler)
         }
-        .map(::statusMapper)
-        .takeUntil { status ->
-          status != Status.PROCESSING
+        .doOnNext(::throwErrorIfUnexpectedStatus)
+        .takeUntil {
+          it.status != PROCESSING
         }
-        .ignoreElements()
+        .singleOrError()
   }
 
-
-  override fun getPurchase(domain: String, sku: String): Single<PurchaseState> {
-    return billing.getSkuPurchase(domain, sku, scheduler)
-        .map { billingMessagesMapper.mapPurchase(it, transaction.orderReference) }
-        .map { PurchaseState.Finished(it) }
+  override fun getPurchaseBundle(uid: String): Single<Bundle> {
+    return getCompletedTransaction(uid)
+        .flatMap { providePurchaseBundle(it.hash) }
   }
 
   override fun getCancelBundle(): Bundle = billingMessagesMapper.mapCancellation()
@@ -85,6 +89,19 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
   override fun getErrorBundle(): Bundle = billingMessagesMapper.genericError()
 
   private fun provideProductId(): String = gson.toJson(getProductInfo())
+
+  private fun providePurchaseBundle(transactionHash: String?): Single<Bundle> {
+    return transaction.run {
+      if (isOneStep()) {
+        Single.just(billingMessagesMapper.successBundle(transactionHash))
+      } else {
+        billing.getSkuPurchase(domain, skuId, scheduler)
+            .map {
+              billingMessagesMapper.mapPurchase(it, orderReference)
+            }
+      }
+    }
+  }
 
   private fun getProductInfo(): ProductInfo {
     return transaction.run {
@@ -139,25 +156,6 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
       )
     }
 
-  }
-
-
-}
-
-
-private enum class Status {
-  PROCESSING,
-  COMPLETED;
-
-  companion object {
-
-    fun statusMapper(transaction: Transaction): Status {
-      return when (transaction.status) {
-        Transaction.Status.PROCESSING -> PROCESSING
-        Transaction.Status.COMPLETED -> COMPLETED
-        else -> error("Not expected status")
-      }
-    }
   }
 
 }
