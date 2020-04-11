@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import com.asfoundation.wallet.BAZAAR_PACKAGE_NAME
 
 class UpdateNavigator {
 
@@ -16,15 +17,15 @@ class UpdateNavigator {
           packageManager?.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
       appsList?.let {
         for (info in appsList) {
-          if (info.activityInfo.packageName == "cm.aptoide.pt") {
+          if (info.activityInfo.packageName == BAZAAR_PACKAGE_NAME) {
             intent.setPackage(info.activityInfo.packageName)
             break
           }
-          if (info.activityInfo.packageName == "com.android.vending")
-            intent.setPackage(info.activityInfo.packageName)
+        }
+        if (appsList.isNotEmpty()) {
+          context.startActivity(intent)
         }
       }
-      context.startActivity(intent)
     }
   }
 }
