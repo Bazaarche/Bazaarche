@@ -13,8 +13,11 @@ import javax.inject.Inject
 class FcmService : FirebaseMessagingService() {
 
   @Inject
-  @field:[Bazaarche]
+  @Bazaarche
   internal lateinit var notificationBuilder: NotificationCompat.Builder
+
+  @Inject
+  internal lateinit var fcmInteractor: FcmInteractor
 
   override fun onCreate() {
     AndroidInjection.inject(this)
@@ -24,7 +27,7 @@ class FcmService : FirebaseMessagingService() {
   override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
     if (remoteMessage.data.isNotEmpty()) {
-      //TODO: handle data notification
+      fcmInteractor.handleDataNotification(remoteMessage.data)
     } else {
       sendNotification(remoteMessage.notification ?: return)
     }

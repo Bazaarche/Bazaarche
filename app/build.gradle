@@ -223,9 +223,6 @@ dependencies {
   implementation "com.asfoundation:appcoins-contract-proxy:$project.appcoinsSdkVersion"
   implementation project(path: ':billing')
 
-  implementation "com.phelat:poolakey:1.0.0-alpha02"
-  implementation "com.phelat:poolakey-rx:1.0.0-alpha02"
-
   //adyen dependency
   implementation "com.adyen.checkout:card-ui:$project.adyenVersion"
   implementation "com.adyen.checkout:redirect:$project.adyenVersion"

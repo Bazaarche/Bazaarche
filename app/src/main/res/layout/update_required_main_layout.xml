@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     >
 
-  <com.airbnb.lottie.LottieAnimationView
+  <ImageView
       android:id="@+id/update_animation"
       android:layout_width="136dp"
       android:layout_height="136dp"
@@ -13,10 +13,7 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:lottie_autoPlay="true"
-      app:lottie_enableMergePathsForKitKatAndAbove="true"
-      app:lottie_loop="true"
-      app:lottie_rawRes="@raw/soft_hard_update_animation"
+      android:src="@drawable/img_logo_with_name"
       />
 
   <TextView

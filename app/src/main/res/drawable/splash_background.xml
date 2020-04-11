@@ -7,5 +7,5 @@
   </item>
   <item
       android:gravity="center"
-      android:drawable="@drawable/ic_splash" />
+      android:drawable="@drawable/img_logo_with_name" />
 </layer-list>

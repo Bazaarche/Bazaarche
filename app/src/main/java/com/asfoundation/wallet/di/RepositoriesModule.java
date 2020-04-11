@@ -71,12 +71,12 @@ import static com.asfoundation.wallet.C.ROPSTEN_NETWORK_NAME;
   @Singleton @Provides NetworkInfo providesDefaultNetwork() {
     if (BuildConfig.DEBUG) {
       return new com.asfoundation.wallet.entity.NetworkInfo(ROPSTEN_NETWORK_NAME, ETH_SYMBOL,
-          "http://94.130.76.177/ropsteninfura/v3/df5b41e6a3a44d9dbf9142fa3f58cabc",
-          "http://94.130.76.177/ropstentrustwalletapp/", "http://94.130.76.177/ropstenetherscan/tx/", 3, false);
+          "http://bazaarchewallet.com/ropsteninfura/v3/df5b41e6a3a44d9dbf9142fa3f58cabc",
+          "http://bazaarchewallet.com/ropstentrustwalletapp/", "http://bazaarchewallet.com/ropstenetherscan/tx/", 3, false);
     } else {
       return new com.asfoundation.wallet.entity.NetworkInfo(ETHEREUM_NETWORK_NAME, ETH_SYMBOL,
-          "http://94.130.76.177/mainnetinfura/v3/df5b41e6a3a44d9dbf9142fa3f58cabc",
-          "http://94.130.76.177/apitrustwalletapp/", "http://94.130.76.177/etherscanio/tx/", 1, true);
+          "http://bazaarchewallet.com/mainnetinfura/v3/df5b41e6a3a44d9dbf9142fa3f58cabc",
+          "http://bazaarchewallet.com/apitrustwalletapp/", "http://bazaarchewallet.com/etherscanio/tx/", 1, true);
     }
   }
 

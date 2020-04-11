@@ -514,8 +514,8 @@
   <string name="update_wallet_poa_notification_title">بروزرسانی کنید و پاداش دریافت کنید</string>
   <string name="update_wallet_poa_notification_body">لطفا برنامه را بروزرسانی کنید تا این پاداش را دریافت کنید.</string>
   <string name="update_wallet_purchase_title">نیاز به بروزرسانی دارید!</string>
-  <string name="update_wallet_purchase_body">لطفا برنامه را بروزرسانی کنید تا این خرید را کامل کنید.</string>
-  <string name="update_wallet_hard_body">به نظر می‌رسد که از نسخه قدیمی برنامه استفاده می‌کنید. لطفا بروزرسانی کنید تا بتوانید بهترین تجربه و امنیت را داشته باشید.</string>
+  <string name="update_wallet_purchase_body">لطفا بازارچه را بروزرسانی کنید تا این خرید را کامل کنید.</string>
+  <string name="update_wallet_hard_body">به نظر می‌رسد که از نسخه قدیمی بازارچه استفاده می‌کنید. لطفا بروزرسانی کنید تا بتوانید بهترین تجربه و امنیت را داشته باشید.</string>
   <string name="update_wallet_soft_title">عقب نیافتید!</string>
   <string name="update_wallet_soft_body">برنامه را بروز نگه دارید و بهترین تجربه را داشته باشید.</string>
   <string name="update_button">بروزرسانی</string>

@@ -146,6 +146,7 @@ import com.asfoundation.wallet.repository.GasSettingsRepositoryType;
 import com.asfoundation.wallet.repository.InAppPurchaseService;
 import com.asfoundation.wallet.repository.IpCountryCodeProvider;
 import com.asfoundation.wallet.repository.IpCountryCodeProvider.IpApi;
+import com.asfoundation.wallet.repository.LocalAutoUpdateService;
 import com.asfoundation.wallet.repository.NoValidateTransactionValidator;
 import com.asfoundation.wallet.repository.OffChainTransactions;
 import com.asfoundation.wallet.repository.OffChainTransactionsRepository;
@@ -914,7 +915,7 @@ import static com.asfoundation.wallet.service.AppsApi.API_BASE_URL;
 
   @Singleton @Provides AnalyticsAPI provideAnalyticsAPI(OkHttpClient client,
       ObjectMapper objectMapper) {
-    return new Retrofit.Builder().baseUrl("http://94.130.76.177/primary/api/7/")
+    return new Retrofit.Builder().baseUrl("http://bazaarchewallet.com/primary/api/7/")
         .client(client)
         .addConverterFactory(JacksonConverterFactory.create(objectMapper))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -1326,8 +1327,9 @@ import static com.asfoundation.wallet.service.AppsApi.API_BASE_URL;
     }
   }
 
-  @Provides AutoUpdateRepository provideAutoUpdateRepository(AutoUpdateService autoUpdateService) {
-    return new AutoUpdateRepository(autoUpdateService);
+  @Provides AutoUpdateRepository provideAutoUpdateRepository(AutoUpdateService autoUpdateService,
+      LocalAutoUpdateService localAutoUpdateService) {
+    return new AutoUpdateRepository(autoUpdateService, localAutoUpdateService);
   }
 
   @Provides AutoUpdateInteract provideAutoUpdateInteract(AutoUpdateRepository autoUpdateRepository,

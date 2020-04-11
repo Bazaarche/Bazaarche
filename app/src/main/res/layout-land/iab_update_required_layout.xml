@@ -25,18 +25,15 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       />
-  <com.airbnb.lottie.LottieAnimationView
+  <ImageView
       android:id="@+id/update_animation"
       android:layout_width="128dp"
       android:layout_height="128dp"
       android:layout_marginTop="40dp"
       android:layout_marginEnd="56dp"
-      app:layout_constraintRight_toRightOf="@id/mid_guideline"
+      app:layout_constraintEnd_toEndOf="@id/mid_guideline"
       app:layout_constraintTop_toBottomOf="@id/top_separator"
-      app:lottie_autoPlay="true"
-      app:lottie_enableMergePathsForKitKatAndAbove="true"
-      app:lottie_loop="true"
-      app:lottie_rawRes="@raw/soft_hard_update_animation"
+      android:src="@drawable/img_logo_with_name"
       />
   <TextView
       android:id="@+id/update_title"
@@ -49,8 +46,8 @@
       android:text="@string/update_wallet_purchase_title"
       android:textColor="@color/black_87_alpha"
       android:textSize="20sp"
-      app:layout_constraintLeft_toLeftOf="@id/mid_guideline"
-      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintStart_toStartOf="@id/mid_guideline"
+      app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toTopOf="@id/top_separator"
       />
   <TextView
@@ -64,8 +61,8 @@
       android:text="@string/update_wallet_purchase_body"
       android:textColor="#99000000"
       android:textSize="14sp"
-      app:layout_constraintLeft_toLeftOf="@id/mid_guideline"
-      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintStart_toStartOf="@id/mid_guideline"
+      app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toBottomOf="@id/update_title"
       />
   <View

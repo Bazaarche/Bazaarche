@@ -24,7 +24,6 @@ abstract class BazaarcheToolsModule {
   @Module
   companion object {
 
-    @JvmStatic
     @Bazaarche
     @Provides
     fun provideNotificationBuilder(context: Context): NotificationCompat.Builder {
