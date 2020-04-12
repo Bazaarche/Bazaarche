@@ -69,10 +69,8 @@ internal class BazaarIabViewModel(private val transaction: TransactionBuilder,
         .flatMap {
           bazaarIabInteract.getPurchaseInfo(data!!, it)
         }
-        .flatMapCompletable {
-          bazaarIabInteract.waitTransactionCompletion(it.uid)
-        }
-        .andThen(bazaarIabInteract.getPurchase(transaction.domain, transaction.skuId))
+        .flatMap { bazaarIabInteract.getPurchaseBundle(it.uid) }
+        .map { PurchaseState.Finished(it) }
         .flatMapObservable { purchaseState: PurchaseState ->
           Observable.just(purchaseState)
               .delay(animationDuration, TimeUnit.MILLISECONDS)

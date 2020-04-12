@@ -5,17 +5,18 @@ import android.os.Bundle
 import com.appcoins.wallet.bdsbilling.Billing
 import com.appcoins.wallet.bdsbilling.WalletService
 import com.appcoins.wallet.bdsbilling.repository.entity.Transaction
+import com.appcoins.wallet.bdsbilling.repository.entity.Transaction.Status.PROCESSING
+import com.appcoins.wallet.bdsbilling.repository.entity.Transaction.Status.COMPLETED
 import com.appcoins.wallet.billing.BillingMessagesMapper
 import com.asf.wallet.BuildConfig
 import com.asfoundation.wallet.entity.BazaarchePurchaseInfo
-import com.asfoundation.wallet.entity.Payload
+import com.asfoundation.wallet.entity.ProductInfo
 import com.asfoundation.wallet.entity.TransactionBuilder
-import com.asfoundation.wallet.ui.iab.bazaariab.Status.Companion.statusMapper
+import com.asfoundation.wallet.util.Parameters
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.phelat.poolakey.entity.PurchaseEntity
 import com.phelat.poolakey.request.PurchaseRequest
-import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -42,60 +43,48 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
 
   override fun getPurchaseRequest(): Single<PurchaseRequest> {
     return walletService.getWalletAddress()
-        .map { createPayload(it, transaction) }
+        .map { getProductInfoJson(it) }
         .map {
-          PurchaseRequest(
-              productId = providePurchaseId(),
-              requestCode = PURCHASE_REQUEST,
-              payload = it)
+          PurchaseRequest(it, PURCHASE_REQUEST, transaction.payload)
         }
   }
 
   override fun getPurchaseInfo(data: Intent, purchaseEntity: PurchaseEntity): Single<BazaarchePurchaseInfo> {
 
     return Single.just(data.getStringExtra(RESPONSE_PURCHASE_DATA))
-        .map { mapper(purchaseEntity, it) }
+        .map { mapToBazaarchePurchaseInfo(purchaseEntity, it) }
   }
 
-
-  override fun waitTransactionCompletion(uid: String): Completable {
-
-    return Observable.interval(0, 5, TimeUnit.SECONDS, scheduler)
-        .switchMapSingle {
-          billing.getAppcoinsTransaction(uid, scheduler)
-        }
-        .map(::statusMapper)
-        .takeUntil { status ->
-          status != Status.PROCESSING
-        }
-        .ignoreElements()
-  }
-
-
-  override fun getPurchase(domain: String, sku: String): Single<PurchaseState> {
-    return billing.getSkuPurchase(domain, sku, scheduler)
-        .map { billingMessagesMapper.mapPurchase(it, transaction.orderReference) }
-        .map { PurchaseState.Finished(it) }
+  override fun getPurchaseBundle(uid: String): Single<Bundle> {
+    return getCompletedTransaction(uid)
+        .flatMap { providePurchaseBundle(it.hash) }
   }
 
   override fun getCancelBundle(): Bundle = billingMessagesMapper.mapCancellation()
 
   override fun getErrorBundle(): Bundle = billingMessagesMapper.genericError()
 
+  private fun getProductInfoJson(walletAddress: String): String {
 
-  private fun providePurchaseId() = "${transaction.domain}#${transaction.skuId}"
+    fun getProductInfo(walletAddress: String): ProductInfo {
+      return transaction.run {
 
-  private fun createPayload(walletAddress: String, transaction: TransactionBuilder): String {
-    return transaction.run {
+        val amount: Double = if (isOneStep()) {
+          originalOneStepValue.toDouble()
+        } else {
+          amount().toDouble()
+        }
 
-      val payload = Payload(skuId, type, payload, walletAddress, domain, amount().toDouble(), callbackUrl,
-          orderReference, toAddress(), BuildConfig.DEFAULT_OEM_ADDRESS)
-
-      gson.toJson(payload)
+        ProductInfo(skuId, type, walletAddress, domain, amount, callbackUrl,
+            orderReference, toAddress(), originalOneStepCurrency, BuildConfig.VERSION_CODE)
+      }
     }
+
+    return gson.toJson(getProductInfo(walletAddress))
   }
 
-  private fun mapper(purchaseEntity: PurchaseEntity, purchaseData: String): BazaarchePurchaseInfo {
+  private fun mapToBazaarchePurchaseInfo(purchaseEntity: PurchaseEntity,
+                                         purchaseData: String): BazaarchePurchaseInfo {
 
     val type = object : TypeToken<Map<String, String>>() {}.type
     val purchaseDataMap = gson.fromJson<Map<String, String>>(purchaseData, type)
@@ -116,26 +105,41 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
           uid = purchaseDataMap.getValue(UID)
       )
     }
-
   }
 
+  private fun getCompletedTransaction(uid: String): Single<Transaction> {
 
-}
+    fun throwErrorIfUnexpectedStatus(transaction: Transaction) {
+      if (transaction.status != PROCESSING && transaction.status != COMPLETED) {
+        error("Not expected status")
+      }
+    }
 
+    return Observable.interval(0, 5, TimeUnit.SECONDS, scheduler)
+        .switchMapSingle {
+          billing.getAppcoinsTransaction(uid, scheduler)
+        }
+        .doOnNext(::throwErrorIfUnexpectedStatus)
+        .takeUntil {
+          it.status == COMPLETED
+        }
+        .singleOrError()
+  }
 
-private enum class Status {
-  PROCESSING,
-  COMPLETED;
-
-  companion object {
-
-    fun statusMapper(transaction: Transaction): Status {
-      return when (transaction.status) {
-        Transaction.Status.PROCESSING -> PROCESSING
-        Transaction.Status.COMPLETED -> COMPLETED
-        else -> error("Not expected status")
+  private fun providePurchaseBundle(transactionHash: String?): Single<Bundle> {
+    return transaction.run {
+      if (isOneStep()) {
+        Single.just(billingMessagesMapper.successBundle(transactionHash))
+      } else {
+        billing.getSkuPurchase(domain, skuId, scheduler)
+            .map {
+              billingMessagesMapper.mapPurchase(it, orderReference)
+            }
       }
     }
   }
+
+  private fun TransactionBuilder.isOneStep() =
+      type.equals(Parameters.PAYMENT_TYPE_INAPP_UNMANAGED, false)
 
 }
