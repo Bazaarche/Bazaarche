@@ -12,6 +12,7 @@ import com.asf.wallet.BuildConfig
 import com.asfoundation.wallet.entity.BazaarchePurchaseInfo
 import com.asfoundation.wallet.entity.ProductInfo
 import com.asfoundation.wallet.entity.TransactionBuilder
+import com.asfoundation.wallet.ui.balance.database.BalanceDetailsMapper.Companion.APPC_SYMBOL
 import com.asfoundation.wallet.util.Parameters
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -69,14 +70,17 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
     fun getProductInfo(walletAddress: String): ProductInfo {
       return transaction.run {
 
+        val currency : String
         val amount: Double = if (isOneStep()) {
+          currency = originalOneStepCurrency
           originalOneStepValue.toDouble()
         } else {
+          currency = APPC_SYMBOL
           amount().toDouble()
         }
 
         ProductInfo(skuId, type, walletAddress, domain, amount, callbackUrl,
-            orderReference, toAddress(), originalOneStepCurrency, BuildConfig.VERSION_CODE)
+            orderReference, toAddress(), currency, BuildConfig.VERSION_CODE)
       }
     }
 
