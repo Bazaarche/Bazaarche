@@ -49,6 +49,11 @@ internal class BazaarIabViewModel(private val transaction: TransactionBuilder,
     }
   }
 
+  internal fun handleBeginPurchaseFlowFailed(throwable: Throwable) {
+    throwable.printStackTrace()
+    _purchaseState.value = PurchaseState.Error(bazaarIabInteract.getErrorBundle())
+  }
+
   internal fun getPurchaseRequest(): LiveData<PurchaseRequest> {
 
     val purchaseRequestLiveData = MutableLiveData<PurchaseRequest>()
