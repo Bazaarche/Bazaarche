@@ -16,7 +16,6 @@ class WebViewActivity : AppCompatActivity() {
     AndroidInjection.inject(this)
     super.onCreate(savedInstanceState)
     setContentView(R.layout.web_view_activity)
-    lockCurrentPosition()
 
     if (savedInstanceState == null) {
       val url = intent.getStringExtra(URL)
