@@ -14,7 +14,7 @@ class TransferParser(private val eipTransactionParser: EIPTransactionParser,
     if (uri.isEthereumURLString()) {
       return Single.just<ERC681>(parseERC681(uri))
           .flatMap { erc681 -> eipTransactionParser.buildTransaction(erc681) }
-    } else if (Uri.parse(uri).isOneStepURLString()) {
+    } else if (Uri.parse(uri).isOneStepURI()) {
       return Single.just<OneStepUri>(parseOneStep(Uri.parse(uri)))
           .flatMap { oneStepUri -> oneStepTransactionParser.buildTransaction(oneStepUri, uri) }
     }
