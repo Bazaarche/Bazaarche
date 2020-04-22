@@ -3,6 +3,7 @@ package com.asfoundation.wallet.util
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.asf.wallet.BuildConfig
 import java.io.IOException
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -36,4 +37,10 @@ inline fun <T> LiveData<T>.observeNotNull(owner: LifecycleOwner, crossinline obs
       observer(it)
     }
   })
+}
+
+fun Throwable.debugLog() {
+  if (BuildConfig.DEBUG) {
+    printStackTrace()
+  }
 }
