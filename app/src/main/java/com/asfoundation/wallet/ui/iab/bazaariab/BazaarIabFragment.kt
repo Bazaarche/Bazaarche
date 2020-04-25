@@ -178,7 +178,8 @@ class BazaarIabFragment : DaggerFragment() {
 
     viewModel.getPurchaseRequest().observe(this, Observer {
       payment.purchaseProduct(this, it)
-          .subscribe()
+          .subscribe({ /*purchase flow began. nothing to do*/ },
+              viewModel::handleBeginPurchaseFlowFailed)
     })
   }
 

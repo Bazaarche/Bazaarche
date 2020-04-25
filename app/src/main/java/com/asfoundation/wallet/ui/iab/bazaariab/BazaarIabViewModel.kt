@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.asf.wallet.BuildConfig
 import com.asfoundation.wallet.entity.TransactionBuilder
+import com.asfoundation.wallet.util.debugLog
 import com.phelat.poolakey.config.PaymentConfiguration
 import com.phelat.poolakey.config.SecurityCheck
 import com.phelat.poolakey.entity.PurchaseEntity
@@ -47,6 +48,11 @@ internal class BazaarIabViewModel(private val transaction: TransactionBuilder,
     } else {
       throw throwable
     }
+  }
+
+  internal fun handleBeginPurchaseFlowFailed(throwable: Throwable) {
+    throwable.debugLog()
+    _purchaseState.value = PurchaseState.Error(bazaarIabInteract.getErrorBundle())
   }
 
   internal fun getPurchaseRequest(): LiveData<PurchaseRequest> {
