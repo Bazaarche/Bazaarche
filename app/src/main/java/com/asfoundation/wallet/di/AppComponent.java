@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 @Singleton @Component(modules = {
     AndroidSupportInjectionModule.class, ToolsModule.class, RepositoriesModule.class,
     BuildersModule.class, ImportModule.class, SettingsModule.class, BazaarcheToolsModule.class
-}) public interface AppComponent {
+, AndroidStuffModule.class}) public interface AppComponent {
 
   void inject(App app);
 
