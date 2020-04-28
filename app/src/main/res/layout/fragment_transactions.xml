@@ -12,4 +12,20 @@
       tools:listitem="@layout/item_bazaarche_transaction"
       />
 
+  <ProgressBar
+      android:id="@+id/progressTransactions"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      />
+
+  <TextView
+      android:id="@+id/textNoTransactions"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:visibility="gone"
+      android:text="@string/no_transactions_yet_main"
+      />
+
 </FrameLayout>

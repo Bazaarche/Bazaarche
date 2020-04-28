@@ -43,6 +43,8 @@ class TransactionsFragment : DaggerFragment() {
 
   private fun setupRecyclerView() {
     recyclerTransactions.apply {
+      loadingView = progressTransactions
+      emptyView = textNoTransactions
 
       layoutManager = LinearLayoutManager(requireContext())
     }
