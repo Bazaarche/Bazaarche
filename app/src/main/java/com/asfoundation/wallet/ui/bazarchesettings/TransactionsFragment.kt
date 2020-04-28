@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.asf.wallet.R
 import com.asfoundation.wallet.entity.Result
 import com.asfoundation.wallet.transactions.Transaction
+import com.asfoundation.wallet.ui.createItemDecoration
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_transactions.*
 import javax.inject.Inject
@@ -47,6 +48,9 @@ class TransactionsFragment : DaggerFragment() {
       emptyView = textNoTransactions
 
       layoutManager = LinearLayoutManager(requireContext())
+
+      val itemDecorationStartMargin = resources.getDimensionPixelSize(R.dimen.source_image_size)
+      addItemDecoration(createItemDecoration(requireContext(), 0, itemDecorationStartMargin))
     }
   }
 
