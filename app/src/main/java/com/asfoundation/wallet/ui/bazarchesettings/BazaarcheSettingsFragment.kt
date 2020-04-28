@@ -33,7 +33,7 @@ class BazaarcheSettingsFragment : DaggerFragment() {
         manageWalletsRouter.open(requireContext())
       }
       TRANSACTIONS_LIST -> {
-        //TODO
+        openTransactionsFragment()
       }
       LANGUAGE_SETTINGS -> {
         showChangeLanguageDialog()
@@ -59,6 +59,13 @@ class BazaarcheSettingsFragment : DaggerFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
     setupRecyclerView()
+  }
+
+  private fun openTransactionsFragment() {
+    parentFragmentManager.beginTransaction()
+        .replace(R.id.fragment_container, TransactionsFragment())
+        .addToBackStack(null)
+        .commit()
   }
 
   private fun setupRecyclerView() {
