@@ -162,7 +162,7 @@
   <string name="NA">N/A</string>
   <string name="error_wallet_not_selected">کیف پول انتخاب نشده است</string>
   <string name="no_transactions_yet">برای آشنایی با نحوه‌ي پرداخت در برنامه مقداری اعتبار دریافت کنید.</string>
-  <string name="no_transactions_yet_main">همچنان بدون تراکنش مالی</string>
+  <string name="no_transactions_yet_main">بدون تراکنش مالی</string>
   <string name="unknown_balance_with_symbol">-- ETH</string>
   <string name="unknown_balance_without_symbol">--</string>
   <string name="dummy">-</string>
