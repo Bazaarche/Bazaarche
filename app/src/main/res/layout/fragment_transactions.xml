@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
 
+  <include layout="@layout/layout_settings_toolbar" />
+
   <com.asfoundation.wallet.ui.widget.EmptyAndLoadingRecyclerView
       android:id="@+id/recyclerTransactions"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:layout_below="@id/toolbarSettings"
       tools:listitem="@layout/item_bazaarche_transaction"
       />
 
@@ -16,16 +19,16 @@
       android:id="@+id/progressTransactions"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_gravity="center"
+      android:layout_centerInParent="true"
       />
 
   <TextView
       android:id="@+id/textNoTransactions"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_gravity="center"
       android:visibility="gone"
+      android:layout_centerInParent="true"
       android:text="@string/no_transactions_yet_main"
       />
 
-</FrameLayout>
+</RelativeLayout>

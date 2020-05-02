@@ -11,8 +11,10 @@ import com.asf.wallet.R
 import com.asfoundation.wallet.entity.Result
 import com.asfoundation.wallet.transactions.Transaction
 import com.asfoundation.wallet.ui.createItemDecoration
+import com.asfoundation.wallet.ui.setNavigationClickToPressBack
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_transactions.*
+import kotlinx.android.synthetic.main.layout_settings_toolbar.*
 import javax.inject.Inject
 
 class TransactionsFragment : DaggerFragment() {
@@ -36,10 +38,18 @@ class TransactionsFragment : DaggerFragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    setupToolbar()
     setupRecyclerView()
 
     transactionsViewModel.getTransactionsAndWalletLiveData()
         .observe(viewLifecycleOwner, Observer(::onTransactionAndWalletReady))
+  }
+
+  private fun setupToolbar() {
+    toolbarSettings.apply {
+      setTitle(R.string.transactions_list)
+      setNavigationClickToPressBack(requireActivity())
+    }
   }
 
   private fun setupRecyclerView() {
