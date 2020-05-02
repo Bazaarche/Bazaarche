@@ -45,6 +45,7 @@ class EmptyAndLoadingRecyclerView : RecyclerView {
     getAdapter()?.unregisterAdapterDataObserver(observer)
     super.setAdapter(adapter)
     adapter?.registerAdapterDataObserver(observer)
+    checkEmptyAndLoading()
   }
 
   private fun checkEmptyAndLoading() {
