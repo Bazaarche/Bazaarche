@@ -3,7 +3,8 @@ package com.asfoundation.wallet.ui.bazarchesettings
 import android.content.Context
 import com.asf.wallet.R
 import com.asfoundation.wallet.transactions.Transaction
-import com.asfoundation.wallet.transactions.TransactionDetails
+import com.asfoundation.wallet.transactions.TransactionDetails.Icon.Type.FILE
+import com.asfoundation.wallet.transactions.TransactionDetails.Icon.Type.URL
 import java.util.*
 
 internal fun Transaction.getAddressText(context: Context, defaultWalletAddress: String): String {
@@ -20,11 +21,11 @@ internal fun Transaction.getAddressText(context: Context, defaultWalletAddress: 
   }
 }
 
-internal fun Transaction.getUri(): String? {
-  return when (details?.icon?.type) {
-    TransactionDetails.Icon.Type.FILE -> "file:" + details.icon.uri
-    TransactionDetails.Icon.Type.URL -> details.icon.uri
-    else -> null
+internal fun Transaction.getUri(): String? = details?.icon?.run {
+  when (type) {
+    FILE -> "file:$uri"
+    URL -> uri
+    null -> null
   }
 }
 
