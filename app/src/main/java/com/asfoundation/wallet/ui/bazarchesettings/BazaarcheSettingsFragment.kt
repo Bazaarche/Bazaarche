@@ -133,4 +133,9 @@ class BazaarcheSettingsFragment : DaggerFragment() {
     viewModel.onLanguageSelected(requireContext(), selectedPosition)
   }
 
+  override fun onDestroy() {
+    super.onDestroy()
+    toolbarSettings.setNavigationOnClickListener(null)
+  }
+
 }

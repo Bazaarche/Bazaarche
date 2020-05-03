@@ -89,4 +89,9 @@ class TransactionsFragment : DaggerFragment() {
     }
   }
 
+  override fun onDestroy() {
+    super.onDestroy()
+    toolbarSettings.setNavigationOnClickListener(null)
+  }
+
 }
