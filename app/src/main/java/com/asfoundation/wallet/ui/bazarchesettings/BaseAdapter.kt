@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
  */
 abstract class BaseAdapter<E : Any, VH : BaseAdapter.BaseViewHolder<E>>(
     items: List<E> = emptyList(),
-    private val clickListener: ((E) -> Unit)? = null) : RecyclerView.Adapter<VH>() {
+    private val clickListener: ((Int) -> Unit)? = null) : RecyclerView.Adapter<VH>() {
 
   val items: MutableList<E> = items.toMutableList()
 
@@ -40,20 +40,18 @@ abstract class BaseAdapter<E : Any, VH : BaseAdapter.BaseViewHolder<E>>(
   final override fun onBindViewHolder(holder: VH, position: Int) {
     val item = items[position]
     holder.item = item
-    holder.clickListener = clickListener
     holder.bind(item)
   }
 
-  abstract class BaseViewHolder<E : Any>(itemView: View) :
+  abstract class BaseViewHolder<E : Any>(itemView: View,
+                                         private val clickListener: ((Int) -> Unit)? = null) :
       RecyclerView.ViewHolder(itemView) {
 
-    internal lateinit var item : E
-    internal var clickListener: ((E) -> Unit)? = null
-    set(value) {
-      field = value
-      itemView.setOnClickListener { field?.invoke(item) }
+    init {
+      itemView.setOnClickListener { clickListener?.invoke(adapterPosition) }
     }
 
+    internal lateinit var item : E
     abstract fun bind(item : E)
   }
 }
