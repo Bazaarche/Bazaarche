@@ -19,7 +19,7 @@ class TransactionViewHolder(itemView: View, private val defaultWalletAddress: St
     BaseAdapter.BaseViewHolder<Transaction>(itemView) {
 
   override fun bind(item: Transaction) {
-    item.apply {
+    with(item) {
 
       val uri: String? = getUri()
 
