@@ -9,19 +9,14 @@ import java.util.*
 internal fun Transaction.getAddressText(context: Context, defaultWalletAddress: String): String {
   val isSent = isSent(defaultWalletAddress)
 
-  return if (details != null) {
-
-    if (type == Transaction.TransactionType.BONUS) {
-      context.getString(R.string.transaction_type_bonus)
-    } else {
-      details.sourceName ?: if (isSent) {
-        to
-      } else {
-        from
-      }
-    }
+  return if (details != null && type == Transaction.TransactionType.BONUS) {
+    context.getString(R.string.transaction_type_bonus)
   } else {
-    if (isSent) to else from
+    details?.sourceName ?: if (isSent) {
+      to
+    } else {
+      from
+    }
   }
 }
 
