@@ -17,6 +17,8 @@ import kotlinx.android.synthetic.main.item_bazaarche_transaction.view.*
 class TransactionViewHolder(itemView: View, private val defaultWalletAddress: String) :
     BaseAdapter.BaseViewHolder<Transaction>(itemView) {
 
+  private var requestListener: RequestListener<Drawable?>? = null
+
   override fun bind(item: Transaction) {
     with(item) {
 
@@ -43,31 +45,37 @@ class TransactionViewHolder(itemView: View, private val defaultWalletAddress: St
 
       itemView.textAddress.text = getAddressText(itemView.context, defaultWalletAddress)
 
+      requestListener = object : RequestListener<Drawable?> {
+        override fun onLoadFailed(exception: GlideException?, model: Any,
+                                  target: Target<Drawable?>,
+                                  isFirstResource: Boolean): Boolean {
+
+          itemView.imageTransactionType.visibility = View.GONE
+          return false
+        }
+
+        override fun onResourceReady(resource: Drawable?, model: Any,
+                                     target: Target<Drawable?>,
+                                     dataSource: DataSource,
+                                     isFirstResource: Boolean): Boolean {
+          itemView.imageTransactionType.setImageResource(transactionTypeIcon)
+          return false
+        }
+      }
+
       GlideApp.with(itemView.context)
           .load(uri)
           .apply(RequestOptions.bitmapTransform(CircleCrop())
               .placeholder(transactionTypeIcon)
               .error(transactionTypeIcon))
-          .listener(object : RequestListener<Drawable?> {
-            override fun onLoadFailed(exception: GlideException?, model: Any,
-                                      target: Target<Drawable?>,
-                                      isFirstResource: Boolean): Boolean {
-
-              itemView.imageTransactionType.visibility = View.GONE
-              return false
-            }
-
-            override fun onResourceReady(resource: Drawable?, model: Any,
-                                         target: Target<Drawable?>,
-                                         dataSource: DataSource,
-                                         isFirstResource: Boolean): Boolean {
-              itemView.imageTransactionType.setImageResource(transactionTypeIcon)
-              return false
-            }
-          })
+          .listener(requestListener)
           .into(itemView.imageSource)
 
     }
+  }
+
+  fun onViewRecycled() {
+    requestListener = null
   }
 
 }

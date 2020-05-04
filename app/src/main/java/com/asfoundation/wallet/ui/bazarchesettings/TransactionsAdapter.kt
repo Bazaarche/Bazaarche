@@ -8,6 +8,11 @@ class TransactionsAdapter(private val defaultWalletAddress: String,
                           items: List<Transaction>) :
     BaseAdapter<Transaction, TransactionViewHolder>(items) {
 
+  override fun onViewRecycled(holder: TransactionViewHolder) {
+
+    holder.onViewRecycled()
+  }
+
   override fun getLayoutId(position: Int): Int = R.layout.item_bazaarche_transaction
 
   override fun createViewHolder(view: View, viewType: Int): TransactionViewHolder =
