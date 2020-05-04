@@ -5,7 +5,6 @@ import android.view.View
 import com.asf.wallet.R
 import com.asfoundation.wallet.GlideApp
 import com.asfoundation.wallet.transactions.Transaction
-import com.asfoundation.wallet.transactions.TransactionDetails
 import com.asfoundation.wallet.ui.toggleVisibility
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -23,11 +22,7 @@ class TransactionViewHolder(itemView: View, private val defaultWalletAddress: St
 
       val uri: String? = getUri()
 
-      if (type == Transaction.TransactionType.BONUS) {
-        itemView.imageTransactionType.visibility = View.GONE
-      } else {
-        setTransactionTypeImageVisibility(details, uri)
-      }
+      itemView.imageTransactionType.toggleVisibility(visible = isTransactionTypeShouldBeShown(uri))
 
       val transactionTypeIcon = when (type) {
         Transaction.TransactionType.IAB, Transaction.TransactionType.IAP_OFFCHAIN -> {
@@ -75,8 +70,4 @@ class TransactionViewHolder(itemView: View, private val defaultWalletAddress: St
     }
   }
 
-  private fun setTransactionTypeImageVisibility(details: TransactionDetails, uri: String?) {
-    itemView.imageTransactionType.toggleVisibility(
-        visible = uri == null || details.sourceName == null)
-  }
 }
