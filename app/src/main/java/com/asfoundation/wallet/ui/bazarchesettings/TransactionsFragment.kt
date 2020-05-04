@@ -23,7 +23,7 @@ class TransactionsFragment : DaggerFragment() {
   lateinit var transactionsViewModelFactory: TransactionsViewModelFactory
   private lateinit var transactionsViewModel: TransactionsViewModel
 
-  private lateinit var adapter: TransactionsAdapter
+  private var adapter: TransactionsAdapter? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -92,6 +92,7 @@ class TransactionsFragment : DaggerFragment() {
   override fun onDestroy() {
     super.onDestroy()
     toolbarSettings.setNavigationOnClickListener(null)
+    adapter = null
   }
 
 }
