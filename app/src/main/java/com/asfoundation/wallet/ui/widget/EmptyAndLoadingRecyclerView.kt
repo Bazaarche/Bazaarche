@@ -4,63 +4,93 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.asfoundation.wallet.ui.toggleVisibility
 
 class EmptyAndLoadingRecyclerView : RecyclerView {
-
-  var emptyView: View? = null
-    set(value) {
-      field = value
-      checkEmptyAndLoading()
-    }
-
-  private val isEmpty: Boolean
-    get() {
-      return adapter?.itemCount ?: 0 <= 0
-    }
-
-  var loadingView: View? = null
-    set(value) {
-      field = value
-      checkEmptyAndLoading()
-    }
-
-  var isLoading: Boolean = false
-    set(value) {
-      field = value
-      checkEmptyAndLoading()
-    }
-
-  private val observer: AdapterDataObserver = object : AdapterDataObserver() {
-    override fun onChanged() {
-      checkEmptyAndLoading()
-    }
-  }
 
   constructor(context: Context) : super(context)
   constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
   constructor(context: Context, attrs: AttributeSet?, defStyle: Int) :
       super(context, attrs, defStyle)
 
+  var emptyView: View? = null
+    set(value) {
+      field = value
+      changeVisibilitiesBasedOnState()
+    }
+
+  var loadingView: View? = null
+    set(value) {
+      field = value
+      changeVisibilitiesBasedOnState()
+    }
+
+  var errorView: View? = null
+    set(value) {
+      field = value
+      changeVisibilitiesBasedOnState()
+    }
+
+  private var state: ViewState = ViewState.Loading
+    set(value) {
+      field = value
+      changeVisibilitiesBasedOnState()
+    }
+
+  private val observer = object : AdapterDataObserver() {
+    override fun onChanged() {
+      checkEmpty()
+    }
+  }
+
+  /**
+   * Shows [loadingView]. Ignores call if recyclerView has data.
+   * Automatically hide [loadingView] when recyclerView got data
+   */
+  fun showLoading() {
+    if (state != ViewState.HasData) {
+      state = ViewState.Loading
+    }
+  }
+
+  /**
+   * Shows [errorView]. Ignores call if recyclerView has data.
+   * Automatically hide [errorView] when recyclerView got data
+   */
+  fun showError() {
+    if (state != ViewState.HasData) {
+      state = ViewState.Error
+    }
+  }
+
   override fun setAdapter(adapter: Adapter<*>?) {
     getAdapter()?.unregisterAdapterDataObserver(observer)
     super.setAdapter(adapter)
     adapter?.registerAdapterDataObserver(observer)
-    checkEmptyAndLoading()
+    checkEmpty()
   }
 
-  private fun checkEmptyAndLoading() {
-    if (isEmpty) {
-      if (isLoading) {
-        loadingView?.visibility = View.VISIBLE
-        emptyView?.visibility = View.GONE
-      } else {
-        emptyView?.visibility = View.VISIBLE
-        loadingView?.visibility = View.GONE
-      }
+  private fun changeVisibilitiesBasedOnState() {
+
+    emptyView?.toggleVisibility(state == ViewState.Empty)
+    loadingView?.toggleVisibility(state == ViewState.Loading)
+    errorView?.toggleVisibility(state == ViewState.Error)
+  }
+
+  private fun checkEmpty() {
+    val isAdapterEmpty = adapter?.itemCount ?: 0 <= 0
+    state = if (isAdapterEmpty) {
+      ViewState.Empty
     } else {
-      emptyView?.visibility = View.GONE
-      loadingView?.visibility = View.GONE
+      ViewState.HasData
     }
   }
 
+}
+
+private enum class ViewState {
+  Error,
+  Loading,
+  Empty,
+  HasData
 }

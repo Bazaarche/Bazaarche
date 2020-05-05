@@ -72,14 +72,12 @@ class TransactionsFragment : DaggerFragment() {
   private fun onTransactionAndWalletReady(
       transactionAndWallet: Result<Pair<String, List<Transaction>>>) {
 
-    recyclerTransactions.isLoading = false
-
     when (transactionAndWallet) {
       Result.Loading -> {
-        recyclerTransactions.isLoading = true
+        recyclerTransactions.showLoading()
       }
       is Result.Error -> {
-        //TODO
+        recyclerTransactions.showError()
       }
       is Result.Success -> {
         adapter = TransactionsAdapter(transactionAndWallet.data.first,
