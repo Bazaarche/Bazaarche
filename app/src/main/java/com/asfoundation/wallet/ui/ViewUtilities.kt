@@ -1,6 +1,5 @@
 package com.asfoundation.wallet.ui
 
-import android.R
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.InsetDrawable
@@ -23,7 +22,7 @@ fun createItemDecoration(context: Context,
 }
 
 fun getDividerDrawable(context: Context, startMargin: Int, endMargin: Int): Drawable {
-  val attrs = intArrayOf(R.attr.listDivider)
+  val attrs = intArrayOf(android.R.attr.listDivider)
 
   val typedArray = context.obtainStyledAttributes(attrs)
   val divider = typedArray.getDrawable(0)
