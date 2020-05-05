@@ -30,7 +30,7 @@ internal fun Transaction.getUri(): String? = details?.icon?.run {
 }
 
 internal fun Transaction.isTransactionTypeShouldBeShown(uri: String?): Boolean =
-    type != Transaction.TransactionType.BONUS && uri == null || details.sourceName == null
+    type != Transaction.TransactionType.BONUS && uri != null && details.sourceName != null
 
 private fun Transaction.isSent(defaultWalletAddress: String): Boolean =
     from.toLowerCase(Locale.ROOT) == defaultWalletAddress
