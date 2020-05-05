@@ -56,7 +56,7 @@ class TransactionsFragment : DaggerFragment() {
     recyclerTransactions.apply {
       loadingView = progressTransactions
       emptyView = textNoTransactions
-
+      errorView = groupTransactionError
       layoutManager = LinearLayoutManager(requireContext())
 
       val itemDecorationStartMargin = resources.getDimensionPixelSize(R.dimen.source_image_size)
