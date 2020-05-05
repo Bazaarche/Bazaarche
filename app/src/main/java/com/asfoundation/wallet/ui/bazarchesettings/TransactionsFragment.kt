@@ -48,6 +48,17 @@ class TransactionsFragment : DaggerFragment() {
         .observe(viewLifecycleOwner, Observer(::onTransactionAndWalletReady))
   }
 
+  override fun onDestroy() {
+    super.onDestroy()
+    toolbar.setNavigationOnClickListener(null)
+    adapter = null
+  }
+
+  private fun initViewModel() {
+    transactionsViewModel = ViewModelProviders.of(this,
+        transactionsViewModelFactory)[TransactionsViewModel::class.java]
+  }
+
   private fun setupToolbar() {
     toolbar = requireView().findViewById(R.id.includeSettingsToolbar)
     toolbar.apply {
@@ -74,11 +85,6 @@ class TransactionsFragment : DaggerFragment() {
     }
   }
 
-  private fun initViewModel() {
-    transactionsViewModel = ViewModelProviders.of(this,
-        transactionsViewModelFactory)[TransactionsViewModel::class.java]
-  }
-
   private fun onTransactionAndWalletReady(
       transactionAndWallet: Result<Pair<String, List<Transaction>>>) {
 
@@ -95,12 +101,6 @@ class TransactionsFragment : DaggerFragment() {
         recyclerTransactions.adapter = adapter
       }
     }
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    toolbar.setNavigationOnClickListener(null)
-    adapter = null
   }
 
 }
