@@ -15,7 +15,6 @@ import com.asfoundation.wallet.ui.createItemDecoration
 import com.asfoundation.wallet.ui.setNavigationClickToPressBack
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_transactions.*
-import kotlinx.android.synthetic.main.layout_settings_toolbar.*
 import javax.inject.Inject
 
 class TransactionsFragment : DaggerFragment() {
@@ -43,8 +42,9 @@ class TransactionsFragment : DaggerFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     setupToolbar()
     setupRecyclerView()
+    setTryAgainClickListener()
 
-    transactionsViewModel.getTransactionsAndWalletLiveData()
+    transactionsViewModel.transactionsAndWallet
         .observe(viewLifecycleOwner, Observer(::onTransactionAndWalletReady))
   }
 
@@ -65,6 +65,12 @@ class TransactionsFragment : DaggerFragment() {
 
       val itemDecorationStartMargin = resources.getDimensionPixelSize(R.dimen.source_image_size)
       addItemDecoration(createItemDecoration(requireContext(), 0, itemDecorationStartMargin))
+    }
+  }
+
+  private fun setTryAgainClickListener() {
+    buttonTransactionsTryAgain.setOnClickListener {
+      transactionsViewModel.onTryAgain()
     }
   }
 

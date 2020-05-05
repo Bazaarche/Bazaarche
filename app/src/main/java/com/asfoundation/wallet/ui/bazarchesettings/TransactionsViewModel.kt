@@ -13,10 +13,21 @@ import javax.inject.Inject
 class TransactionsViewModel(private val transactionViewInteract: TransactionViewInteract) :
     BaseViewModel() {
 
-  fun getTransactionsAndWalletLiveData(): LiveData<Result<Pair<String, List<Transaction>>>> {
+  private val _transactionsAndWallet = MutableLiveData<Result<Pair<String, List<Transaction>>>>()
+  val transactionsAndWallet: LiveData<Result<Pair<String, List<Transaction>>>> =
+      _transactionsAndWallet
 
-    val result = MutableLiveData<Result<Pair<String, List<Transaction>>>>()
-    result.value = Result.Loading
+  init {
+    fetchTransactionsAndWalletData()
+  }
+
+  fun onTryAgain() {
+    fetchTransactionsAndWalletData()
+  }
+
+  private fun fetchTransactionsAndWalletData() {
+
+    _transactionsAndWallet.value = Result.Loading
 
     disposable = transactionViewInteract.findWallet()
         .flatMapObservable { wallet ->
@@ -25,9 +36,8 @@ class TransactionsViewModel(private val transactionViewInteract: TransactionView
         }
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe({ result.value = Result.Success(it) }, { result.value = Result.Error(it) })
-
-    return result
+        .subscribe({ _transactionsAndWallet.value = Result.Success(it) },
+            { _transactionsAndWallet.value = Result.Error(it) })
   }
 
 }
