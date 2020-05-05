@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +25,8 @@ class TransactionsFragment : DaggerFragment() {
   private lateinit var transactionsViewModel: TransactionsViewModel
 
   private var adapter: TransactionsAdapter? = null
+
+  private lateinit var toolbar: Toolbar
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -46,7 +49,8 @@ class TransactionsFragment : DaggerFragment() {
   }
 
   private fun setupToolbar() {
-    toolbarSettings.apply {
+    toolbar = requireView().findViewById(R.id.includeSettingsToolbar)
+    toolbar.apply {
       setTitle(R.string.transactions_list)
       setNavigationClickToPressBack(requireActivity())
     }
@@ -89,7 +93,7 @@ class TransactionsFragment : DaggerFragment() {
 
   override fun onDestroy() {
     super.onDestroy()
-    toolbarSettings.setNavigationOnClickListener(null)
+    toolbar.setNavigationOnClickListener(null)
     adapter = null
   }
 
