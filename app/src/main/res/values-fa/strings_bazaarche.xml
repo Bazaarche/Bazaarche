@@ -16,4 +16,6 @@
 
   <string name="choose_language">انتخاب زبان</string>
   <string name="confirm">اعمال</string>
+  <string name="generic_error">خطایی هنگام دریافت اطلاعات ایجاد شده است.</string>
+
 </resources>

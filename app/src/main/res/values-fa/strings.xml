@@ -64,7 +64,7 @@
   <string name="buying">خرید %s</string>
   <string name="action_buy">خرید</string>
   <string name="empty"></string>
-  <string name="try_again">دوباره امتحان کنید</string>
+  <string name="try_again">تلاش دوباره</string>
   <string name="already_have_account">کیف پول دارید؟</string>
   <string name="action_create_new_account">ساختن کیف پول</string>
   <string name="unknown_error">خطا</string>

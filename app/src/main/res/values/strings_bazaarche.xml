@@ -18,4 +18,6 @@
 
   <string name="choose_language">Choose Language</string>
   <string name="confirm">Set</string>
+  <string name="generic_error">An error occurred while receiving the data.</string>
+
 </resources>
