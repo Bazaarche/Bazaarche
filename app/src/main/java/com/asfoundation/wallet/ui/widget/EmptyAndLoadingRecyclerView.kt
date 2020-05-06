@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.asfoundation.wallet.ui.toggleVisibility
+import kotlin.properties.Delegates.observable
 
 class EmptyAndLoadingRecyclerView : RecyclerView {
 
@@ -31,11 +32,11 @@ class EmptyAndLoadingRecyclerView : RecyclerView {
       changeVisibilitiesBasedOnState()
     }
 
-  private var state: ViewState = ViewState.Loading
-    set(value) {
-      field = value
+  private var state: ViewState by observable(ViewState.Loading, { _, oldValue, newValue ->
+    if (newValue != oldValue) {
       changeVisibilitiesBasedOnState()
     }
+  })
 
   private val observer = object : AdapterDataObserver() {
     override fun onChanged() {
