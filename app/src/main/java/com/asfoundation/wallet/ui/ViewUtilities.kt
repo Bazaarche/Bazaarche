@@ -22,29 +22,36 @@ fun createItemDecoration(context: Context,
 }
 
 fun getDividerDrawable(context: Context, startMargin: Int, endMargin: Int): Drawable {
-  val attrs = intArrayOf(android.R.attr.listDivider)
 
-  val typedArray = context.obtainStyledAttributes(attrs)
-  val divider = typedArray.getDrawable(0)
+  val divider = getDividerDrawable(context)
 
-  val isLTR =
-      TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == View.LAYOUT_DIRECTION_LTR
-  val (leftInset, rightInset) = getLeftAndRightInset(isLTR, startMargin, endMargin)
+  val (leftInset, rightInset) = getLeftAndRightInset(startMargin, endMargin)
 
-  val insetDivider = InsetDrawable(divider, leftInset, 0, rightInset, 0)
-
-  typedArray.recycle()
-
-  return insetDivider
+  return InsetDrawable(divider, leftInset, 0, rightInset, 0)
 }
 
 fun Context.dp(px: Int): Int {
   return (px * resources.displayMetrics.density).roundToInt()
 }
 
-private fun getLeftAndRightInset(isLTR: Boolean, startMargin: Int, endMargin: Int): Pair<Int, Int> =
-    if (isLTR) {
-      startMargin to endMargin
-    } else {
-      endMargin to startMargin
-    }
+private fun getDividerDrawable(context: Context): Drawable {
+  val attrs = intArrayOf(android.R.attr.listDivider)
+
+  val typedArray = context.obtainStyledAttributes(attrs)
+  val dividerDrawable = typedArray.getDrawable(0)!!
+  typedArray.recycle()
+  return dividerDrawable
+}
+
+private fun getLeftAndRightInset(startInset: Int, endInset: Int): LeftAndRightInset {
+  val isLTR =
+      TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == View.LAYOUT_DIRECTION_LTR
+
+  return if (isLTR) {
+    startInset to endInset
+  } else {
+    endInset to startInset
+  }
+}
+
+typealias LeftAndRightInset = Pair<Int, Int>
