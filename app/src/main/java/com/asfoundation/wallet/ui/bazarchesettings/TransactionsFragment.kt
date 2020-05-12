@@ -48,10 +48,10 @@ class TransactionsFragment : DaggerFragment() {
         .observe(viewLifecycleOwner, Observer(::onTransactionAndWalletReady))
   }
 
-  override fun onDestroy() {
-    super.onDestroy()
+  override fun onDestroyView() {
     toolbar.setNavigationOnClickListener(null)
     adapter = null
+    super.onDestroyView()
   }
 
   private fun initViewModel() {
