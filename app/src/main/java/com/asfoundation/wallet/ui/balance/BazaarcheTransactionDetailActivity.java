@@ -304,4 +304,10 @@ public class BazaarcheTransactionDetailActivity extends BaseActivity {
     }
     return rawValue;
   }
+
+  public static Intent newIntent(Context context, Transaction transaction) {
+    Intent intent = new Intent(context, BazaarcheTransactionDetailActivity.class);
+    intent.putExtra(TRANSACTION, transaction);
+    return intent;
+  }
 }

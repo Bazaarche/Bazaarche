@@ -1,10 +1,12 @@
 package com.asfoundation.wallet.ui.bazarchesettings
 
+import android.app.Activity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.asfoundation.wallet.entity.Result
 import com.asfoundation.wallet.interact.TransactionViewInteract
 import com.asfoundation.wallet.transactions.Transaction
+import com.asfoundation.wallet.ui.balance.BazaarcheTransactionDetailActivity
 import com.asfoundation.wallet.viewmodel.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -38,6 +40,11 @@ class TransactionsViewModel(private val transactionViewInteract: TransactionView
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({ _transactionsAndWallet.value = Result.Success(it) },
             { _transactionsAndWallet.value = Result.Error(it) })
+  }
+
+  fun onTransactionClicked(transaction: Transaction, activity: Activity) {
+    val intent = BazaarcheTransactionDetailActivity.newIntent(activity, transaction)
+    activity.startActivity(intent)
   }
 
 }

@@ -96,8 +96,10 @@ class TransactionsFragment : DaggerFragment() {
         recyclerTransactions.showError()
       }
       is Result.Success -> {
-        adapter = TransactionsAdapter(transactionAndWallet.data.first,
-            transactionAndWallet.data.second)
+        adapter =
+            TransactionsAdapter(transactionAndWallet.data.first, transactionAndWallet.data.second) {
+              transactionsViewModel.onTransactionClicked(adapter!!.items[it], requireActivity())
+            }
         recyclerTransactions.adapter = adapter
       }
     }

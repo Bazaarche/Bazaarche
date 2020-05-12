@@ -14,8 +14,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import kotlinx.android.synthetic.main.item_bazaarche_transaction.view.*
 
-class TransactionViewHolder(itemView: View, private val defaultWalletAddress: String) :
-    BaseAdapter.BaseViewHolder<Transaction>(itemView) {
+class TransactionViewHolder(itemView: View, private val defaultWalletAddress: String,
+                            clickListener: (Int) -> Unit) :
+    BaseAdapter.BaseViewHolder<Transaction>(itemView, clickListener) {
 
   private var requestListener: RequestListener<Drawable?>? = null
 
