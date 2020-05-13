@@ -18,6 +18,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_bazaarche_settings.view.*
 import com.asfoundation.wallet.ui.bazarchesettings.SettingsItem.*
+import com.asfoundation.wallet.ui.setNavigationClickToPressBack
+import kotlinx.android.synthetic.main.layout_settings_toolbar.*
 import javax.inject.Inject
 
 
@@ -33,7 +35,7 @@ class BazaarcheSettingsFragment : DaggerFragment() {
         manageWalletsRouter.open(requireContext())
       }
       TRANSACTIONS_LIST -> {
-        //TODO
+        openTransactionsFragment()
       }
       LANGUAGE_SETTINGS -> {
         showChangeLanguageDialog()
@@ -57,8 +59,15 @@ class BazaarcheSettingsFragment : DaggerFragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+    setupToolbar()
     setupRecyclerView()
+  }
+
+  private fun openTransactionsFragment() {
+    parentFragmentManager.beginTransaction()
+        .replace(R.id.fragment_container, TransactionsFragment())
+        .addToBackStack(null)
+        .commit()
   }
 
   private fun setupRecyclerView() {
@@ -98,6 +107,14 @@ class BazaarcheSettingsFragment : DaggerFragment() {
         .show()
   }
 
+  private fun setupToolbar() {
+
+    toolbarSettings.apply {
+      setTitle(R.string.title_activity_settings)
+      setNavigationClickToPressBack(requireActivity())
+    }
+  }
+
   private fun onLanguageSelected(selectedPosition: Int) {
 
     fun restartApplication() {
@@ -114,6 +131,11 @@ class BazaarcheSettingsFragment : DaggerFragment() {
     })
 
     viewModel.onLanguageSelected(requireContext(), selectedPosition)
+  }
+
+  override fun onDestroyView() {
+    toolbarSettings.setNavigationOnClickListener(null)
+    super.onDestroyView()
   }
 
 }

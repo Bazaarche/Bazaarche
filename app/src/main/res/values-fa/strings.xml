@@ -64,7 +64,7 @@
   <string name="buying">خرید %s</string>
   <string name="action_buy">خرید</string>
   <string name="empty"></string>
-  <string name="try_again">دوباره امتحان کنید</string>
+  <string name="try_again">تلاش دوباره</string>
   <string name="already_have_account">کیف پول دارید؟</string>
   <string name="action_create_new_account">ساختن کیف پول</string>
   <string name="unknown_error">خطا</string>
@@ -162,7 +162,7 @@
   <string name="NA">N/A</string>
   <string name="error_wallet_not_selected">کیف پول انتخاب نشده است</string>
   <string name="no_transactions_yet">برای آشنایی با نحوه‌ي پرداخت در برنامه مقداری اعتبار دریافت کنید.</string>
-  <string name="no_transactions_yet_main">همچنان بدون تراکنش مالی</string>
+  <string name="no_transactions_yet_main">بدون تراکنش مالی</string>
   <string name="unknown_balance_with_symbol">-- ETH</string>
   <string name="unknown_balance_without_symbol">--</string>
   <string name="dummy">-</string>

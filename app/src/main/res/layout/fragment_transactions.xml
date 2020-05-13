@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <include
+      android:id="@+id/includeSettingsToolbar"
+      layout="@layout/layout_settings_toolbar"
+      app:layout_constraintTop_toTopOf="parent"
+      />
+
+  <com.asfoundation.wallet.ui.widget.EmptyAndLoadingRecyclerView
+      android:id="@+id/recyclerTransactions"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/includeSettingsToolbar"
+      tools:listitem="@layout/item_bazaarche_transaction"
+      />
+
+  <ProgressBar
+      android:id="@+id/progressTransactions"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
+
+  <TextView
+      android:id="@+id/textNoTransactions"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/no_transactions_yet_main"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
+
+
+  <TextView
+      android:id="@+id/textView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/generic_error"
+      android:textColor="@color/title_color"
+      android:textSize="@dimen/bazaarche_medium_text"
+      app:layout_constraintBottom_toTopOf="@+id/buttonTransactionsTryAgain"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_chainStyle="packed"
+      />
+
+  <Button
+      android:id="@+id/buttonTransactionsTryAgain"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/default_margin_triple"
+      android:text="@string/try_again"
+      android:textSize="@dimen/title_small_text"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/textView"
+      />
+
+  <androidx.constraintlayout.widget.Group
+      android:id="@+id/groupTransactionError"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      app:constraint_referenced_ids="textView,buttonTransactionsTryAgain"
+      />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
