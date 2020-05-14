@@ -65,7 +65,7 @@ class CatalogActivity : AppCompatActivity() {
 
     fun createItemDecoration(): RecyclerView.ItemDecoration {
 
-      val startMargin = resources.getDimensionPixelSize(R.dimen.app_image_size)
+      val startMargin = resources.getDimensionPixelSize(R.dimen.source_image_size)
       val dividerDrawable = getDividerDrawable(this, startMargin, 0)
 
       val itemDecoration = CatalogDividerItemDecoration(this, VERTICAL, R.layout.item_app)

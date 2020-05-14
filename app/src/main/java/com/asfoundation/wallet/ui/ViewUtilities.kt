@@ -1,10 +1,12 @@
 package com.asfoundation.wallet.ui
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.InsetDrawable
 import android.text.TextUtils
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
 import java.util.*
 import kotlin.math.roundToInt
@@ -32,6 +34,20 @@ fun getDividerDrawable(context: Context, startMargin: Int, endMargin: Int): Draw
 
 fun Context.dp(px: Int): Int {
   return (px * resources.displayMetrics.density).roundToInt()
+}
+
+fun View.toggleVisibility(visible: Boolean) {
+  visibility = if (visible) {
+    View.VISIBLE
+  } else {
+    View.GONE
+  }
+}
+
+fun Toolbar.setNavigationClickToPressBack(activity: Activity) {
+  setNavigationOnClickListener {
+    activity.onBackPressed()
+  }
 }
 
 private fun getDividerDrawable(context: Context): Drawable {
