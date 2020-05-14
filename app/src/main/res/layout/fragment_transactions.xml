@@ -50,7 +50,7 @@
       android:layout_height="wrap_content"
       android:text="@string/generic_error"
       android:textColor="@color/title_color"
-      android:textSize="@dimen/bazaarche_medium_text"
+      android:textSize="@dimen/bazaarche_large_text"
       app:layout_constraintBottom_toTopOf="@+id/buttonTransactionsTryAgain"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"

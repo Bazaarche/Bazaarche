@@ -26,7 +26,7 @@
       android:maxLines="2"
       android:textAlignment="center"
       android:textColor="@color/install_bazaar_dialog_text_color"
-      android:textSize="@dimen/bazaarche_medium_text"
+      android:textSize="@dimen/bazaarche_large_text"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/dialogWalletInstallImageGraphic"

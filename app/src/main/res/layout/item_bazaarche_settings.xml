@@ -6,5 +6,5 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/default_margin_double"
     android:textColor="@color/black_color"
-    android:textSize="@dimen/bazaarche_medium_text"
+    android:textSize="@dimen/bazaarche_large_text"
     tools:text="@string/transactions_list" />
