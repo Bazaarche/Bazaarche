@@ -39,13 +39,14 @@ class IabActivity : BaseActivity(), IabView, UriNavigator {
 
   @Inject
   lateinit var inAppPurchaseInteractor: InAppPurchaseInteractor
+
   @Inject
   lateinit var autoUpdateInteract: AutoUpdateInteract
+
   @Inject
   lateinit var billingAnalytics: BillingAnalytics
   private var isBackEnable: Boolean = false
   private lateinit var presenter: IabPresenter
-  private var skuDetails: Bundle? = null
   private var transaction: TransactionBuilder? = null
   private var isBds: Boolean = false
   private var results: PublishRelay<Uri>? = null
@@ -63,29 +64,29 @@ class IabActivity : BaseActivity(), IabView, UriNavigator {
     uri = intent.getStringExtra(URI)
     transaction = intent.getParcelableExtra(TRANSACTION_EXTRA)
     isBackEnable = true
+    if (savedInstanceState != null && savedInstanceState.containsKey(FIRST_IMPRESSION)) {
+      firstImpression = savedInstanceState.getBoolean(FIRST_IMPRESSION)
+    }
     presenter =
         IabPresenter(this, autoUpdateInteract, Schedulers.io(), AndroidSchedulers.mainThread(),
-            CompositeDisposable())
-    if (savedInstanceState != null) {
-      if (savedInstanceState.containsKey(SKU_DETAILS)) {
-        skuDetails = savedInstanceState.getBundle(SKU_DETAILS)
-      }
-      if (savedInstanceState.containsKey(FIRST_IMPRESSION)) {
-        firstImpression = savedInstanceState.getBoolean(FIRST_IMPRESSION)
-      }
-    } else {
-//      showPaymentMethodsView()
-      showBazaarIab()
-    }
+            CompositeDisposable(), inAppPurchaseInteractor, billingAnalytics, firstImpression)
+    if (savedInstanceState == null) showBazaarIab()
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-
     if (requestCode == WEB_VIEW_REQUEST_CODE) {
       if (resultCode == WebViewActivity.FAIL) {
+        sendPayPalConfirmationEvent("cancel")
         showPaymentMethodsView()
       } else if (resultCode == SUCCESS) {
+        if (data?.scheme?.contains("adyencheckout") == true) {
+          sendPaypalUrlEvent(data)
+          if (getQueryParameter(data, "resultCode") == "cancelled")
+            sendPayPalConfirmationEvent("cancel")
+          else
+            sendPayPalConfirmationEvent("buy")
+        }
         results!!.accept(Objects.requireNonNull(data!!.data, "Intent data cannot be null!"))
       }
     }
@@ -143,8 +144,7 @@ class IabActivity : BaseActivity(), IabView, UriNavigator {
   override fun showOnChain(amount: BigDecimal, isBds: Boolean, bonus: String) {
     supportFragmentManager.beginTransaction()
         .replace(R.id.fragment_container, OnChainBuyFragment.newInstance(createBundle(amount),
-            intent.data!!
-                .toString(), isBds, transaction, bonus))
+            intent.data!!.toString(), isBds, transaction, bonus))
         .commit()
   }
 
@@ -184,28 +184,13 @@ class IabActivity : BaseActivity(), IabView, UriNavigator {
   override fun showPaymentMethodsView() {
     val isDonation = TransactionData.TransactionType.DONATION.name
         .equals(transaction?.type, ignoreCase = true)
-    handlePurchaseStartAnalytics()
+    presenter.handlePurchaseStartAnalytics(transaction)
     supportFragmentManager.beginTransaction()
         .replace(R.id.fragment_container, PaymentMethodsFragment.newInstance(transaction,
             intent.extras!!
                 .getString(PRODUCT_NAME), isBds, isDonation, developerPayload, uri,
             intent.dataString))
         .commit()
-  }
-
-  private fun handlePurchaseStartAnalytics() {
-    if (firstImpression) {
-      if (inAppPurchaseInteractor.hasPreSelectedPaymentMethod()) {
-        billingAnalytics.sendPurchaseStartWithoutDetailsEvent(transaction!!.domain,
-            transaction!!.skuId, transaction!!.amount().toString(), transaction!!.type,
-            BillingAnalytics.RAKAM_PRESELECTED_PAYMENT_METHOD)
-      } else {
-        billingAnalytics.sendPurchaseStartEvent(transaction!!.domain, transaction!!.skuId,
-            transaction!!.amount().toString(), inAppPurchaseInteractor.preSelectedPaymentMethod,
-            transaction!!.type, BillingAnalytics.RAKAM_PAYMENT_METHOD)
-      }
-      firstImpression = false
-    }
   }
 
   override fun showShareLinkPayment(domain: String, skuId: String?, originalAmount: String?,
@@ -230,17 +215,18 @@ class IabActivity : BaseActivity(), IabView, UriNavigator {
         .commit()
   }
 
-  override fun showEarnAppcoins(domain: String, skuId: String?, amount: BigDecimal, type: String) {
-    supportFragmentManager.beginTransaction()
-        .replace(R.id.fragment_container,
-            EarnAppcoinsFragment.newInstance(domain, skuId, amount, type))
-        .commit()
-  }
-
   override fun showBazaarIab() {
 
     supportFragmentManager.beginTransaction()
         .replace(R.id.fragment_container, BazaarIabFragment.newInstance(transaction!!))
+        .commit()
+  }
+
+  override fun showEarnAppcoins(domain: String, skuId: String?, amount: BigDecimal,
+                                type: String) {
+    supportFragmentManager.beginTransaction()
+        .replace(R.id.fragment_container,
+            EarnAppcoinsFragment.newInstance(domain, skuId, amount, type))
         .commit()
   }
 
@@ -256,9 +242,7 @@ class IabActivity : BaseActivity(), IabView, UriNavigator {
 
   override fun onSaveInstanceState(outState: Bundle) {
     super.onSaveInstanceState(outState)
-
-    outState.putBundle(SKU_DETAILS, skuDetails)
-    outState.putBoolean(FIRST_IMPRESSION, firstImpression)
+    presenter.onSaveInstance(outState)
   }
 
   private fun getOrigin(isBds: Boolean): String? {
@@ -270,15 +254,13 @@ class IabActivity : BaseActivity(), IabView, UriNavigator {
   }
 
   private fun createBundle(amount: BigDecimal): Bundle {
-    val bundle = Bundle().apply {
+    return Bundle().apply {
       putSerializable(TRANSACTION_AMOUNT, amount)
       putString(APP_PACKAGE, transaction!!.domain)
       putString(PRODUCT_NAME, intent.extras!!.getString(PRODUCT_NAME))
       putString(TRANSACTION_DATA, intent.dataString)
       putString(DEVELOPER_PAYLOAD, transaction!!.payload)
     }
-    skuDetails = bundle
-    return bundle
   }
 
   fun isBds(): Boolean {
@@ -310,12 +292,31 @@ class IabActivity : BaseActivity(), IabView, UriNavigator {
     super.onPause()
   }
 
+  private fun sendPayPalConfirmationEvent(action: String) {
+    billingAnalytics.sendPaymentConfirmationEvent(transaction?.domain, transaction?.skuId,
+        transaction?.amount()
+            .toString(), "paypal",
+        transaction?.type, action)
+  }
+
+  private fun sendPaypalUrlEvent(data: Intent) {
+    val amountString = transaction?.amount()
+        .toString()
+    billingAnalytics.sendPaypalUrlEvent(transaction?.domain, transaction?.skuId,
+        amountString, "PAYPAL", getQueryParameter(data, "type"),
+        getQueryParameter(data, "resultCode"), data.dataString)
+  }
+
+  private fun getQueryParameter(data: Intent, parameter: String): String? {
+    return Uri.parse(data.dataString)
+        .getQueryParameter(parameter)
+  }
+
   companion object {
 
     const val URI = "uri"
     const val RESPONSE_CODE = "RESPONSE_CODE"
     const val RESULT_USER_CANCELED = 1
-    const val SKU_DETAILS = "sku_details"
     const val FIRST_IMPRESSION = "first_impression"
     const val APP_PACKAGE = "app_package"
     const val TRANSACTION_EXTRA = "transaction_extra"
