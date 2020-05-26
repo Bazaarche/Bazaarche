@@ -93,7 +93,7 @@ class App : MultiDexApplication(), HasAndroidInjector, BillingDependenciesProvid
     appcoinsRewards.start()
     rakamAnalytics.start()
     initiateIntercom()
-    initiateSentry()
+//    initiateSentry()
   }
 
   private fun setupRxJava() {
