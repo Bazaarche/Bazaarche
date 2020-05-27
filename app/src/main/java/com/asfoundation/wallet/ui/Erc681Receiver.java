@@ -63,7 +63,7 @@ public class Erc681Receiver extends BaseActivity implements Erc681ReceiverView {
   @Override public void startEipTransfer(TransactionBuilder transaction, Boolean isBds,
       String developerPayload) {
     Intent intent;
-    if (getIntent().getData()
+    if (getIntent().getData() != null && getIntent().getData()
         .toString()
         .contains("/buy?")) {
       intent = IabActivity.newIntent(this, getIntent(), transaction, isBds, developerPayload);
@@ -80,12 +80,14 @@ public class Erc681Receiver extends BaseActivity implements Erc681ReceiverView {
   }
 
   @Override public void endAnimation() {
-    walletCreationAnimation.setVisibility(View.INVISIBLE);
-    walletCreationCard.setVisibility(View.INVISIBLE);
-    walletCreationText.setVisibility(View.INVISIBLE);
-    walletCreationAnimation.removeAllAnimatorListeners();
-    walletCreationAnimation.removeAllUpdateListeners();
-    walletCreationAnimation.removeAllLottieOnCompositionLoadedListener();
+    if(walletCreationAnimation != null){
+      walletCreationAnimation.setVisibility(View.INVISIBLE);
+      walletCreationText.setVisibility(View.INVISIBLE);
+      walletCreationCard.setVisibility(View.INVISIBLE);
+      walletCreationAnimation.removeAllAnimatorListeners();
+      walletCreationAnimation.removeAllUpdateListeners();
+      walletCreationAnimation.removeAllLottieOnCompositionLoadedListener();
+    }
   }
 
   @Override public void showLoadingAnimation() {

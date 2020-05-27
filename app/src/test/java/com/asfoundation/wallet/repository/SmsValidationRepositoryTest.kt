@@ -2,6 +2,7 @@ package com.asfoundation.wallet.repository
 
 import com.asfoundation.wallet.entity.WalletRequestCodeResponse
 import com.asfoundation.wallet.entity.WalletStatus
+import com.asfoundation.wallet.logging.Logger
 import com.asfoundation.wallet.service.SmsValidationApi
 import com.asfoundation.wallet.wallet_validation.WalletValidationStatus
 import com.google.gson.Gson
@@ -19,6 +20,9 @@ class SmsValidationRepositoryTest {
   @Mock
   lateinit var smsValidationApi: SmsValidationApi
   @Mock
+  private lateinit var logger: Logger
+
+  @Mock
   lateinit var gson: Gson
   private lateinit var smsValidationRepository: SmsValidationRepository
   private lateinit var walletAddress: String
@@ -30,8 +34,7 @@ class SmsValidationRepositoryTest {
     walletAddress = "0x648234234"
     phoneNumber = "00351912475564"
     code = "0345671"
-
-    smsValidationRepository = SmsValidationRepository(smsValidationApi, gson)
+    smsValidationRepository = SmsValidationRepository(smsValidationApi, gson, logger)
   }
 
   @Test

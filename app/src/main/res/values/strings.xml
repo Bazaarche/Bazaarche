@@ -97,7 +97,7 @@
   <string name="tab_keystore">Keystore</string>
   <string name="tab_private_key">Private key</string>
 
-  
+
   <!-- Dialog titles -->
   <string name="title_dialog_error">Error</string>
   <string name="title_dialog_handling">Processing…</string>
@@ -110,7 +110,7 @@
   <string name="toast_message_wallet_exported">A backup was created</string>
   <string name="toast_qr_code_no_address">QR code doesn\'t contain a valid address</string>
   <string name="dialog_message_close_channel">Are you sure you want to close this µRaiden channel? </string>
-  
+
   <!-- Intro resources-->
   <string name="intro_title_first_page">AppCoins Wallet</string>
   <string name="intro_title_second_page"><![CDATA[Private & Secure]]></string>
@@ -132,7 +132,7 @@
   <string name="intro_wallet_created_short">Wallet created!</string>
   <string name="intro_agree_terms_and_conditions_body">By tapping on Skip, you agree to AppCoins Wallet’s %1$s and %2$s</string>
   <string name="intro_skip_button">SKIP</string>
-        
+
   <!-- Menus -->
   <!-- Labels -->
   <string name="label_from">From</string>
@@ -295,7 +295,7 @@
   <string name="gamification_level_next_lvl_value">%s APPC</string>
   <string name="gamification_level_bonus">%s%% BONUS</string>
   <string name="gamification_level_button_how">HOW IT WORKS</string>
-  <string name="gamification_level_body">You\'ll earn APPC Credits when buying items in your favorite apps and games.</string>  
+  <string name="gamification_level_body">You\'ll earn APPC Credits when buying items in your favorite apps and games.</string>
   <string name="gamification_how_header">How to Level Up?</string>
   <string name="gamification_how_body">You\'ll earn APPC Credits when buying items in your favorite apps and games.</string>
   <string name="gamification_how_body_new">The more you spend in your favorite apps, the bigger the Bonus!</string>
@@ -372,7 +372,7 @@
   <string name="balance_ethereum_body">Ethereum is the cryptocurrency that AppCoins are based on. You can buy and sell them in most exchanges, it\'s very popular!</string>
   <string name="balance_appcoins_body">AppCoins is the cryptocurrency for the app economy. You can buy and sell it on several exchanges and use it to purchase in-app items.</string>
   <string name="balance_appccreditos_body">The token to buy in-app items! Top up APPC-C from your wallet or get them for free by using apps. They can also be transferred between friends!</string>
-  
+
   <!--Ask a friend for funds-->
   <string name="askafriend_payment_option_button">Ask someone to pay</string>
   <string name="askafriend_generating_link_message">We\'re generating your payment link&#8230;</string>
@@ -428,11 +428,11 @@
   <string name="terms_and_conditions">Terms and Conditions</string>
   <string name="privacy_policy">Privacy Policy</string>
 
-  
+
   <!--Home-->
   <string name="home_empty_discover_apps_body">The best Android apps are waiting for you.</string>
   <string name="home_empty_discover_apps_button">DISCOVER TOP APPS</string>
-  
+
   <!--Tokens-->
   <string name="appc_token_name" translatable="false">AppCoins</string>
   <string name="appc_credits_token_name" translatable="false">AppCoins Credits</string>
@@ -552,6 +552,7 @@
   <string name="promotions_referral_card_title">Earn up to %s by inviting friends</string>
   <string name="promotions_referral_card_body">Share your invite link and earn AppCoins Credits.</string>
   <string name="promotions_gamification_card_title">Up to 30% bonus on every purchase</string>
+  <string name="promotions_gamification_card_title_variable">Up to %s%% bonus on every purchase</string>
   <string name="promotions_new">NEW</string>
   <string name="promotions_tab_promotions_title">PROMOTIONS</string>
   <string name="promotions_tab_poa_title">PLAY &amp; EARN</string>
@@ -578,10 +579,21 @@
   <string name="backup_body">We don\'t store your private keys or any other access method. It\'s important to keep your wallet\'s backup (keystore) safe.</string>
   <string name="backup_confirmation_title">Just one more step</string>
   <string name="backup_confirmation_body">Keep your backup safe! Where do you want to save it?</string>
+  <string name="backup_confirmation_yes">YES, FINISH</string>
+  <string name="backup_confirmation_no">NO, SAVE IT AGAIN</string>
   <string name="backup_done_title">Backup done!</string>
   <string name="backup_done_body">Are you sure your backup file is on a safe place?</string>
+  <string name="backup_confirmation_no_share_title">Backup done!</string>
+  <string name="backup_confirmation_no_share_body">Your backup file is in your Downloads folder.</string>
+  <string name="backup_save_dialogue_title">Save backup file</string>
+  <string name="backup_save_dialogue_body">Choose a name for your backup file.</string>
+  <string name="backup_confirmation_tips_title">Keep the file safe:</string>
+  <string name="backup_confirmation_tips_1">Print it and store it somewhere safe.</string>
+  <string name="backup_confirmation_tips_2">Save it on a USB dive.</string>
+  <string name="backup_confirmation_tips_3">Copy it to a private and secure cloud storage.</string>
   <string name="backup_send_via_title">Send backup via:</string>
   <string name="backup_send_button">SEND BACKUP</string>
+  <string name="backup_save_button">SAVE BACKUP</string>
   <string name="import_wallet_title">Import Wallet</string>
   <string name="import_wallet_body">Paste your wallet\'s backup below.</string>
   <string name="import_wallet_keystore_private_keys">Keystore or private keys</string>
@@ -641,6 +653,15 @@
   <string name="transfer_send_button">SEND</string>
   <string name="transfer_receive_body">Share your wallet address to receive funds.</string>
 
+
+ <!--Support Notifications-->
+  <string name="support_new_message_title">You\'ve got a new message!</string>
+  <string name="support_new_message_button">Tap to open</string>
+
+ <!--Pioneers-->
+  <string name="pioneer_bonus_updated_body">Bonus percentages were updated on %s.</string>
+  <string name="pioneer_gamification_title">You\'re a Pioneer</string>
+  <string name="pioneer_gamification_body">A Pioneer is an early adopter with increased bonuses.</string>
 
 
 

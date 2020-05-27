@@ -7,10 +7,12 @@ import java.math.BigDecimal
 
 interface PaymentMethodsView {
   fun showPaymentMethods(paymentMethods: MutableList<PaymentMethod>, fiatValue: FiatValue,
-                         currency: String, paymentMethodId: String)
+                         currency: String, paymentMethodId: String, fiatAmount: String,
+                         appcAmount: String)
 
   fun showPreSelectedPaymentMethod(paymentMethod: PaymentMethod, fiatValue: FiatValue,
-                                   isDonation: Boolean, currency: String)
+                                   isDonation: Boolean, currency: String, fiatAmount: String,
+                                   appcAmount: String, isBonusActive: Boolean)
 
   fun showError(message: Int)
   fun showItemAlreadyOwnedError()
@@ -27,6 +29,7 @@ interface PaymentMethodsView {
   fun showAdyen(fiatValue: FiatValue,
                 paymentType: PaymentType,
                 iconUrl: String?, gamificationLevel: Int)
+
   fun showCreditCard(gamificationLevel: Int)
   fun showAppCoins()
   fun showCredits()
@@ -42,6 +45,7 @@ interface PaymentMethodsView {
   fun lockRotation()
   fun showEarnAppcoins()
   fun showBonus()
+  fun hideBonus()
   fun replaceBonus()
   fun showWalletBlocked()
 
@@ -59,4 +63,5 @@ interface PaymentMethodsView {
     ASK_FRIEND("ask_friend")
   }
 
+  fun removeBonus()
 }
