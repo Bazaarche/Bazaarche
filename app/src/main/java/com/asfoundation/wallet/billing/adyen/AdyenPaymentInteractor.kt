@@ -10,7 +10,7 @@ import com.appcoins.wallet.billing.adyen.PaymentInfoModel
 import com.appcoins.wallet.billing.adyen.PaymentModel
 import com.appcoins.wallet.billing.adyen.TransactionResponse
 import com.asfoundation.wallet.billing.partners.AddressService
-import com.asfoundation.wallet.interact.SupportInteractor
+import com.asfoundation.wallet.support.SupportInteractor
 import com.asfoundation.wallet.ui.iab.FiatValue
 import com.asfoundation.wallet.ui.iab.InAppPurchaseInteractor
 import io.reactivex.Completable
@@ -121,19 +121,17 @@ class AdyenPaymentInteractor(
   }
 
   fun getTransaction(uid: String): Observable<PaymentModel> {
-    return walletService.getWalletAddress()
-        .flatMapObservable { address ->
-          walletService.signContent(address)
-              .flatMapObservable { signedWallet ->
-                Observable.interval(0, 10, TimeUnit.SECONDS, Schedulers.io())
-                    .timeInterval()
-                    .switchMap {
-                      adyenPaymentRepository.getTransaction(uid, address, signedWallet)
-                          .toObservable()
-                    }
-                    .filter { isEndingState(it.status) }
-                    .distinctUntilChanged { transaction -> transaction.status }
+    return walletService.getAndSignCurrentWalletAddress()
+        .flatMapObservable { walletAddressModel ->
+          Observable.interval(0, 10, TimeUnit.SECONDS, Schedulers.io())
+              .timeInterval()
+              .switchMap {
+                adyenPaymentRepository.getTransaction(uid, walletAddressModel.address,
+                    walletAddressModel.signedAddress)
+                    .toObservable()
               }
+              .filter { isEndingState(it.status) }
+              .distinctUntilChanged { transaction -> transaction.status }
         }
   }
 

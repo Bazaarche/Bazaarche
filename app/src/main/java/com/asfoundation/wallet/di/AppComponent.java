@@ -8,10 +8,15 @@ import javax.inject.Singleton;
 
 @Singleton @Component(modules = {
     AndroidSupportInjectionModule.class, ToolsModule.class, RepositoriesModule.class,
-    BuildersModule.class, ImportModule.class, SettingsModule.class, BazaarcheToolsModule.class
-, AndroidStuffModule.class}) public interface AppComponent {
+    BuildersModule.class, ImportModule.class, SettingsModule.class, BazaarcheToolsModule.class,
+    AndroidStuffModule.class
+}) public interface AppComponent {
 
   void inject(App app);
+
+  DaggerWorkerFactory daggerWorkerFactory();
+
+  WorkerSubComponent.Builder workerSubComponentBuilder();
 
   @Component.Builder interface Builder {
     @BindsInstance Builder application(App app);

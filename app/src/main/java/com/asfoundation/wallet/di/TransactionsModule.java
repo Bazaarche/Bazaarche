@@ -8,7 +8,6 @@ import com.asfoundation.wallet.interact.DefaultTokenProvider;
 import com.asfoundation.wallet.interact.FetchTransactionsInteract;
 import com.asfoundation.wallet.interact.FindDefaultNetworkInteract;
 import com.asfoundation.wallet.interact.FindDefaultWalletInteract;
-import com.asfoundation.wallet.interact.SupportInteractor;
 import com.asfoundation.wallet.interact.TransactionViewInteract;
 import com.asfoundation.wallet.navigator.TransactionViewNavigator;
 import com.asfoundation.wallet.navigator.UpdateNavigator;
@@ -28,10 +27,12 @@ import com.asfoundation.wallet.router.SendRouter;
 import com.asfoundation.wallet.router.SettingsRouter;
 import com.asfoundation.wallet.router.TopUpRouter;
 import com.asfoundation.wallet.router.TransactionDetailRouter;
+import com.asfoundation.wallet.support.SupportInteractor;
 import com.asfoundation.wallet.transactions.TransactionsAnalytics;
 import com.asfoundation.wallet.ui.AppcoinsApps;
 import com.asfoundation.wallet.ui.balance.BalanceInteract;
 import com.asfoundation.wallet.ui.gamification.GamificationInteractor;
+import com.asfoundation.wallet.util.CurrencyFormatUtils;
 import com.asfoundation.wallet.viewmodel.TransactionsViewModelFactory;
 import dagger.Module;
 import dagger.Provides;
@@ -42,9 +43,10 @@ import javax.inject.Singleton;
   @Provides TransactionsViewModelFactory provideTransactionsViewModelFactory(
       AppcoinsApps applications, TransactionsAnalytics analytics,
       TransactionViewNavigator transactionViewNavigator,
-      TransactionViewInteract transactionViewInteract, SupportInteractor supportInteractor) {
+      TransactionViewInteract transactionViewInteract, SupportInteractor supportInteractor,
+      CurrencyFormatUtils formatter) {
     return new TransactionsViewModelFactory(applications, analytics, transactionViewNavigator,
-        transactionViewInteract, supportInteractor);
+        transactionViewInteract, supportInteractor, formatter);
   }
 
   @Provides TransactionViewNavigator provideTransactionsViewNavigator(SettingsRouter settingsRouter,
