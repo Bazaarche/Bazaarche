@@ -1,0 +1,287 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <include
+      layout="@layout/layout_appcoins_app_bar"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/transaction_detail_app_bar_height"
+      />
+
+  <ImageView
+      android:id="@+id/img"
+      android:layout_width="56dp"
+      android:layout_height="56dp"
+      android:layout_gravity="center"
+      android:layout_marginStart="@dimen/big_padding"
+      android:layout_marginTop="@dimen/normal_margin"
+      android:layout_marginBottom="@dimen/big_padding"
+      android:animateLayoutChanges="true"
+      android:background="@drawable/transaction_details_img_background"
+      android:contentDescription="@string/empty"
+      android:elevation="@dimen/component_elevation"
+      android:scaleType="fitCenter"
+      app:layout_anchor="@+id/app_bar"
+      app:layout_anchorGravity="center|bottom"
+      tools:src="@drawable/ic_transaction_peer"
+      />
+
+  <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@drawable/background_fragment"
+      android:fillViewport="true"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+      >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/half_large_margin"
+        >
+
+      <androidx.constraintlayout.widget.Guideline
+          android:id="@+id/guideline_start"
+          android:layout_width="1dp"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          app:layout_constraintGuide_begin="@dimen/half_large_margin"
+          />
+
+      <androidx.constraintlayout.widget.Guideline
+          android:id="@+id/guideline_end"
+          android:layout_width="1dp"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          app:layout_constraintGuide_end="@dimen/half_large_margin"
+          />
+
+      <androidx.constraintlayout.widget.Guideline
+          android:id="@+id/guideline_mid"
+          android:layout_width="1dp"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          app:layout_constraintGuide_percent="0.5"
+          />
+
+      <TextView
+          android:id="@+id/amount"
+          style="@style/TransactionDetailsTextStyle.Heading"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:visibility="gone"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:text="+0.85 APPC"
+          />
+
+      <TextView
+          android:id="@+id/app_id"
+          style="@style/TransactionDetailsTextStyle.Title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/default_margin_double"
+          android:ellipsize="end"
+          android:maxLines="1"
+          app:layout_constrainedWidth="true"
+          app:layout_constraintEnd_toStartOf="@id/guideline_end"
+          app:layout_constraintStart_toEndOf="@id/guideline_start"
+          app:layout_constraintTop_toBottomOf="@id/amount"
+          />
+
+      <TextView
+          android:id="@+id/item_id"
+          style="@style/TransactionDetailsTextStyle.Subtitle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/default_margin_one_and_half"
+          android:ellipsize="end"
+          android:maxLines="1"
+          android:visibility="invisible"
+          app:layout_constrainedWidth="true"
+          app:layout_constraintEnd_toStartOf="@id/guideline_end"
+          app:layout_constraintStart_toEndOf="@id/guideline_start"
+          app:layout_constraintTop_toBottomOf="@id/app_id"
+          />
+
+      <View
+          android:id="@+id/top_separator"
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginStart="32dp"
+          android:layout_marginTop="@dimen/default_margin_double"
+          android:layout_marginEnd="32dp"
+          android:background="@color/layout_separator_color"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/item_id"
+          />
+
+      <TextView
+          android:id="@+id/status_label"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/default_margin_double"
+          android:text="@string/transaction_status_label"
+          android:textAppearance="@style/TransactionDetailsTextAppearance"
+          app:layout_constraintStart_toStartOf="@id/guideline_start"
+          app:layout_constraintTop_toBottomOf="@id/top_separator"
+          />
+
+      <TextView
+          android:id="@+id/status"
+          style="@style/TransactionDetailsTextStyle.Content"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/green"
+          app:layout_constraintBaseline_toBaselineOf="@id/status_label"
+          app:layout_constraintEnd_toEndOf="@id/guideline_end"
+          tools:text="Sucess"
+          />
+
+      <TextView
+          android:id="@+id/category_label"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/big_margin"
+          android:text="@string/transaction_category_label"
+          android:textAppearance="@style/TransactionDetailsTextAppearance"
+          app:layout_constraintStart_toStartOf="@id/guideline_start"
+          app:layout_constraintTop_toBottomOf="@id/status_label"
+          />
+
+      <TextView
+          android:id="@+id/category_name"
+          style="@style/TransactionDetailsTextStyle.Content"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:layout_constraintBaseline_toBaselineOf="@id/category_label"
+          app:layout_constraintEnd_toEndOf="@id/guideline_end"
+          tools:text="In App Purchase"
+          />
+
+      <ImageView
+          android:id="@+id/category_icon"
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          android:layout_marginEnd="@dimen/normal_margin"
+          android:background="@drawable/transaction_img_background"
+          android:contentDescription="@string/empty"
+          android:padding="@dimen/small_padding"
+          android:src="@drawable/ic_transaction_iab"
+          app:layout_constraintBottom_toBottomOf="@id/category_name"
+          app:layout_constraintEnd_toStartOf="@id/category_name"
+          app:layout_constraintTop_toTopOf="@id/category_name"
+          />
+
+      <TextView
+          android:id="@+id/to_label"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/big_margin"
+          android:text="@string/transaction_to_label"
+          android:textAppearance="@style/TransactionDetailsTextAppearance"
+          android:visibility="gone"
+          app:layout_constraintStart_toStartOf="@id/guideline_start"
+          app:layout_constraintTop_toBottomOf="@id/category_label"
+          />
+
+      <TextView
+          android:id="@+id/to"
+          style="@style/TransactionDetailsTextStyle.Content.Address"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:maxLines="1"
+          android:visibility="gone"
+          app:layout_constrainedWidth="true"
+          app:layout_constraintBaseline_toBaselineOf="@id/to_label"
+          app:layout_constraintEnd_toEndOf="@id/guideline_end"
+          app:layout_constraintHorizontal_bias="1.0"
+          app:layout_constraintStart_toEndOf="@id/guideline_mid"
+          tools:text="0xDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF"
+          />
+
+      <View
+          android:id="@+id/bottom_separator"
+          android:layout_width="0dp"
+          android:layout_height="1dp"
+          android:layout_marginTop="@dimen/default_margin_double"
+          android:background="@color/layout_separator_color"
+          app:layout_constraintEnd_toEndOf="@id/guideline_end"
+          app:layout_constraintStart_toStartOf="@id/guideline_start"
+          app:layout_constraintTop_toBottomOf="@id/to_label"
+          />
+
+      <TextView
+          android:id="@+id/details_label"
+          style="@style/TransactionDetailsTextStyle.Dark"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/big_margin"
+          android:text="@string/transaction_details_label"
+          android:visibility="gone"
+          app:layout_constraintStart_toStartOf="@id/guideline_start"
+          app:layout_constraintTop_toBottomOf="@id/bottom_separator"
+          />
+
+      <Button
+          android:id="@+id/more_detail"
+          style="@style/TransactionDetailsButtonStyle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_marginTop="@dimen/big_margin"
+          android:autoLink="web"
+          android:minWidth="64dp"
+          android:minHeight="36dp"
+          android:text="@string/transaction_details_label"
+          app:layout_constraintEnd_toEndOf="@id/guideline_end"
+          app:layout_constraintTop_toBottomOf="@id/bottom_separator"
+          />
+
+      <TextView
+          android:id="@+id/textBackupTitle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/default_margin_quadruple"
+          android:text="@string/backup_key"
+          android:textColor="@color/title_color"
+          android:textSize="@dimen/bazaarche_large_text"
+          app:layout_constraintStart_toStartOf="@id/guideline_start"
+          app:layout_constraintTop_toBottomOf="@id/bottom_separator"
+          />
+
+      <TextView
+          android:id="@+id/textBackupDescription"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/default_margin"
+          android:text="@string/backup_key_description"
+          android:textColor="@color/title_color"
+          android:textSize="@dimen/bazaarche_medium_text"
+          app:layout_constraintEnd_toEndOf="@id/guideline_end"
+          app:layout_constraintStart_toStartOf="@id/guideline_start"
+          app:layout_constraintTop_toBottomOf="@+id/textBackupTitle"
+          />
+
+      <Button
+          android:id="@+id/button_backup"
+          style="@style/ButtonStyle"
+          android:layout_width="0dp"
+          android:layout_height="@dimen/backup_button_height"
+          android:layout_marginTop="@dimen/default_margin_triple"
+          android:text="@string/get_key"
+          app:layout_constraintEnd_toEndOf="@id/guideline_end"
+          app:layout_constraintStart_toStartOf="@id/guideline_start"
+          app:layout_constraintTop_toBottomOf="@+id/textBackupDescription"
+          />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

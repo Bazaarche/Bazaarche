@@ -3,11 +3,17 @@
 
   <dimen name="intro_button_height">56dp</dimen>
   <dimen name="bazaarche_small_text">12sp</dimen>
+  <dimen name="bazaarche_medium_text">14sp</dimen>
   <dimen name="bazaarche_large_text">16sp</dimen>
   <dimen name="source_image_size">72dp</dimen>
+  <dimen name="transaction_detail_app_bar_height">92dp</dimen>
+
   <dimen name="default_margin">8dp</dimen>
   <dimen name="default_margin_half">4dp</dimen>
   <dimen name="default_margin_one_and_half">12dp</dimen>
   <dimen name="default_margin_double">16dp</dimen>
   <dimen name="default_margin_triple">24dp</dimen>
+  <dimen name="default_margin_quadruple">36dp</dimen>
+
+  <dimen name="backup_button_height">48dp</dimen>
 </resources>

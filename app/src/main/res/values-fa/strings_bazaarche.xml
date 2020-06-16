@@ -17,5 +17,7 @@
   <string name="choose_language">انتخاب زبان</string>
   <string name="confirm">اعمال</string>
   <string name="generic_error">خطایی هنگام دریافت اطلاعات ایجاد شده است.</string>
-
+  <string name="backup_key">کلید بازارچه را نزد خود نگه دارید!</string>
+  <string name="backup_key_description">برای حفظ خرید‌های خود در بازی، کلید بازارچه را دریافت و در جای مطمئنی نگهداری کنید. در این صورت، پس از پاک شدن بازی و بازارچه امکان بازگرداندن خریدهای شما وجود خواهد داشت.</string>
+  <string name="get_key">دریافت کلید بازارچه</string>
 </resources>

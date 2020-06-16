@@ -54,7 +54,7 @@ public class BazaarcheTransactionDetailActivity extends BaseActivity {
 
     AndroidInjection.inject(this);
 
-    setContentView(R.layout.activity_transaction_detail);
+    setContentView(R.layout.activity_bazaarche_transaction_detail);
     findViewById(R.id.more_detail).setVisibility(View.GONE);
 
     disposables = new CompositeDisposable();
@@ -289,7 +289,7 @@ public class BazaarcheTransactionDetailActivity extends BaseActivity {
 
   private void formatValue(String value, String symbol) {
     int smallTitleSize = (int) getResources().getDimension(R.dimen.small_text);
-    int color = getResources().getColor(R.color.color_grey_9e);
+    int color = getResources().getColor(R.color.transaction_detail_text_color);
 
     amount.setText(BalanceUtils.formatBalance(value, symbol, smallTitleSize, color));
   }
