@@ -263,6 +263,7 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/default_margin"
+          android:lineSpacingExtra="@dimen/default_margin_one_and_half"
           android:text="@string/backup_key_description"
           android:textColor="@color/title_color"
           android:textSize="@dimen/bazaarche_medium_text"
