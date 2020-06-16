@@ -275,6 +275,7 @@
           android:id="@+id/button_backup"
           style="@style/ButtonStyle"
           android:layout_width="0dp"
+          android:background="@drawable/button_transaction_detail_background"
           android:layout_height="@dimen/backup_button_height"
           android:layout_marginTop="@dimen/default_margin_triple"
           android:text="@string/get_key"
