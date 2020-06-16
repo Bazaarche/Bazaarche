@@ -21,5 +21,5 @@
   <string name="generic_error">An error occurred while receiving the data.</string>
   <string name="backup_key">Backup the key!</string>
   <string name="backup_key_description">Get the Bazaarche key and keep it in a secure place. In the case of missing the game installation, you can maintain the status of your in-game purchases with the Bazaarche key.</string>
-  <string name="get_key">Get the Bazaarche key</string>
+  <string name="backup_wallet">Backup the wallet</string>
 </resources>

@@ -278,7 +278,7 @@
           android:background="@drawable/button_transaction_detail_background"
           android:layout_height="@dimen/backup_button_height"
           android:layout_marginTop="@dimen/default_margin_triple"
-          android:text="@string/get_key"
+          android:text="@string/backup_wallet"
           app:layout_constraintEnd_toEndOf="@id/guideline_end"
           app:layout_constraintStart_toStartOf="@id/guideline_start"
           app:layout_constraintTop_toBottomOf="@+id/textBackupDescription"
