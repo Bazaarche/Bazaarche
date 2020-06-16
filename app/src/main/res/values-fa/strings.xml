@@ -219,10 +219,10 @@
   <string name="notification_submit_error_poa">متاسفیم، خطایی رخ داده است. دوباره امتحان کنید!</string>
   <string name="notification_wrong_network_poa">شما در حال استفاده از نسخه برنامه‌نویسان کیف پول هستید. برای پردازش پاداش خود لطفا نسخه رسمی برنامه را دانلود کنید.</string>
   <!-- transaction details -->
-  <string name="transaction_status_success">موفقیت</string>
+  <string name="transaction_status_success">موفق</string>
   <string name="transaction_status_pending">در حال انتظار</string>
   <string name="transaction_status_failed">انجام نشد</string>
-  <string name="transaction_type_iab">خرید درون‌ برنامه</string>
+  <string name="transaction_type_iab">پرداخت درون‌ برنامه‌ای</string>
   <string name="transaction_type_poa">پاداش</string>
   <string name="transaction_type_poa_offchain">@string/transaction_type_poa</string>
   <string name="transaction_type_standard">انتقال</string>
@@ -234,10 +234,10 @@
   <string name="miuraiden_trans_details_topup">µRaiden channel top up</string>
   <string name="miuraiden_trans_details_close">µRaiden channel closed</string>
   <string name="ellipsize">\u0020• • •</string>
-  <string name="transaction_status_label">وضعیت</string>
-  <string name="transaction_category_label">دسته</string>
+  <string name="transaction_status_label">وضعیت پرداخت</string>
+  <string name="transaction_category_label">دسته بندی</string>
   <string name="transaction_details_label">جزئیات</string>
-  <string name="transaction_to_label">به</string>
+  <string name="transaction_to_label">مقصد</string>
   <string name="dialog_credit_card_remember">ثبت کارت در حافظه</string>
   <string name="notification_payment_refused">پرداخت رد شد</string>
   <string name="dialog_credit_card_number">شماره کارت</string>
