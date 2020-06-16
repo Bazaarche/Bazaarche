@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,6 +22,8 @@ import com.asfoundation.wallet.transactions.TransactionDetails;
 import com.asfoundation.wallet.ui.BaseActivity;
 import com.asfoundation.wallet.ui.toolbar.ToolbarArcBackground;
 import com.asfoundation.wallet.util.BalanceUtils;
+import com.asfoundation.wallet.util.CalendarKt;
+import com.asfoundation.wallet.util.languagecontroller.LanguageController;
 import com.asfoundation.wallet.viewmodel.TransactionDetailViewModel;
 import com.asfoundation.wallet.viewmodel.TransactionDetailViewModelFactory;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
@@ -33,8 +34,6 @@ import dagger.android.AndroidInjection;
 import io.reactivex.disposables.CompositeDisposable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Calendar;
-import java.util.Locale;
 import javax.inject.Inject;
 
 import static com.asfoundation.wallet.C.Key.TRANSACTION;
@@ -218,11 +217,9 @@ public class BazaarcheTransactionDetailActivity extends BaseActivity {
         .toPlainString();
   }
 
-  private String getDate(long timeStampInSec) {
-    Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-    cal.setTimeInMillis(timeStampInSec);
-    return DateFormat.format("dd MMM yyyy hh:mm a", cal.getTime())
-        .toString();
+  private String getDate(long timeInMillis) {
+    return CalendarKt.getLocalizedDateString(timeInMillis,
+        LanguageController.getInstance().getLanguage());
   }
 
   private void setUIContent(long timeStamp, String value, String symbol, String icon, String id,

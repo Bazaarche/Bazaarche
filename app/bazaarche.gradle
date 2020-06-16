@@ -24,4 +24,6 @@ dependencies {
 
   implementation "com.phelat:poolakey:1.0.0-alpha04"
   implementation "com.phelat:poolakey-rx:1.0.0-alpha04"
+
+  implementation 'com.github.sbahmani:jalcal:1.4'
 }
