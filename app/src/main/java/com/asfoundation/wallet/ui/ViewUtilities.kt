@@ -1,12 +1,10 @@
 package com.asfoundation.wallet.ui
 
 import android.R
-import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.InsetDrawable
 import android.view.View
-import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
 import kotlin.math.roundToInt
 
@@ -41,11 +39,5 @@ fun View.toggleVisibility(visible: Boolean) {
     View.VISIBLE
   } else {
     View.GONE
-  }
-}
-
-fun Toolbar.setNavigationClickToPressBack(activity: Activity) {
-  setNavigationOnClickListener {
-    activity.onBackPressed()
   }
 }

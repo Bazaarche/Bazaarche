@@ -6,8 +6,6 @@
     android:orientation="vertical"
     >
 
-  <include layout="@layout/layout_settings_toolbar" />
-
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/recyclerBazaarcheSettings"
       android:layout_width="match_parent"

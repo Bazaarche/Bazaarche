@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,7 +11,6 @@ import com.asf.wallet.R
 import com.asfoundation.wallet.entity.Result
 import com.asfoundation.wallet.transactions.Transaction
 import com.asfoundation.wallet.ui.createItemDecoration
-import com.asfoundation.wallet.ui.setNavigationClickToPressBack
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_transactions.*
 import javax.inject.Inject
@@ -24,8 +22,6 @@ class TransactionsFragment : DaggerFragment() {
   private lateinit var transactionsViewModel: TransactionsViewModel
 
   private var adapter: TransactionsAdapter? = null
-
-  private lateinit var toolbar: Toolbar
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -40,7 +36,7 @@ class TransactionsFragment : DaggerFragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    setupToolbar()
+    setTitle()
     setupRecyclerView()
     setTryAgainClickListener()
 
@@ -49,7 +45,6 @@ class TransactionsFragment : DaggerFragment() {
   }
 
   override fun onDestroyView() {
-    toolbar.setNavigationOnClickListener(null)
     adapter = null
     super.onDestroyView()
   }
@@ -59,12 +54,8 @@ class TransactionsFragment : DaggerFragment() {
         transactionsViewModelFactory)[TransactionsViewModel::class.java]
   }
 
-  private fun setupToolbar() {
-    toolbar = requireView().findViewById(R.id.includeSettingsToolbar)
-    toolbar.apply {
-      setTitle(R.string.transactions_list)
-      setNavigationClickToPressBack(requireActivity())
-    }
+  private fun setTitle() {
+      requireActivity().setTitle(R.string.transactions_list)
   }
 
   private fun setupRecyclerView() {

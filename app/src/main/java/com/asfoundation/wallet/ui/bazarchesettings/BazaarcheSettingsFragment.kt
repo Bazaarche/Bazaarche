@@ -18,8 +18,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_bazaarche_settings.view.*
 import com.asfoundation.wallet.ui.bazarchesettings.SettingsItem.*
-import com.asfoundation.wallet.ui.setNavigationClickToPressBack
-import kotlinx.android.synthetic.main.layout_settings_toolbar.*
 import javax.inject.Inject
 
 
@@ -59,7 +57,7 @@ class BazaarcheSettingsFragment : DaggerFragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    setupToolbar()
+    setTitle()
     setupRecyclerView()
   }
 
@@ -107,12 +105,8 @@ class BazaarcheSettingsFragment : DaggerFragment() {
         .show()
   }
 
-  private fun setupToolbar() {
-
-    toolbarSettings.apply {
-      setTitle(R.string.title_activity_settings)
-      setNavigationClickToPressBack(requireActivity())
-    }
+  private fun setTitle() {
+    requireActivity().setTitle(R.string.title_activity_settings)
   }
 
   private fun onLanguageSelected(selectedPosition: Int) {
@@ -131,11 +125,6 @@ class BazaarcheSettingsFragment : DaggerFragment() {
     })
 
     viewModel.onLanguageSelected(requireContext(), selectedPosition)
-  }
-
-  override fun onDestroyView() {
-    toolbarSettings.setNavigationOnClickListener(null)
-    super.onDestroyView()
   }
 
 }

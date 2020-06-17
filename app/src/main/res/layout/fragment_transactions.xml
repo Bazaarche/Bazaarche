@@ -6,18 +6,12 @@
     android:layout_height="match_parent"
     >
 
-  <include
-      android:id="@+id/includeSettingsToolbar"
-      layout="@layout/layout_settings_toolbar"
-      app:layout_constraintTop_toTopOf="parent"
-      />
-
   <com.asfoundation.wallet.ui.widget.EmptyAndLoadingRecyclerView
       android:id="@+id/recyclerTransactions"
       android:layout_width="match_parent"
       android:layout_height="0dp"
       app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/includeSettingsToolbar"
+      app:layout_constraintTop_toTopOf="parent"
       tools:listitem="@layout/item_bazaarche_transaction"
       />
 
