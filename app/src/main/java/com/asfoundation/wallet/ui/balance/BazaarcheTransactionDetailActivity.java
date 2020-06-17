@@ -21,7 +21,7 @@ import com.asfoundation.wallet.transactions.TransactionDetails;
 import com.asfoundation.wallet.ui.BaseActivity;
 import com.asfoundation.wallet.ui.toolbar.ToolbarArcBackground;
 import com.asfoundation.wallet.util.BalanceUtils;
-import com.asfoundation.wallet.util.CalendarKt;
+import com.asfoundation.wallet.util.CalendarUtilsKt;
 import com.asfoundation.wallet.util.languagecontroller.LanguageController;
 import com.asfoundation.wallet.viewmodel.TransactionDetailViewModel;
 import com.asfoundation.wallet.viewmodel.TransactionDetailViewModelFactory;
@@ -217,7 +217,7 @@ public class BazaarcheTransactionDetailActivity extends BaseActivity {
   }
 
   private String getDate(long timeInMillis) {
-    return CalendarKt.getLocalizedDateString(timeInMillis,
+    return CalendarUtilsKt.getLocalizedDateString(timeInMillis,
         LanguageController.getInstance().getLanguage());
   }
 
