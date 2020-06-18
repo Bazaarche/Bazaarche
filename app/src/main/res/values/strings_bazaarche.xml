@@ -22,4 +22,7 @@
   <string name="backup_key">Backup the key!</string>
   <string name="backup_key_description">Get the Bazaarche key and keep it in a secure place. In the case of missing the game installation, you can maintain the status of your in-game purchases with the Bazaarche key.</string>
   <string name="backup_wallet">Backup the wallet</string>
+  <string name="bazaarche_wallet">Bazaarche Wallet</string>
+  <string name="backup_wallet_description">برای حفظ خرید‌های خود در بازی، کد کیف پول بازارچه را یک‌بار دریافت و در جای مطمئنی نگهداری کنید.</string><!--TODO: translate this-->
+  <string name="restore_wallet">بازگرداندن کیف پول قبلی</string><!--TODO: translate this-->
 </resources>

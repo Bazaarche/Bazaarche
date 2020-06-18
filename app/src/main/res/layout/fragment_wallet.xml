@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/default_margin_double"
+      >
+
+    <View
+        android:id="@+id/cardWallet"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/default_margin_quadruple"
+        android:background="@drawable/shape_wallet_card"
+        app:layout_constraintDimensionRatio="5:3"
+        app:layout_constraintHeight_min="200dp"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+    <ImageView
+        android:id="@+id/imageWalletCard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/wallet_card_image_margin"
+        android:layout_marginTop="@dimen/default_margin_triple"
+        android:layout_marginEnd="@dimen/default_margin_quadruple"
+        app:layout_constraintBottom_toBottomOf="@id/textView"
+        app:layout_constraintEnd_toEndOf="@id/cardWallet"
+        app:layout_constraintStart_toStartOf="@id/cardWallet"
+        app:layout_constraintTop_toTopOf="@id/cardWallet"
+        app:srcCompat="@drawable/ic_wallet_card"
+        />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin_triple"
+        android:layout_marginBottom="@dimen/default_margin_triple"
+        android:text="@string/bazaarche_wallet"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/textWalletId"
+        app:layout_constraintStart_toStartOf="@id/cardWallet"
+        />
+
+
+    <TextView
+        android:id="@+id/textWalletId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin_triple"
+        android:layout_marginBottom="@dimen/default_margin_triple"
+        android:textAlignment="viewStart"
+        android:textColor="@color/white"
+        android:textSize="@dimen/bazaarche_large_text"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@id/cardWallet"
+        app:layout_constraintEnd_toEndOf="@id/cardWallet"
+        app:layout_constraintStart_toStartOf="@id/cardWallet"
+        tools:text="0x969fcfa183df936bfc45984405a045"
+        />
+
+
+    <TextView
+        android:id="@+id/textBackup"
+        style="@style/WalletTextVewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin_quadruple"
+        android:drawableStart="@drawable/ic_backup"
+        android:text="@string/backup_wallet"
+        app:layout_constraintTop_toBottomOf="@id/cardWallet"
+        />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        android:text="@string/backup_wallet_description"
+        app:layout_constraintTop_toBottomOf="@+id/textBackup"
+        />
+
+    <TextView
+        android:id="@+id/textRestore"
+        style="@style/WalletTextVewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin_triple"
+        android:drawableStart="@drawable/ic_restore"
+        android:text="@string/restore_wallet"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        android:text="@string/backup_wallet_description"
+        app:layout_constraintTop_toBottomOf="@+id/textRestore"
+        />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -20,4 +20,8 @@
   <string name="backup_key">کلید بازارچه را نزد خود نگه دارید!</string>
   <string name="backup_key_description">برای حفظ خرید‌های خود در بازی، کلید بازارچه را دریافت و در جای مطمئنی نگهداری کنید. در این صورت، پس از پاک شدن بازی و بازارچه امکان بازگرداندن خریدهای شما وجود خواهد داشت.</string>
   <string name="backup_wallet">پشتیبان‌گیری از کیف پول</string>
+  <string name="bazaarche_wallet">کیف پول بازارچه</string>
+  <string name="backup_wallet_description">برای حفظ خرید‌های خود در بازی، کد کیف پول بازارچه را یک‌بار دریافت و در جای مطمئنی نگهداری کنید.</string>
+  <string name="restore_wallet">بازگرداندن کیف پول قبلی</string>
+
 </resources>

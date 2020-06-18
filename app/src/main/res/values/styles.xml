@@ -518,4 +518,12 @@
     <item name="android:textSize">12sp</item>
   </style>
 
+  <style name="WalletTextVewStyle">
+
+    <item name="android:textAlignment">viewStart</item>
+    <item name="android:drawablePadding">@dimen/default_margin_half</item>
+    <item name="android:textSize">@dimen/bazaarche_large_text</item>
+    <item name="android:textColor">@color/colorPrimary</item>
+  </style>
+
 </resources>
