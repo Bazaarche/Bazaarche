@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.asf.wallet.R
-import com.asfoundation.wallet.router.ManageWalletsRouter
 import com.asfoundation.wallet.ui.SplashActivity
 import com.asfoundation.wallet.ui.createItemDecoration
 import com.asfoundation.wallet.util.languagecontroller.Language
@@ -18,19 +17,16 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_bazaarche_settings.view.*
 import com.asfoundation.wallet.ui.bazarchesettings.SettingsItem.*
-import javax.inject.Inject
+import com.asfoundation.wallet.ui.bazarchesettings.backuprestore.WalletFragment
 
 
 class BazaarcheSettingsFragment : DaggerFragment() {
-
-  @Inject
-  internal lateinit var manageWalletsRouter: ManageWalletsRouter
 
   private val itemClickListener: (Int) -> Unit = { position ->
 
     when (items[position]) {
       ACTION_WALLETS -> {
-        manageWalletsRouter.open(requireContext())
+        openWalletFragment()
       }
       TRANSACTIONS_LIST -> {
         openTransactionsFragment()
@@ -59,6 +55,13 @@ class BazaarcheSettingsFragment : DaggerFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     setTitle()
     setupRecyclerView()
+  }
+
+  private fun openWalletFragment() {
+    parentFragmentManager.beginTransaction()
+        .replace(R.id.fragment_container, WalletFragment())
+        .addToBackStack(null)
+        .commit()
   }
 
   private fun openTransactionsFragment() {
