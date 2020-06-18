@@ -25,4 +25,6 @@
   <string name="bazaarche_wallet">Bazaarche Wallet</string>
   <string name="backup_wallet_description">برای حفظ خرید‌های خود در بازی، کد کیف پول بازارچه را یک‌بار دریافت و در جای مطمئنی نگهداری کنید.</string><!--TODO: translate this-->
   <string name="restore_wallet">بازگرداندن کیف پول قبلی</string><!--TODO: translate this-->
+  <string name="wallet">Wallet</string>
+
 </resources>

@@ -5,7 +5,7 @@ import com.asf.wallet.R
 
 internal enum class SettingsItem(@StringRes val resId: Int) {
 
-  ACTION_WALLETS(R.string.action_wallets),
+  ACTION_WALLET(R.string.wallet),
   TRANSACTIONS_LIST(R.string.transactions_list),
   LANGUAGE_SETTINGS(R.string.language_settings),
   BAZAARCHE_GUIDE(R.string.bazaarche_guide),
@@ -13,7 +13,7 @@ internal enum class SettingsItem(@StringRes val resId: Int) {
 }
 
 internal val items = arrayOf(
-    SettingsItem.ACTION_WALLETS,
+    SettingsItem.ACTION_WALLET,
     SettingsItem.TRANSACTIONS_LIST,
     SettingsItem.LANGUAGE_SETTINGS,
     SettingsItem.BAZAARCHE_GUIDE,

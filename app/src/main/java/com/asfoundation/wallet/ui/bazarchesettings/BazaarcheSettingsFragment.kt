@@ -25,7 +25,7 @@ class BazaarcheSettingsFragment : DaggerFragment() {
   private val itemClickListener: (Int) -> Unit = { position ->
 
     when (items[position]) {
-      ACTION_WALLETS -> {
+      ACTION_WALLET -> {
         openWalletFragment()
       }
       TRANSACTIONS_LIST -> {
