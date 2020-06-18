@@ -14,4 +14,10 @@ class WalletFragment : Fragment() {
 
     return inflater.inflate(R.layout.fragment_wallet, container, false)
   }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+    requireActivity().setTitle(R.string.wallet)
+  }
+
 }
