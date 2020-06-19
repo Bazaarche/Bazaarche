@@ -4,10 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.asf.wallet.R
+import com.asfoundation.wallet.viewmodel.WalletsViewModel
+import com.asfoundation.wallet.viewmodel.WalletsViewModelFactory
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class WalletFragment : Fragment() {
+class WalletFragment : DaggerFragment() {
+
+  @Inject
+  lateinit var viewModelFactory: WalletsViewModelFactory
+
+  private val viewModel: WalletsViewModel by lazy(LazyThreadSafetyMode.NONE) {
+    ViewModelProviders.of(this, viewModelFactory)
+        .get(WalletsViewModel::class.java)
+  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                             savedInstanceState: Bundle?): View? {
