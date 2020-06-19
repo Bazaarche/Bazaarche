@@ -207,9 +207,6 @@ import dagger.android.ContributesAndroidInjector;
   @ContributesAndroidInjector(modules = IabModule.class)
   abstract BazaarIabFragment bazaarIabFragment();
 
-  @ContributesAndroidInjector(modules = SettingsFragmentModule.class)
-  abstract BazaarcheSettingsFragment bazaarcheSettingsFragment();
-
   @ContributesAndroidInjector() abstract IabUpdateRequiredFragment bindIabUpdateRequiredFragment();
 
   @FragmentScope @ContributesAndroidInjector()

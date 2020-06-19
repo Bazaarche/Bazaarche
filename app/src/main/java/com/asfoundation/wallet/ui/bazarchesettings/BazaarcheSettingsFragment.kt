@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -14,13 +15,12 @@ import com.asfoundation.wallet.ui.SplashActivity
 import com.asfoundation.wallet.ui.createItemDecoration
 import com.asfoundation.wallet.util.languagecontroller.Language
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_bazaarche_settings.view.*
 import com.asfoundation.wallet.ui.bazarchesettings.SettingsItem.*
 import com.asfoundation.wallet.ui.bazarchesettings.backuprestore.WalletFragment
 
 
-class BazaarcheSettingsFragment : DaggerFragment() {
+class BazaarcheSettingsFragment : Fragment() {
 
   private val itemClickListener: (Int) -> Unit = { position ->
 
