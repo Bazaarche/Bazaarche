@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.asf.wallet.R
+import com.asfoundation.wallet.entity.Wallet
+import com.asfoundation.wallet.util.observe
 import com.asfoundation.wallet.viewmodel.WalletsViewModel
 import com.asfoundation.wallet.viewmodel.WalletsViewModelFactory
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_wallet.*
 import javax.inject.Inject
 
 class WalletFragment : DaggerFragment() {
@@ -30,6 +33,16 @@ class WalletFragment : DaggerFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
     requireActivity().setTitle(R.string.wallet)
+    observeViewModels()
+  }
+
+  private fun observeViewModels() {
+    viewModel.defaultWallet()
+        .observe(viewLifecycleOwner, ::onWalletReady)
+  }
+
+  private fun onWalletReady(wallet: Wallet) {
+    textWalletId.text = wallet.address
   }
 
 }
