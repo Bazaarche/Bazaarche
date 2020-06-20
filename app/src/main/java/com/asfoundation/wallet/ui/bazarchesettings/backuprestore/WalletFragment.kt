@@ -77,6 +77,7 @@ class WalletFragment : DaggerFragment() {
 
   private fun onWalletReady(wallet: Wallet) {
     textWalletId.text = wallet.address
+    textBackup.isEnabled = true//Enable backup when wallet ready
   }
 
 }
