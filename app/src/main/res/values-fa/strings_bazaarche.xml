@@ -23,6 +23,7 @@
   <string name="bazaarche_wallet">کیف پول بازارچه</string>
   <string name="backup_wallet_description">برای حفظ خرید‌های خود در بازی، کد کیف پول بازارچه را یک‌بار دریافت و در جای مطمئنی نگهداری کنید.</string>
   <string name="restore_wallet">بازگرداندن کیف پول قبلی</string>
+  <string name="restore_wallet_description">در صورت پاک شدن بازی و بازارچه می‌توانید با بازگرداندن کد کیف پول قبلی خرید‌ها و اشتراک‌های خود را بازیابی کنید.</string>
   <string name="wallet">کیف پول</string>
 
 </resources>

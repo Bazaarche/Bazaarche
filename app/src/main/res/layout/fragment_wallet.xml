@@ -105,7 +105,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_margin"
-        android:text="@string/backup_wallet_description"
+        android:text="@string/restore_wallet_description"
         app:layout_constraintTop_toBottomOf="@+id/textRestore"
         />
 
