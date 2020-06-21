@@ -1,6 +1,7 @@
 package com.asfoundation.wallet.ui.bazarchesettings.backuprestore
 
 import android.app.Activity.RESULT_OK
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,9 +12,11 @@ import com.asf.wallet.R
 import com.asfoundation.wallet.C.IMPORT_REQUEST_CODE
 import com.asfoundation.wallet.entity.Wallet
 import com.asfoundation.wallet.ui.ImportWalletActivity
+import com.asfoundation.wallet.util.KeyboardUtils
 import com.asfoundation.wallet.util.observe
 import com.asfoundation.wallet.viewmodel.WalletsViewModel
 import com.asfoundation.wallet.viewmodel.WalletsViewModelFactory
+import com.asfoundation.wallet.widget.BackupView
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_wallet.*
@@ -64,6 +67,10 @@ class WalletFragment : DaggerFragment() {
     textRestore.setOnClickListener {
       startImportWalletActivity()
     }
+
+    textBackup.setOnClickListener {
+      showBackupDialog()
+    }
   }
 
   private fun onImportSucceeded() {
@@ -78,6 +85,25 @@ class WalletFragment : DaggerFragment() {
   private fun onWalletReady(wallet: Wallet) {
     textWalletId.text = wallet.address
     textBackup.isEnabled = true//Enable backup when wallet ready
+  }
+
+  private fun showBackupDialog() {
+
+    val view = BackupView(requireContext())
+    AlertDialog.Builder(requireContext())
+        .setView(view)
+        .setPositiveButton(R.string.ok) { _, _ ->
+          viewModel.exportWallet(view.password)
+          KeyboardUtils.hideKeyboard(view)
+        }
+        .setNegativeButton(R.string.cancel) { _, _ ->
+          KeyboardUtils.hideKeyboard(view)
+        }
+        .setOnDismissListener {
+          KeyboardUtils.hideKeyboard(view)
+        }
+        .show()
+
   }
 
 }
