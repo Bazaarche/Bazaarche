@@ -55,6 +55,9 @@ class WalletFragment : DaggerFragment() {
   private fun observeViewModels() {
     viewModel.defaultWallet()
         .observe(viewLifecycleOwner, ::onWalletReady)
+
+    viewModel.exportedStore()
+        .observe(viewLifecycleOwner, ::shareWallet)
   }
 
   private fun setClickListeners() {
@@ -85,6 +88,12 @@ class WalletFragment : DaggerFragment() {
   private fun onWalletReady(wallet: Wallet) {
     textWalletId.text = wallet.address
     textBackup.isEnabled = true//Enable backup when wallet ready
+  }
+
+  private fun shareWallet(walletData: String) {
+    val shareIntent = viewModel.getShareIntent(walletData)
+    val chooserTitle = getString(R.string.share_via)
+    startActivityForResult(Intent.createChooser(shareIntent, chooserTitle), 0)
   }
 
   private fun showBackupDialog() {
