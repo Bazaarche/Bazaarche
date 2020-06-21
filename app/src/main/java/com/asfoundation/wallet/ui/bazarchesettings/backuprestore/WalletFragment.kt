@@ -58,6 +58,9 @@ class WalletFragment : DaggerFragment() {
 
     viewModel.exportedStore()
         .observe(viewLifecycleOwner, ::shareWallet)
+
+    viewModel.exportWalletError()
+        .observe(viewLifecycleOwner) { showErrorDialog() }
   }
 
   private fun setClickListeners() {
@@ -94,6 +97,17 @@ class WalletFragment : DaggerFragment() {
     val shareIntent = viewModel.getShareIntent(walletData)
     val chooserTitle = getString(R.string.share_via)
     startActivityForResult(Intent.createChooser(shareIntent, chooserTitle), 0)
+  }
+
+  private fun showErrorDialog() {
+
+    val message = getString(R.string.error_export)
+
+    AlertDialog.Builder(requireContext())
+        .setTitle(R.string.title_dialog_error)
+        .setMessage(message)
+        .setPositiveButton(R.string.ok) { _, _ -> }
+        .show()
   }
 
   private fun showBackupDialog() {
