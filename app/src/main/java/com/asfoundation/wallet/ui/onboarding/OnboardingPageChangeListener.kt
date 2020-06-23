@@ -33,6 +33,7 @@ class OnboardingPageChangeListener internal constructor(private val view: View,
   private lateinit var warningText: TextView
   private lateinit var termsConditionsLayout: LinearLayout
   private lateinit var pageIndicatorView: PageIndicatorView
+  private var currentPage = 0
 
   init {
     init()
@@ -56,6 +57,10 @@ class OnboardingPageChangeListener internal constructor(private val view: View,
     this.isActive = isActive
   }
 
+  fun updateUI() {
+    if (isActive && currentPage == 3) beenInvitedButton.visibility = View.VISIBLE
+  }
+
   private fun animateHideWarning(textView: TextView) {
     val animation = AnimationUtils.loadAnimation(view.context, R.anim.fast_fade_out_animation)
     textView.animation = animation
@@ -65,6 +70,7 @@ class OnboardingPageChangeListener internal constructor(private val view: View,
     onboardingImage.setImageResource(imageResources[position])
     checkBox.setOnClickListener { handleUI(position) }
     updatePageIndicator(position)
+    currentPage = position
     handleUI(position)
   }
 

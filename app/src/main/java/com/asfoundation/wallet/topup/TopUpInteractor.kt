@@ -2,7 +2,6 @@ package com.asfoundation.wallet.topup
 
 import com.appcoins.wallet.bdsbilling.repository.BdsRepository
 import com.appcoins.wallet.bdsbilling.repository.entity.PaymentMethodEntity
-import com.appcoins.wallet.gamification.repository.ForecastBonus
 import com.appcoins.wallet.gamification.repository.ForecastBonusAndLevel
 import com.asfoundation.wallet.service.LocalCurrencyConversionService
 import com.asfoundation.wallet.topup.paymentMethods.PaymentMethodData
@@ -45,7 +44,7 @@ class TopUpInteractor(private val repository: BdsRepository,
   }
 
   fun getEarningBonus(packageName: String, amount: BigDecimal): Single<ForecastBonusAndLevel> {
-    return gamificationInteractor. getEarningBonus(packageName, amount)
+    return gamificationInteractor.getEarningBonus(packageName, amount)
   }
 
   fun getLimitTopUpValues(): Single<TopUpLimitValues> {
@@ -67,19 +66,17 @@ class TopUpInteractor(private val repository: BdsRepository,
     }
   }
 
-  fun getChipIndex(value: FiatValue): Single<Int> {
-    return if (chipValueIndexMap.isNotEmpty()) {
-      findChipIndex(ArrayList(chipValueIndexMap.keys), value)
-    } else {
-      topUpValuesService.getDefaultValues()
-          .doOnSuccess { if (!it.error.hasError) cacheChipValues(it.values) }
-          .flatMap { findChipIndex(it.values, value) }
-    }
-  }
-
   fun cleanCachedValues() {
     limitValues = TopUpLimitValues()
     chipValueIndexMap.clear()
+  }
+
+  fun isBonusValidAndActive(): Boolean {
+    return gamificationInteractor.isBonusActiveAndValid()
+  }
+
+  fun isBonusValidAndActive(forecastBonusAndLevel: ForecastBonusAndLevel): Boolean {
+    return gamificationInteractor.isBonusActiveAndValid(forecastBonusAndLevel)
   }
 
   private fun cacheChipValues(chipValues: List<FiatValue>) {
@@ -92,13 +89,4 @@ class TopUpInteractor(private val repository: BdsRepository,
     limitValues = TopUpLimitValues(values.minValue, values.maxValue)
   }
 
-  private fun findChipIndex(chipValues: List<FiatValue>,
-                            value: FiatValue): Single<Int> {
-    for (chipValue in chipValues) {
-      if (chipValue == value) {
-        return Single.just(chipValueIndexMap[chipValue])
-      }
-    }
-    return Single.just(-1)
-  }
 }

@@ -12,7 +12,6 @@ import com.asf.wallet.BuildConfig
 import com.asfoundation.wallet.entity.BazaarchePurchaseInfo
 import com.asfoundation.wallet.entity.ProductInfo
 import com.asfoundation.wallet.entity.TransactionBuilder
-import com.asfoundation.wallet.ui.balance.database.BalanceDetailsMapper.Companion.APPC_SYMBOL
 import com.asfoundation.wallet.util.Parameters
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -39,6 +38,8 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
 
     private const val DOMAIN = "dealer"
     private const val UID = "uid"
+
+    private const val APPC = "APPC"
 
   }
 
@@ -75,7 +76,7 @@ class BazaarIabInteract @Inject constructor(private val transaction: Transaction
           currency = originalOneStepCurrency
           originalOneStepValue.toDouble()
         } else {
-          currency = APPC_SYMBOL
+          currency = APPC
           amount().toDouble()
         }
 

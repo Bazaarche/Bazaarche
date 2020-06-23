@@ -13,6 +13,8 @@ class Parameters {
     const val CURRENCY = "currency"
     const val CALLBACK_URL = "callback_url"
     const val SCHEME = "https"
+    const val BAZAARCHE_SCHEME = "bazaarche"
+    const val BAZAARCHE_TRANSACTION_HOST = "transaction"
     const val HOST = BuildConfig.PAYMENT_HOST
     const val SECOND_HOST = BuildConfig.SECOND_PAYMENT_HOST
     const val PATH = "/transaction"
@@ -22,9 +24,14 @@ class Parameters {
   }
 }
 
+fun Uri.isOneStepURI() = isOneStepURLString() || isOneStepDeepLink()
+
 fun Uri.isOneStepURLString() =
     scheme == Parameters.SCHEME && (host == Parameters.HOST || host == Parameters.SECOND_HOST)
         && path.startsWith(Parameters.PATH)
+
+private fun Uri.isOneStepDeepLink() =
+    scheme == Parameters.BAZAARCHE_SCHEME && host == Parameters.BAZAARCHE_TRANSACTION_HOST
 
 fun parseOneStep(uri: Uri): OneStepUri {
   val scheme = uri.scheme

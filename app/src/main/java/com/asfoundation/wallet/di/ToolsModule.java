@@ -58,8 +58,6 @@ import com.asfoundation.wallet.Airdrop;
 import com.asfoundation.wallet.AirdropService;
 import com.asfoundation.wallet.AirdropService.Api;
 import com.asfoundation.wallet.App;
-import com.asfoundation.wallet.FlurryLogger;
-import com.asfoundation.wallet.Logger;
 import com.asfoundation.wallet.advertise.AdvertisingThrowableCodeMapper;
 import com.asfoundation.wallet.advertise.CampaignInteract;
 import com.asfoundation.wallet.advertise.PoaAnalyticsController;
@@ -69,7 +67,7 @@ import com.asfoundation.wallet.analytics.FacebookEventLogger;
 import com.asfoundation.wallet.analytics.HttpClientKnockLogger;
 import com.asfoundation.wallet.analytics.KeysNormalizer;
 import com.asfoundation.wallet.analytics.LogcatAnalyticsLogger;
-import com.asfoundation.wallet.analytics.RakamAnalyticsSetup;
+import com.asfoundation.wallet.analytics.RakamAnalytics;
 import com.asfoundation.wallet.analytics.RakamEventLogger;
 import com.asfoundation.wallet.analytics.gamification.GamificationAnalytics;
 import com.asfoundation.wallet.apps.Applications;
@@ -110,7 +108,10 @@ import com.asfoundation.wallet.interact.GetDefaultWalletBalance;
 import com.asfoundation.wallet.interact.PaymentReceiverInteract;
 import com.asfoundation.wallet.interact.SendTransactionInteract;
 import com.asfoundation.wallet.interact.SmsValidationInteract;
-import com.asfoundation.wallet.interact.SupportInteractor;
+import com.asfoundation.wallet.logging.DebugReceiver;
+import com.asfoundation.wallet.logging.LogReceiver;
+import com.asfoundation.wallet.logging.Logger;
+import com.asfoundation.wallet.logging.WalletLogger;
 import com.asfoundation.wallet.navigator.UpdateNavigator;
 import com.asfoundation.wallet.permissions.PermissionsInteractor;
 import com.asfoundation.wallet.permissions.repository.PermissionRepository;
@@ -184,6 +185,9 @@ import com.asfoundation.wallet.service.LocalCurrencyConversionService.TokenToLoc
 import com.asfoundation.wallet.service.SmsValidationApi;
 import com.asfoundation.wallet.service.TokenRateService;
 import com.asfoundation.wallet.service.TokenRateService.TokenToFiatApi;
+import com.asfoundation.wallet.support.SupportInteractor;
+import com.asfoundation.wallet.support.SupportSharedPreferences;
+import com.asfoundation.wallet.topup.TopUpAnalytics;
 import com.asfoundation.wallet.topup.TopUpInteractor;
 import com.asfoundation.wallet.topup.TopUpLimitValues;
 import com.asfoundation.wallet.topup.TopUpValuesApiResponseMapper;
@@ -224,6 +228,7 @@ import com.asfoundation.wallet.ui.iab.share.ShareLinkInteractor;
 import com.asfoundation.wallet.ui.onboarding.OnboardingInteract;
 import com.asfoundation.wallet.ui.transact.TransactionDataValidator;
 import com.asfoundation.wallet.ui.transact.TransferInteractor;
+import com.asfoundation.wallet.util.CurrencyFormatUtils;
 import com.asfoundation.wallet.util.DeviceInfo;
 import com.asfoundation.wallet.util.EIPTransactionParser;
 import com.asfoundation.wallet.util.LogInterceptor;
@@ -233,10 +238,12 @@ import com.asfoundation.wallet.util.UserAgentInterceptor;
 import com.asfoundation.wallet.wallet_blocked.WalletBlockedInteract;
 import com.asfoundation.wallet.wallet_blocked.WalletStatusApi;
 import com.asfoundation.wallet.wallet_blocked.WalletStatusRepository;
+import com.asfoundation.wallet.wallet_validation.generic.WalletValidationAnalytics;
 import com.facebook.appevents.AppEventsLogger;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import dagger.Module;
 import dagger.Provides;
 import io.reactivex.Single;
@@ -257,14 +264,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Named;
 import javax.inject.Singleton;
-import cm.aptoide.analytics.AnalyticsManager;
-import dagger.Module;
-import dagger.Provides;
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.BehaviorSubject;
 import okhttp3.OkHttpClient;
 import org.jetbrains.annotations.NotNull;
 import retrofit2.Retrofit;
@@ -350,7 +349,11 @@ import static com.asfoundation.wallet.service.AppsApi.API_BASE_URL;
   }
 
   @Singleton @Provides Logger provideLogger() {
-    return new FlurryLogger();
+    ArrayList<LogReceiver> receivers = new ArrayList<>();
+    if (BuildConfig.DEBUG) {
+      receivers.add(new DebugReceiver());
+    }
+    return new WalletLogger(receivers);
   }
 
   @Singleton @Provides BillingPaymentProofSubmission providesBillingPaymentProofSubmission(
@@ -869,10 +872,13 @@ import static com.asfoundation.wallet.service.AppsApi.API_BASE_URL;
   }
 
   @Provides GamificationApi provideGamificationApi(OkHttpClient client) {
+    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm")
+        .create();
+
     String baseUrl = CampaignService.SERVICE_HOST;
     return new Retrofit.Builder().baseUrl(baseUrl)
         .client(client)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
         .create(GamificationApi.class);
@@ -954,6 +960,16 @@ import static com.asfoundation.wallet.service.AppsApi.API_BASE_URL;
     list.add(BillingAnalytics.RAKAM_PAYMENT_CONFIRMATION);
     list.add(BillingAnalytics.RAKAM_PAYMENT_CONCLUSION);
     list.add(BillingAnalytics.RAKAM_PAYMENT_START);
+    list.add(BillingAnalytics.RAKAM_PAYPAL_URL);
+    list.add(TopUpAnalytics.WALLET_TOP_UP_START);
+    list.add(TopUpAnalytics.WALLET_TOP_UP_SELECTION);
+    list.add(TopUpAnalytics.WALLET_TOP_UP_CONFIRMATION);
+    list.add(TopUpAnalytics.WALLET_TOP_UP_CONCLUSION);
+    list.add(TopUpAnalytics.WALLET_TOP_UP_PAYPAL_URL);
+    list.add(PoaAnalytics.RAKAM_POA_EVENT);
+    list.add(WalletValidationAnalytics.WALLET_PHONE_NUMBER_VERIFICATION);
+    list.add(WalletValidationAnalytics.WALLET_CODE_VERIFICATION);
+    list.add(WalletValidationAnalytics.WALLET_VERIFICATION_CONFIRMATION);
     return list;
   }
 
@@ -1284,8 +1300,7 @@ import static com.asfoundation.wallet.service.AppsApi.API_BASE_URL;
     return builder.setContentTitle(context.getString(string.app_name))
         .setSmallIcon(drawable.ic_launcher_foreground)
         .setPriority(NotificationCompat.PRIORITY_MAX)
-        .setAutoCancel(true)
-        .setOngoing(false);
+        .setAutoCancel(true);
   }
 
   @Singleton @Provides IExtract provideIExtract() {
@@ -1343,8 +1358,14 @@ import static com.asfoundation.wallet.service.AppsApi.API_BASE_URL;
     return new UpdateNavigator();
   }
 
-  @Singleton @Provides SupportInteractor provideSupportInteractor() {
-    return new SupportInteractor();
+  @Singleton @Provides SupportInteractor provideSupportInteractor(
+      SupportSharedPreferences preferences) {
+    return new SupportInteractor(preferences);
+  }
+
+  @Singleton @Provides SupportSharedPreferences provideSupportSharedPreferences(
+      SharedPreferences preferences) {
+    return new SupportSharedPreferences(preferences);
   }
 
   @Singleton @Provides IdsRepository provideIdsRepository(Context context,
@@ -1353,7 +1374,21 @@ import static com.asfoundation.wallet.service.AppsApi.API_BASE_URL;
         installerService);
   }
 
-  @Singleton @Provides RakamAnalyticsSetup provideRakamAnalyticsSetup() {
-    return new RakamAnalyticsSetup();
+  @Singleton @Provides RakamAnalytics provideRakamAnalyticsSetup(Context context,
+      IdsRepository idsRepository, Logger logger) {
+    return new RakamAnalytics(context, idsRepository, logger);
+  }
+
+  @Singleton @Provides TopUpAnalytics provideTopUpAnalytics(AnalyticsManager analyticsManager) {
+    return new TopUpAnalytics(analyticsManager);
+  }
+
+  @Singleton @Provides CurrencyFormatUtils provideCurrencyFormatUtils() {
+    return CurrencyFormatUtils.Companion.create();
+  }
+
+  @Singleton @Provides WalletValidationAnalytics provideWalletValidationAnalytics(
+      AnalyticsManager analyticsManager) {
+    return new WalletValidationAnalytics(analyticsManager);
   }
 }

@@ -60,3 +60,5 @@
 -keepclassmembers class * {
     @com.fasterxml.jackson.annotation.* *;
 }
+##---------------Begin: proguard configuration for Sentry  ----------
+-dontwarn javax.**

@@ -2,6 +2,7 @@ package com.appcoins.wallet.billing.adyen
 
 import com.adyen.checkout.base.model.paymentmethods.PaymentMethod
 import com.appcoins.wallet.billing.util.Error
+import retrofit2.HttpException
 import java.io.IOException
 
 class AdyenResponseMapper {
@@ -32,12 +33,36 @@ class AdyenResponseMapper {
 
   fun mapInfoModelError(throwable: Throwable): PaymentInfoModel {
     throwable.printStackTrace()
-    return PaymentInfoModel(Error(true, throwable.isNoNetworkException()))
+    val codeAndMessage = getErrorCodeAndMessageFromThrowable(throwable)
+    return PaymentInfoModel(
+        Error(true, throwable.isNoNetworkException(), codeAndMessage.first, codeAndMessage.second))
   }
 
   fun mapPaymentModelError(throwable: Throwable): PaymentModel {
     throwable.printStackTrace()
-    return PaymentModel(Error(true, throwable.isNoNetworkException()))
+    val codeAndMessage = getErrorCodeAndMessageFromThrowable(throwable)
+    return PaymentModel(
+        Error(true, throwable.isNoNetworkException(), codeAndMessage.first, codeAndMessage.second))
+  }
+
+  private fun getErrorCodeAndMessageFromThrowable(throwable: Throwable): Pair<Int?, String?> {
+    val code: Int?
+    val message: String?
+    if (throwable is HttpException) {
+      code = throwable.code()
+      val retrofitMessage = throwable.response()
+          ?.errorBody()
+          ?.string()
+      if (retrofitMessage.isNullOrBlank()) {
+        message = throwable.message
+      } else {
+        message = retrofitMessage
+      }
+    } else {
+      code = null
+      message = throwable.message
+    }
+    return Pair(code, message)
   }
 
   private fun findPaymentMethod(paymentMethods: List<PaymentMethod>?,
