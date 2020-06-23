@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin_triple"
-        android:layout_marginBottom="@dimen/default_margin_triple"
+        android:layout_marginBottom="@dimen/default_margin_double"
         android:text="@string/bazaarche_wallet"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -58,15 +58,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin_triple"
-        android:layout_marginBottom="@dimen/default_margin_triple"
+        android:layout_marginBottom="@dimen/default_margin_double"
         android:textAlignment="viewStart"
         android:textColor="@color/white"
-        android:textSize="@dimen/bazaarche_large_text"
+        android:textSize="@dimen/bazaarche_medium_text"
         app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toBottomOf="@id/cardWallet"
         app:layout_constraintEnd_toEndOf="@id/cardWallet"
         app:layout_constraintStart_toStartOf="@id/cardWallet"
-        tools:text="0x969fcfa183df936bfc45984405a045"
+        tools:text="0x969fcfa183df936bfc459844045673425125a045"
         />
 
 
