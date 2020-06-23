@@ -7,12 +7,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.asf.wallet.R
 import com.asfoundation.wallet.C.IMPORT_REQUEST_CODE
 import com.asfoundation.wallet.entity.Wallet
 import com.asfoundation.wallet.ui.ImportWalletActivity
+import com.asfoundation.wallet.ui.MyAddressActivity.KEY_ADDRESS
 import com.asfoundation.wallet.util.KeyboardUtils
+import com.asfoundation.wallet.util.copyToClipboard
 import com.asfoundation.wallet.util.observe
 import com.asfoundation.wallet.viewmodel.WalletsViewModel
 import com.asfoundation.wallet.viewmodel.WalletsViewModelFactory
@@ -77,6 +80,10 @@ class WalletFragment : DaggerFragment() {
     textBackup.setOnClickListener {
       showBackupDialog()
     }
+
+    textWalletId.setOnClickListener {
+      copyWalletAddress()
+    }
   }
 
   private fun onImportSucceeded() {
@@ -127,6 +134,13 @@ class WalletFragment : DaggerFragment() {
         }
         .show()
 
+  }
+
+  private fun copyWalletAddress() {
+
+    textWalletId.text.copyToClipboard(requireContext(), KEY_ADDRESS)
+    Toast.makeText(requireContext(), R.string.wallets_address_copied_body, Toast.LENGTH_SHORT)
+        .show()
   }
 
 }
