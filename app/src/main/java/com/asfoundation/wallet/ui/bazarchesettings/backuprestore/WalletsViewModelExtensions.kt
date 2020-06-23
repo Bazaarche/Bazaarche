@@ -8,6 +8,7 @@ fun WalletsViewModel.exportWallet(password: String) {
   exportWallet(defaultWallet().value ?: return, password)
 }
 
+@Suppress("unused")
 fun WalletsViewModel.getShareIntent(walletData: String): Intent {
 
     return Intent(Intent.ACTION_SEND).apply {
