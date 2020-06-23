@@ -31,7 +31,7 @@
         android:layout_marginStart="@dimen/wallet_card_image_margin"
         android:layout_marginTop="@dimen/default_margin_triple"
         android:layout_marginEnd="@dimen/default_margin_quadruple"
-        app:layout_constraintBottom_toBottomOf="@id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="@id/cardWallet"
         app:layout_constraintStart_toStartOf="@id/cardWallet"
         app:layout_constraintTop_toTopOf="@id/cardWallet"
@@ -43,29 +43,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin_triple"
-        android:layout_marginBottom="@dimen/default_margin_double"
+        android:layout_marginBottom="@dimen/default_margin_triple"
         android:text="@string/bazaarche_wallet"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/textWalletId"
+        app:layout_constraintBottom_toBottomOf="@id/cardWallet"
         app:layout_constraintStart_toStartOf="@id/cardWallet"
         />
 
 
     <TextView
         android:id="@+id/textWalletId"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin_triple"
-        android:layout_marginBottom="@dimen/default_margin_double"
+        android:layout_marginTop="@dimen/default_margin_double"
         android:textAlignment="viewStart"
-        android:textColor="@color/white"
+        android:textColor="@color/title_color"
         android:textSize="@dimen/bazaarche_medium_text"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toBottomOf="@id/cardWallet"
-        app:layout_constraintEnd_toEndOf="@id/cardWallet"
-        app:layout_constraintStart_toStartOf="@id/cardWallet"
+        app:layout_constraintTop_toBottomOf="@id/cardWallet"
         tools:text="0x969fcfa183df936bfc459844045673425125a045"
         />
 
@@ -79,7 +75,7 @@
         android:enabled="false"
         android:drawableStart="@drawable/ic_backup"
         android:text="@string/backup_wallet"
-        app:layout_constraintTop_toBottomOf="@id/cardWallet"
+        app:layout_constraintTop_toBottomOf="@id/textWalletId"
         />
 
     <TextView
